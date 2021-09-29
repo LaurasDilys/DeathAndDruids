@@ -1,12 +1,20 @@
 import { Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const TabLabel = ({ hp, name, init, onChange, onClose }) => {
+const TabLabel = ({ /*hp,*/ id, name, init, onInitiativeChange, onClose }) => {
   const [initiative, setInitiative] = useState(init);
 
   const handleChange = event => {
     const value = event.target.value;
     setInitiative(value);
+  }
+
+  useEffect(() => {
+    onInitiativeChange(id, initiative);
+  }, [initiative])
+
+  const onClick = event => {
+    onClose(id);
   }
 
   return (
@@ -18,7 +26,7 @@ const TabLabel = ({ hp, name, init, onChange, onClose }) => {
         size="small"
         style = {{width: 50}}>
       </TextField>
-      <Button>x</Button>
+      <Button onClick={onClick}>x</Button>
     </div>
   );
 }
