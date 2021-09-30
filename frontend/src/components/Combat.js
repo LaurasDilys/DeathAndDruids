@@ -4,8 +4,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useState } from 'react';
 import TabLabel from './CombatTabs/TabLabel';
-import { getColor, StyledTab } from './CombatTabs/StyledTab';
-import { Tab } from '@mui/material';
+import { getColor, FadingTab } from './CombatTabs/FadingTab';
 
 const mockCharacters = [{
   id: 1,
@@ -45,16 +44,16 @@ const mockCharacters = [{
   maxHp: 10
 }]
 
+const sorted = (characters) => {
+  return characters.sort((a, b) => {
+    return b.initiative - a.initiative;
+  });
+}
+
 const CombatTabs = () => {
-  const [selectedTab, setSelectedTab] = useState();
   const [characters, setCharacters] = useState(mockCharacters);
-
-  const sorted = (characters) => {
-    return characters.sort((a, b) => {
-      return b.initiative - a.initiative;
-    });
-  }
-
+  const [selectedTab, setSelectedTab] = useState(sorted(characters)[0].id);
+  
   const handleSelectedTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
@@ -77,7 +76,7 @@ const CombatTabs = () => {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleSelectedTabChange} aria-label="lab API tabs example">
             {sorted(characters).map(character =>
-              <Tab
+              <FadingTab
                 style={getColor(character.hp / character.maxHp)}
                 key={character.id}
                 value={character.id}
