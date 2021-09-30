@@ -1,7 +1,7 @@
 import { Tab } from "@mui/material";
 import { withStyles } from "@mui/styles";
 
-const StyledTab = withStyles({
+const FadingTab = withStyles({
   root: {
     opacity: 0.5,
     '&:hover': {
@@ -12,19 +12,19 @@ const StyledTab = withStyles({
     },
   },
   selected: {},
-})(props => <Tab {...props} />);
+})(Tab); //props => <Tab {...props} />
 
 const getColor = hpRation => {
 
   let color;
 
   switch (true) {
-    case (hpRation < 0.1): color = "FireBrick"; break;
-    case (hpRation < 0.2): color = "#e67e00"; break; //darker dark orange
-    case (hpRation < 0.4): color = "#e6c300"; break; //darker gold
-    case (hpRation < 0.6): color = "YellowGreen"; break;
-    case (hpRation < 0.8): color = "#2db92d"; break; //forest green ??
-    default: color = "Green";
+    case (hpRation < 0.1): color = "#ab2121"; break; //FireBrick 40%
+    case (hpRation < 0.2): color = "#cc7000"; break; //DarkOrange 40%
+    case (hpRation < 0.4): color = "#ccad00"; break; //Gold 40%
+    case (hpRation < 0.6): color = "#8ab92d"; break; //YellowGreen 45%
+    case (hpRation < 0.8): color = "#28a428"; break; //ForestGreen 40%
+    default: color = "Green"; //25%
   }
 
   return({
@@ -32,4 +32,4 @@ const getColor = hpRation => {
   })
 }
 
-export { StyledTab, getColor }
+export { FadingTab, getColor }
