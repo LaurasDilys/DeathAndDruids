@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TabLabel from './CombatTabs/TabLabel';
 import { getColor, FadingTab } from './CombatTabs/FadingTab';
 
@@ -57,11 +57,8 @@ const firstInInitiative = (characters) => {
 
 const CombatTabs = () => {
   const [characters, setCharacters] = useState(mockCharacters);
+  const [tabChangeAttempt, setTabChangeAttempt] = useState();
   const [selectedTab, setSelectedTab] = useState(firstInInitiative(characters));
-
-  const handleSelectedTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
-  };
 
   const handleInitiativeChange = (id, initiative) => {
     setCharacters(characters.map(c => {
@@ -71,10 +68,23 @@ const CombatTabs = () => {
   };
 
   const handleCloseTab = (id) => {
-    const ids = sorted(characters).map(c => c.id);
-    setSelectedTab(ids[ids.indexOf(id) + 1]); // set to next tab in tabs row
+    if (selectedTab === id) { // if selected tab is the one, that's being closed
+      const ids = sorted(characters).map(c => c.id);
+      const nextId = ids[ids.indexOf(id) + 1] !== undefined ? ids[ids.indexOf(id) + 1] : ids[ids.indexOf(id) - 1]
+      setSelectedTab(nextId); // switch to tab to the right of closed tab – or to the left, if there are no tabs to the right
+    }
     setCharacters(characters.filter(c => c.id !== id));
   }
+
+  const handleSelectedTabChange = (event, newValue) => { // close button also selects tab,
+    setTabChangeAttempt(newValue); // so each tab select only attempts to change tab
+  };
+  
+  useEffect(() => { // and useEffect checks, if tabChangeAttempt is a non-closed tab
+    if (characters.map(c => c.id).includes(tabChangeAttempt)) {
+      setSelectedTab(tabChangeAttempt);
+    }
+  }, [tabChangeAttempt])
 
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
