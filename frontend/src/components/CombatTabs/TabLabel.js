@@ -26,7 +26,7 @@ const TabLabel = ({ id, name, init, onInitiativeChange, onClose }) => {
         size="small"
         style = {{width: 50}}>
       </TextField>
-      <Button onClick={onClick}>x</Button>
+      <Button disableRipple onClick={onClick}>x</Button>
     </div>
   );
 }
