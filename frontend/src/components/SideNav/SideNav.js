@@ -3,27 +3,33 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './SideNav.css';
 
+const mouseEnteredNav = (component, event) => {
+  const width = component.clientWidth; // nav width
+  const height = component.clientHeight; // nav height
+  const x = event.clientX; // cursor's x-axis location
+  const y = event.clientY; // cursor's y-axis location
+
+  // nav is in the middle of viewport height
+  // const margin is top and bottom nav margin
+  const margin = (window.innerHeight - height) / 2
+
+  if (x <= width &&
+    y >= margin &&
+    y <= margin + height)
+    return true;
+
+  return false;
+}
+
 const SideNav = ({ routes }) => {
   const [visibility, setVisibility] = useState(true);
   const ref = useRef(null);
 
-  const toggleSideBar = (event) => {
-    // x is cursor's x-axis location
-    const x = event.clientX;
-
-    // yvh is the ratio between
-    // cursor's y-axis location and viewport height
-    const yvh = event.clientY / window.innerHeight;
-
-    // css .side-nav { position: fixed;
-    if (x <= 200 && // width: 200px;
-      yvh > 0.3 &&  // top: 30vh;
-      yvh <= 0.7)   // height: 40vh;
-    {
-    //   setVisibility(true);
-    //   alert(ref.current.clientWidth);
-    // } else {
-    //   setVisibility(false);
+  const toggleSideBar = event => {
+    if (mouseEnteredNav(ref.current, event)) {
+      setVisibility(true);
+    } else {
+      setVisibility(false);
     }
   };
 
@@ -33,14 +39,16 @@ const SideNav = ({ routes }) => {
   }, []);
 
   return (
-    <nav ref={ref} className={visibility ? "side-nav visible" : "side-nav"}>
-      <div className="nav-items">
-        {routes.map(({ path, title }, index) =>
-          <Link
-            key={index}
-            to={path}
-            children={<Button>{title}</Button>}/>
-        )}
+    <nav className={visibility ? "nav-viewport-height visible" : "nav-viewport-height"}>
+      <div ref={ref} className="nav">
+        <div className="nav-items">
+          {routes.map(({ path, title }, index) =>
+            <Link
+              key={index}
+              to={path}
+              children={<Button>{title}</Button>}/>
+          )}
+        </div>
       </div>
     </nav>
   );
