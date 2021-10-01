@@ -1,15 +1,16 @@
 import CombatTabs from './components/CombatTabs/CombatTabs';
+import HomePage from './components/HomePage/HomePage';
 
 const Routes = [
   {
     title: "Home",
     path: "/",
-    getComponent: () => {return CombatTabs}
+    getComponent: () => {return HomePage}
   },
   {
     title: "Creation",
     path: "/creation",
-    getComponent: () => {return CombatTabs}
+    getComponent: () => {return HomePage}
   },
   {
     title: "Combat",
