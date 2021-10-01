@@ -9,20 +9,19 @@ const mouseEnteredNav = (component, event) => {
   const x = event.clientX; // cursor's x-axis location
   const y = event.clientY; // cursor's y-axis location
 
-  // nav is in the middle of viewport height
+  // nav is in the middle of viewport height, so
   // const margin is top and bottom nav margin
   const margin = (window.innerHeight - height) / 2
 
   if (x <= width &&
-    y >= margin &&
-    y <= margin + height)
-    return true;
+    y > margin &&
+    y <= margin + height) return true;
 
   return false;
 }
 
 const SideNav = ({ routes }) => {
-  const [visibility, setVisibility] = useState(true);
+  const [visibility, setVisibility] = useState(false);
   const ref = useRef(null);
 
   const toggleSideBar = event => {
