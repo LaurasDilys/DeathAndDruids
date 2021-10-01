@@ -1,21 +1,25 @@
-.side-nav {
-  /* background-color: teal; */
-  position: fixed;
+.nav-viewport-height {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   width: 200px;
-  top: 30vh;
-  height: 40vh;
+  position: fixed;
   left: -100%;
   transition: 850ms;
-  display: flex;
 }
 
-.side-nav.visible {
+.nav-viewport-height.visible {
   left: 0;
   transition: 350ms;
 }
 
-.nav-items {
+.nav {
   /* background-color: aquamarine; */
+  display: flex;
+  margin: auto 0;
+}
+
+.nav-items {
   display: flex;
   flex-direction: column;
   margin-left: 20px;
@@ -27,7 +31,11 @@
 }
 
 .nav-items button {
+  text-align: left;
+  width: 180px;
   font-size: 20px;
   padding: 10px 20px;
   text-transform: unset;
+  margin: 10px 0;
+  justify-content: flex-start;
 }
