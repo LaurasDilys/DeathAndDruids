@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './SideNav.css';
 
 const SideNav = ({ routes }) => {
-  const [visibility, setVisibility] = useState(true);
+  const [visibility, setVisibility] = useState(false);
 
   const toggleSideBar = (event) => {
     // x is cursor's x-axis location
