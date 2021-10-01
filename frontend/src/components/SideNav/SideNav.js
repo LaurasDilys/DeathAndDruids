@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './SideNav.css';
 
 const mouseEnteredNav = (component, event) => {
@@ -23,8 +23,14 @@ const mouseEnteredNav = (component, event) => {
 const SideNav = ({ routes }) => {
   const [visibility, setVisibility] = useState(false);
   const ref = useRef(null);
+  let location = useLocation();
 
-  const toggleSideBar = event => {
+  useEffect(() => { // sets document title
+    document.title = "Death & Druids – " +
+    routes.find(r => r.path === location.pathname).title
+  }, [location]);
+
+  const toggleSideNav = event => {
     if (mouseEnteredNav(ref.current, event)) {
       setVisibility(true);
     } else {
@@ -32,9 +38,9 @@ const SideNav = ({ routes }) => {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("mousemove", toggleSideBar);
-    return () => document.removeEventListener("mousemove", toggleSideBar);
+  useEffect(() => { // adds mouse move event listener for toggling SideNav
+    document.addEventListener("mousemove", toggleSideNav);
+    return () => document.removeEventListener("mousemove", toggleSideNav);
   }, []);
 
   return (
