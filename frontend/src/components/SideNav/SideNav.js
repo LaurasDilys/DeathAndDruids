@@ -1,10 +1,11 @@
 import { Button } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './SideNav.css';
 
 const SideNav = ({ routes }) => {
-  const [visibility, setVisibility] = useState(false);
+  const [visibility, setVisibility] = useState(true);
+  const ref = useRef(null);
 
   const toggleSideBar = (event) => {
     // x is cursor's x-axis location
@@ -19,9 +20,10 @@ const SideNav = ({ routes }) => {
       yvh > 0.3 &&  // top: 30vh;
       yvh <= 0.7)   // height: 40vh;
     {
-      setVisibility(true);
-    } else {
-      setVisibility(false);
+    //   setVisibility(true);
+    //   alert(ref.current.clientWidth);
+    // } else {
+    //   setVisibility(false);
     }
   };
 
@@ -31,7 +33,7 @@ const SideNav = ({ routes }) => {
   }, []);
 
   return (
-    <nav className={visibility ? "side-nav visible" : "side-nav"}>
+    <nav ref={ref} className={visibility ? "side-nav visible" : "side-nav"}>
       <div className="nav-items">
         {routes.map(({ path, title }, index) =>
           <Link
