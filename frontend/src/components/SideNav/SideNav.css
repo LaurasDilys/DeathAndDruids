@@ -1,3 +1,5 @@
+@import url("../../Themes.css");
+
 .nav-viewport-height {
   position: fixed;
   display: flex;
@@ -14,7 +16,7 @@
 }
 
 .nav {
-  /* background-color: black; possibly */
+  /* background-color: var(--black); */
   display: flex;
   margin: auto 0;
 }

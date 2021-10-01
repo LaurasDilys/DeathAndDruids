@@ -97,18 +97,22 @@ const CombatTabs = () => {
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={selectedTab}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList variant="scrollable" scrollButtons="auto" onChange={handleSelectedTabChange}>
-            {sorted(characters).map(character =>
-              <FadingTab
-                style={getColor(character.hp / character.maxHp)}
-                key={character.id}
-                value={character.id}
-                label={<TabLabel
-                  id={character.id}
-                  name={character.name}
-                  init={character.initiative}
-                  onInitiativeChange={handleInitiativeChange}
-                  onClose={handleCloseTab}/>}/>)}
+          <TabList
+            // TabIndicatorProps={{ style: { background: "firebrick" } }}
+            variant="scrollable"
+            scrollButtons="auto"
+            onChange={handleSelectedTabChange}>
+              {sorted(characters).map(character =>
+                <FadingTab
+                  style={getColor(character.hp / character.maxHp)}
+                  key={character.id}
+                  value={character.id}
+                  label={<TabLabel
+                    id={character.id}
+                    name={character.name}
+                    init={character.initiative}
+                    onInitiativeChange={handleInitiativeChange}
+                    onClose={handleCloseTab}/>}/>)}
           </TabList>
         </Box>
           {characters.map(character =>
