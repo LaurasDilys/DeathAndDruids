@@ -1,0 +1,33 @@
+.side-nav {
+  /* background-color: teal; */
+  position: fixed;
+  width: 200px;
+  top: 30vh;
+  height: 40vh;
+  left: -100%;
+  transition: 850ms;
+  display: flex;
+}
+
+.side-nav.visible {
+  left: 0;
+  transition: 350ms;
+}
+
+.nav-items {
+  /* background-color: aquamarine; */
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+}
+
+.nav-items * {
+  margin: auto 0;
+  text-decoration: none;
+}
+
+.nav-items button {
+  font-size: 20px;
+  padding: 10px 20px;
+  text-transform: unset;
+}

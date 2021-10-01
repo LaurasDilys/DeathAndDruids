@@ -1,17 +1,17 @@
-import React from 'react';
 import './App.css';
-import Combat from './components/Combat';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import Home from './pages/Home';
-// import Navbar from './nav/Navbar';
+import Routes from './Routes';
+import SideNav from './components/SideNav/SideNav';
 
 const App = () => {
   return (
     <Router>
-      {/* <Navbar /> */}
+      <SideNav routes={Routes} />
       <Switch>
-        {/* <Route path='/' exact component={Home} /> */}
-        <Route path='/' component={Combat} />
+        {Routes.map(({ path, getComponent }, index) => <Route
+          key={index}
+          path={path}
+          component={getComponent()} />)}
       </Switch>
     </Router>
   );
