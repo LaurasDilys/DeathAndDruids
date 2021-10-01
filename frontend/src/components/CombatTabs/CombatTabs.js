@@ -3,46 +3,53 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useEffect, useState } from 'react';
-import TabLabel from './CombatTabs/TabLabel';
-import { getColor, FadingTab } from './CombatTabs/FadingTab';
+import TabLabel from './TabLabel';
+import { getColor, FadingTab } from './FadingTab';
 
-const mockCharacters = [{
-  id: 1,
-  name: "Sixth",
-  initiative: 1,
-  hp: 1,
-  maxHp: 11
-}, {
-  id: 2,
-  name: "Fifth",
-  initiative: 2,
-  hp: 1,
-  maxHp: 10
-}, {
-  id: 3,
-  name: "Fourth",
-  initiative: 4,
-  hp: 2,
-  maxHp: 10
-}, {
-  id: 4,
-  name: "Third",
-  initiative: 6,
-  hp: 4,
-  maxHp: 10
-}, {
-  id: 5,
-  name: "Second",
-  initiative: 8,
-  hp: 6,
-  maxHp: 10
-}, {
-  id: 6,
-  name: "First",
-  initiative: 10,
-  hp: 8,
-  maxHp: 10
-}]
+const mockCharacters = [
+  {
+    id: 1,
+    name: "Sixth",
+    initiative: 1,
+    hp: 1,
+    maxHp: 11
+  },
+  {
+    id: 2,
+    name: "Fifth",
+    initiative: 2,
+    hp: 1,
+    maxHp: 10
+  },
+  {
+    id: 3,
+    name: "Fourth",
+    initiative: 4,
+    hp: 2,
+    maxHp: 10
+  },
+  {
+    id: 4,
+    name: "Third",
+    initiative: 6,
+    hp: 4,
+    maxHp: 10
+  },
+  {
+    id: 5,
+    name: "Second",
+    initiative: 8,
+    hp: 6,
+    maxHp: 10
+  },
+  {
+    id: 6,
+    name: "First",
+    initiative: 10,
+    hp: 8,
+    maxHp: 10
+  }
+]
 
 const sorted = (characters) => {
   return [...characters].sort((a, b) => {
