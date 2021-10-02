@@ -51,7 +51,7 @@ const SideNav = ({ routes }) => {
             <Link
               key={index}
               to={path}
-              children={<Button>{title}</Button>}/>
+              children={<Button variant="contained">{title}</Button>}/>
           )}
         </div>
       </div>
