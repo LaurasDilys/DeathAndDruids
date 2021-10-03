@@ -34,7 +34,7 @@ export const NewCharacter = () => (dispatch) => {
   API.get(
     "creation/new"
   )
-    .then(res => console.log(res))
+    .then(res => dispatch(NewCharacterAction(res.data)))
     .catch(err => console.log(err));
 }
 
