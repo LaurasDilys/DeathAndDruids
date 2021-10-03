@@ -1,8 +1,18 @@
 import { combineReducers } from 'redux';
 import type { StateType } from 'typesafe-actions';
 import { applyMiddleware, createStore } from 'redux';
-// import { composeWithDevTools } from 'redux-devtools-extension';
-// import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+import axios from 'axios';
+
+// ../domain/Api.ts
+const host = "https://localhost:44351/";
+const timeout = 3000; // How long of a wait for response is too long
+
+const API = axios.create({
+  baseURL: host,
+  timeout: timeout,
+});
 
 
 
@@ -12,18 +22,26 @@ export const NEW_CHARACTER = "NEW_CHARACTER";
 
 
 // action
-type CreationAction = {
-  type: string;
-}
-
-export const NewCharacter = (): CreationAction => ({
-  type: NEW_CHARACTER
+export const NewCharacterAction = (props) => ({
+  type: NEW_CHARACTER,
+  payload: props
 })
 
 
 
+// thunk
+export const NewCharacter = () => (dispatch) => {
+  API.get(
+    "creation/new"
+  )
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+}
+
+
+
 // reducer
-export type Character = {
+type Character = {
   id: number,
   name: string,
   initiative: number,
@@ -39,20 +57,15 @@ const initialState: CreationState = {
   characters: []
 }
 
+type CreationAction = {
+  type: string;
+  payload: Character;
+}
+
 export const creationReducer = (state: CreationState = initialState, action: CreationAction): CreationState => {
   switch (action.type) {
-    case NEW_CHARACTER: {
-      //
-      const newCharacter = {
-        id: 0,
-        name: "Zero",
-        initiative: 0,
-        hp: 0,
-        maxHp: 0
-      }
-      //
-      return { characters: [...state.characters, newCharacter] };
-    };
+    case NEW_CHARACTER:
+      return { ...state, characters: [...state.characters, action.payload] };
     default:
       return state;
   };
@@ -74,11 +87,11 @@ export const getCharacters = (state: RootState): CreationState => state.creation
 // store
 export default function configureStore() {
 
-  // const middlewareEnhancer = applyMiddleware(thunk);
+  const middlewareEnhancer = applyMiddleware(thunk);
 
-  // const composedEnhancers = composeWithDevTools(middlewareEnhancer);
+  const composedEnhancers = composeWithDevTools(middlewareEnhancer);
 
-  const store = createStore(reducers);
+  const store = createStore(reducers, composedEnhancers);
 
   return store;
 }
