@@ -31,6 +31,7 @@ namespace Api
 
             services.AddCors(cors =>
             {
+                // This policy allows my React application (localhost:3000) to access controller methods of this application (localhost:44351)
                 cors.AddPolicy("dev", builder => builder.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(origin => true).AllowCredentials());
             });
 
