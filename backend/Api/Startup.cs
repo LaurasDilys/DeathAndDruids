@@ -30,6 +30,8 @@ namespace Api
         {
             services.AddDatabase(Configuration["Database"]);
 
+            services.ConfigureDependencyInjection();
+
             services.AddControllers();
 
             services.AddCors(cors =>
@@ -47,9 +49,7 @@ namespace Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            var dbCtx = app.ApplicationServices.CreateScope().ServiceProvider
-                .GetRequiredService<DataContext>();
-            dbCtx.Database.Migrate();
+            app.AddDatabaseMigrations();
 
             if (env.IsDevelopment())
             {
