@@ -1,4 +1,5 @@
-﻿using Data;
+﻿using Application;
+using Data;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,12 +14,34 @@ namespace Api.Controllers
     [Route("[controller]")]
     public class CreationController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly CreationService _service;
 
-        public CreationController(DataContext context)
+        public CreationController(CreationService service)
         {
-            _context = context;
+            _service = service;
         }
+
+        [HttpGet("GetOpened", Name = nameof(GetOpened))]
+        public ActionResult<OpenedMonster> GetOpened()
+        {
+            if (!_service.OpenedExists())
+                return NotFound();
+
+            return Ok(_service.GetOpened());
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [HttpGet("New")]
         public IActionResult New()
@@ -33,14 +56,6 @@ namespace Api.Controllers
             };
 
             return Ok(res);
-        }
-
-        [HttpGet("Test")]
-        public IActionResult Test()
-        {
-            _context.SaveChanges();
-
-            return Ok();
         }
     }
 }
