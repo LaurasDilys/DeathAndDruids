@@ -1,19 +1,43 @@
-const commonData = {
-  monsters: ["(only beasts, for now)"]
-}
+const commonData = { monsters: ["(only beasts, for now)"] }
 
 const stateTemplate = {
 
-  characters: [], // id, bool InCreation, bool InCombat, bool InCombat
-  monsters: [], // id, bool InCreation
-  players: [], // { id, name, init }
+  // Entities
+  monsters: [], // id, name, init, type="monster", bool InCombat, bool InCreation
+  players: [], // {id, name, init, type="player"}
+
+  monster_in_creation: [1], // id, name, init, sourceId(=0) (monster), bool Saved
+
+  combat: ["selectedId", ["combatants"]], // id, sourceId (m_copy_in_combat / player), type (monster / player), initiative, InitiativeOrder, IsSelected
+  m_copies_in_combat: [],
+
+
+  // React store
+  allMonsters: [],
+  allPlayers: [],
+
+  monsterInCreation: {},
+
+  selectedCombatTab: 1,
+  creaturesInCombat: [],
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   // CREATION
   // can delete only when opened
   c_copies_in_creation: [], // id, id from characters, bool InCreation, bool InCombat, bool Saved, bool Selected, int? CreationOrder, int? InitiativeOrder
-  m_copies_in_creation: [], // id, id(=0) from monsters, 
-
+  m_copies_in_creation: [], // id, id(=0) from monsters,
 
   // COMBAT
   // onInitiativeChange:
