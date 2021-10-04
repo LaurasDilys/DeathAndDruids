@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const commonData = { monsters: ["(only beasts, for now)"] }
 
 const stateTemplate = {
@@ -6,32 +8,20 @@ const stateTemplate = {
   monsters: [], // id, name, init, type="monster", || bool InCombat, bool InCreation
   players: [], // {id, name, init, type="player",  ||  int? combatId
 
-  monster_in_creation: [1], // id, name, init, int? sourceId (monsterId), bool Saved
+  opened_monster: [1], // id, name, init, int? sourceId (monsterId), bool Saved
 
   m_copies_in_combat: [],
   combat: [ "selectedId", "m_copies[]", "players[]" ], // id, sourceId (m_copy_in_combat / player), type (monster / player), initiative, InitiativeOrder, IsSelected
 
 
   // React store
-  allMonsters: [],
-  allPlayers: [],
+  monsters: [],
+  players: [],
 
-  monsterInCreation: {},
+  openedMonster: null,
 
   selectedCombatTab: 1,
   creaturesInCombat: [],
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   // CREATION
@@ -53,3 +43,13 @@ const stateTemplate = {
   // onChange: oldValue === "" ? createPlayer : editPlayer; add ("", ""init);
   // else newValue === "" ? delete this; dispatch(deletePlayer); ("", "") becomes ("", this init)
 }
+
+const host = "https://localhost:44351/api/";
+const timeout = 3000; // How long of a wait for response is too long
+
+const API = axios.create({
+  baseURL: host,
+  timeout: timeout,
+});
+
+export default API;

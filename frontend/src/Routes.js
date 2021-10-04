@@ -1,5 +1,5 @@
 import CombatTabs from './components/CombatTabs/CombatTabs';
-import CreationTabs from './components/CreationTabs/CreationTabs';
+import Creation from './components/Creation/Creation';
 import HomePage from './components/HomePage/HomePage';
 
 const Routes = [
@@ -11,7 +11,7 @@ const Routes = [
   {
     title: "Creation",
     path: "/creation",
-    getComponent: () => {return CreationTabs}
+    getComponent: () => {return Creation}
   },
   {
     title: "Combat",

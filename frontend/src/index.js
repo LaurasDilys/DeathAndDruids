@@ -4,8 +4,7 @@ import './index.css';
 import './Themes.css';
 import App from './App';
 import { Provider } from 'react-redux';
-//
-import store from './state/actions/actionTypes';
+import store from './state/store';
 
 
 ReactDOM.render(
