@@ -64,6 +64,14 @@ type CreationAction = {
 
 export const creationReducer = (state: CreationState = initialState, action: CreationAction): CreationState => {
   switch (action.type) {
+    //
+    case "TEST":
+      let first = state.characters[0];
+      first.hp++;
+      let rest = state.characters;
+      rest.shift();
+      return { ...state, characters: [first, ...rest] }
+      //
     case NEW_CHARACTER:
       return { ...state, characters: [...state.characters, action.payload] };
     default:
