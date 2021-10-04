@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace Api.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class CreationController : ControllerBase
     {
         private readonly CreationService _service;
@@ -21,8 +21,8 @@ namespace Api.Controllers
             _service = service;
         }
 
-        [HttpGet("GetOpened", Name = nameof(GetOpened))]
-        public ActionResult<OpenedMonster> GetOpened()
+        [HttpGet("OpenedMonster", Name = nameof(OpenedMonster))]
+        public ActionResult<OpenedMonster> OpenedMonster()
         {
             if (!_service.OpenedExists())
                 return NotFound();
