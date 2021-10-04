@@ -3,13 +3,13 @@ const commonData = { monsters: ["(only beasts, for now)"] }
 const stateTemplate = {
 
   // Entities
-  monsters: [], // id, name, init, type="monster", bool InCombat, bool InCreation
-  players: [], // {id, name, init, type="player"}
+  monsters: [], // id, name, init, type="monster", || bool InCombat, bool InCreation
+  players: [], // {id, name, init, type="player",  ||  int? combatId
 
-  monster_in_creation: [1], // id, name, init, sourceId(=0) (monster), bool Saved
+  monster_in_creation: [1], // id, name, init, int? sourceId (monsterId), bool Saved
 
-  combat: ["selectedId", ["combatants"]], // id, sourceId (m_copy_in_combat / player), type (monster / player), initiative, InitiativeOrder, IsSelected
   m_copies_in_combat: [],
+  combat: [ "selectedId", "m_copies[]", "players[]" ], // id, sourceId (m_copy_in_combat / player), type (monster / player), initiative, InitiativeOrder, IsSelected
 
 
   // React store
