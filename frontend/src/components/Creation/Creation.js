@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOpenedMonster } from "../../state/actions/creationThunk";
+import { getOpenedMonster, newMonster } from "../../state/actions/creationThunk";
 import { getMonsters } from "../../state/actions/monstersThunk";
 import { creationState, monstersState } from "../../state/selectors/creationSelectors";
 import './Creation.css';
@@ -12,18 +12,24 @@ const Creation = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOpenedMonster())
+    dispatch(getOpenedMonster());
     dispatch(getMonsters());
   }, [])
+
+  const handleNew = () => {
+    dispatch(newMonster());
+  }
 
   return (
     <div className="flex-row">
       {creation === null &&
         <div className="flex-col">
-          <Button>Create New</Button>
+          <Button onClick={handleNew}>Create New</Button>
           {monsters.length > 0 &&
           <Button>Load</Button>}
         </div>}
+        <Button onClick={() => dispatch(getOpenedMonster())}>GET OPENED MONSTER</Button>
+        <Button onClick={() => console.log(creation.monster)}>LOG OPENED MONSTER</Button>
     </div>
   );
 }

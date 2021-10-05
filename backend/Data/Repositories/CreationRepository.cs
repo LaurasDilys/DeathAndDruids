@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Data.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +20,23 @@ namespace Data.Repositories
         public bool Exists()
         {
             return _context.OpenedMonsters.Any();
+        }
+
+        public OpenedMonster GetOpened()
+        {
+            return _context.OpenedMonsters.First();
+        }
+
+        public void Add(OpenedMonster monster)
+        {
+            _context.OpenedMonsters.Add(monster);
+            _context.SaveChanges();
+        }
+
+        public void DeleteAll()
+        {
+            var tableName = nameof(OpenedMonster);
+            _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [{tableName}s]");
         }
     }
 }

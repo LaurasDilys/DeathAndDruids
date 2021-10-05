@@ -29,33 +29,13 @@ namespace Api.Controllers
 
             return Ok(_service.GetOpened());
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        [HttpGet("New")]
+        
+        [HttpPost("New")]
         public IActionResult New()
         {
-            var res = new
-            {
-                Id = DateTime.Now.Second,
-                Name = DateTime.Now.Second,
-                Initiative = 0,
-                Hp = 0,
-                MaxHp = 0
-            };
+            _service.New();
 
-            return Ok(res);
+            return Ok();
         }
     }
 }

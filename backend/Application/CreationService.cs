@@ -20,7 +20,21 @@ namespace Application
 
         public OpenedMonster GetOpened()
         {
-            return new OpenedMonster();
+            return _repository.GetOpened();
+        }
+
+        public void New()
+        {
+            var monster = new OpenedMonster
+            {
+                Name = "",
+                Initiative = 0
+            };
+
+            if (OpenedExists())
+                _repository.DeleteAll();
+
+            _repository.Add(monster);
         }
     }
 }
