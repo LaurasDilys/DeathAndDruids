@@ -69,7 +69,14 @@ namespace Application
         {
             var monster = _creationRepository.GetOpened();
 
-            _mapper.Patch(monster, patch);
+            if (patch.Name == "name")
+            {
+                _mapper.PatchName(monster, patch);
+            }
+            else
+            {
+                _mapper.Patch(monster, patch);
+            }
 
             monster.Saved = false;
 

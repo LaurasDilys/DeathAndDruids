@@ -28,6 +28,14 @@ namespace Application
             previousSave.Initiative = monster.Initiative;
         }
 
+        public void PatchName(OpenedMonster monster, IMonsterPatchRequest patch)
+        {
+            if (patch.Value != "")
+            {
+                monster.Name = patch.Value;
+            }
+        }
+
         public void Patch(OpenedMonster monster, IMonsterPatchRequest patch)
         {
             int newValue;
