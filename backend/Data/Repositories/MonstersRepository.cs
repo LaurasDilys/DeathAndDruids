@@ -20,5 +20,24 @@ namespace Data.Repositories
         {
             return _context.Monsters;
         }
+
+        public Monster Get(int key)
+        {
+            return _context.Monsters.Find(key);
+        }
+
+        public int Add(Monster monster)
+        {
+            _context.Monsters.Add(monster);
+            SaveChanges();
+            return monster.Id;
+        }
+
+
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
     }
 }

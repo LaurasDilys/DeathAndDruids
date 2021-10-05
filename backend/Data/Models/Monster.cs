@@ -15,6 +15,6 @@ namespace Data.Models
         public int Initiative { get; set; }
         public string Type { get; set; }
         public bool InCombat { get; set; }
-        public bool InCreation { get; set; }
+        public bool InCreation { get; set; } // onOpen => true
     }
 }

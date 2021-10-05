@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOpenedMonster, newMonster } from "../../state/actions/creationThunk";
 import { getMonsters } from "../../state/actions/monstersThunk";
 import { creationState, monstersState } from "../../state/selectors/creationSelectors";
+import CharacterSheet from "../CharacterSheet/CharacterSheet";
 import './Creation.css';
 
 const Creation = () => {
@@ -28,8 +29,10 @@ const Creation = () => {
           {monsters.length > 0 &&
           <Button>Load</Button>}
         </div>}
-        <Button onClick={() => dispatch(getOpenedMonster())}>GET OPENED MONSTER</Button>
-        <Button onClick={() => console.log(creation.monster)}>LOG OPENED MONSTER</Button>
+      {creation !== null &&
+        <div className="flex-col">
+          <CharacterSheet monster={creation.monster} />
+        </div>}
     </div>
   );
 }

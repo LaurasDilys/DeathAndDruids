@@ -16,9 +16,12 @@ namespace Api
         public static void ConfigureDependencyInjection(this IServiceCollection services)
         {
             services.AddScoped<CreationService>()
-                    .AddScoped<CreationRepository>()
-                    .AddScoped<MonstersService>()
+                    .AddScoped<CreationRepository>();
+
+            services.AddScoped<MonstersService>()
                     .AddScoped<MonstersRepository>();
+
+            services.AddTransient<MapperService>();
         }
 
         public static void AddDatabase(this IServiceCollection services, string connectionString)

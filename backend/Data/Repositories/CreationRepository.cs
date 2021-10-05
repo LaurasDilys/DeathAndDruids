@@ -30,13 +30,20 @@ namespace Data.Repositories
         public void Add(OpenedMonster monster)
         {
             _context.OpenedMonsters.Add(monster);
-            _context.SaveChanges();
+            SaveChanges();
         }
 
         public void DeleteAll()
         {
-            var tableName = nameof(OpenedMonster);
-            _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [{tableName}s]");
+            _context.OpenedMonsters.RemoveRange(_context.OpenedMonsters);
+            SaveChanges();
+        }
+
+
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
     }
 }

@@ -11,9 +11,9 @@ namespace Data.Models
     {
         [Key]
         public int Id { get; set; }
+        public int? SourceId { get; set; }
         public string Name { get; set; }
         public int Initiative { get; set; }
-        public int? SourceId { get; set; }
-        public bool Saved { get; set; }
+        public bool Saved { get; set; } // onChange => false
     }
 }
