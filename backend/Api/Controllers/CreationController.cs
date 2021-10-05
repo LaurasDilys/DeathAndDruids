@@ -2,6 +2,7 @@
 using Data;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,14 +16,31 @@ namespace Api.Controllers
     public class CreationController : ControllerBase
     {
         private readonly CreationService _service;
+        //
+        private readonly DataContext _context;
 
-        public CreationController(CreationService service)
+        public CreationController(CreationService service,
+            //
+            DataContext context)
         {
             _service = service;
+            //
+            _context = context;
         }
 
-        [HttpGet("OpenedMonster", Name = nameof(OpenedMonster))]
-        public ActionResult<OpenedMonster> OpenedMonster()
+        //
+        [HttpDelete(nameof(TruncateAllTables))]
+        public IActionResult TruncateAllTables()
+        {
+            _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [Monsters]");
+            _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [OpenedMonsters]");
+            _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [Players]");
+            return Ok();
+        }
+        //
+
+        [HttpGet(nameof(Get))]
+        public ActionResult<OpenedMonster> Get()
         {
             if (!_service.OpenedExists())
                 return NotFound();
@@ -30,10 +48,18 @@ namespace Api.Controllers
             return Ok(_service.GetOpened());
         }
         
-        [HttpPost("New")]
+        [HttpPost(nameof(New))]
         public IActionResult New()
         {
             _service.New();
+
+            return Ok();
+        }
+
+        [HttpPut(nameof(Save))]
+        public IActionResult Save()
+        {
+            _service.Save();
 
             return Ok();
         }
