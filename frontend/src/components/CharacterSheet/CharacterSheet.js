@@ -12,24 +12,21 @@ const CharacterSheet = ({ monster }) => {
     let values = Object.values(obj);
 
     for (let i = 0; i < keys.length; i++) {
-      const temp = {
+      const monsterPropertyAsNameAndValue = {
         name : keys[i],
         value : values[i]
       }
-      array.push(temp)
+      array.push(monsterPropertyAsNameAndValue)
     }
     return array;
   }
 
-  const valueOf = (name, monster) => {
+  const valueOf = name => {
     return mapped(monster).find(x => x.name === name).value;
   }
 
   const handleSave = () => {
     dispatch(saveMonster());
-    //
-    dispatch(getOpenedMonster());
-    //
     if (monster.sourceId == null) {
       dispatch(getOpenedMonster());
     } // update this monster with its sourceId
@@ -43,7 +40,7 @@ const CharacterSheet = ({ monster }) => {
       <h1>Initiative: {monster.initiative}</h1>
       <NumberField
         name={"initiative"}
-        value={valueOf("initiative", monster)}
+        value={valueOf("initiative")}
       />
     </div>
   );

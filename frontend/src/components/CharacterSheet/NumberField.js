@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
 import { getMonsters } from "../../state/actions/monstersThunk";
+import field from '../../domain/FieldNames.json';
 
 const NumberField = ({ name, value }) => {
   const [state, setState] = useState(value);
@@ -25,7 +26,8 @@ const NumberField = ({ name, value }) => {
 
   return(
     <TextField
-      label={name}
+      error={state === ""}
+      label={field[name]}
       value={state}
       type="number"
       InputLabelProps={{
