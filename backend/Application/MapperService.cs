@@ -1,4 +1,5 @@
-﻿using Data.Models;
+﻿using Business.Interfaces;
+using Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,21 @@ namespace Application
         {
             previousSave.Name = monster.Name;
             previousSave.Initiative = monster.Initiative;
+        }
+
+        public void Patch(OpenedMonster monster, IMonsterPatchRequest patch)
+        {
+            int newValue;
+
+            if (patch.Value != "" && int.TryParse(patch.Value, out newValue))
+            {
+                string propName = $"{char.ToUpper(patch.Name[0])}{patch.Name.Substring(1)}";
+                //try
+                //{
+                    monster.GetType().GetProperty(propName).SetValue(monster, newValue);
+                //}
+                //finally
+            }
         }
     }
 }

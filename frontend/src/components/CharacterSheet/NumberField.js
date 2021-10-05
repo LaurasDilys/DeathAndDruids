@@ -1,8 +1,12 @@
 import { TextField } from "@mui/material";
 import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux";
+import { patchMonster } from "../../state/actions/creationThunk";
+import { getMonsters } from "../../state/actions/monstersThunk";
 
 const NumberField = ({ name, value }) => {
   const [state, setState] = useState(value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (state !== value) {
@@ -12,6 +16,11 @@ const NumberField = ({ name, value }) => {
 
   const handleChange = event => {
     setState(event.target.value);
+    dispatch(patchMonster({
+      name: name,
+      value: event.target.value
+    }));
+    dispatch(getMonsters()); // update saved monsters after every patch
   }
 
   return(

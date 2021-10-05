@@ -1,4 +1,6 @@
-﻿using Application;
+﻿using Api.Dto;
+using Application;
+using Business.Interfaces;
 using Data;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -68,6 +70,14 @@ namespace Api.Controllers
         public IActionResult Save()
         {
             _service.Save();
+
+            return Ok();
+        }
+
+        [HttpPatch(nameof(Patch))]
+        public IActionResult Patch(MonsterPatchRequest patch)
+        {
+            _service.Patch(patch);
 
             return Ok();
         }

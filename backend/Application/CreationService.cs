@@ -1,4 +1,5 @@
-﻿using Data.Models;
+﻿using Business.Interfaces;
+using Data.Models;
 using Data.Repositories;
 using System;
 
@@ -61,6 +62,17 @@ namespace Application
             }
 
             monster.Saved = true;
+            _creationRepository.SaveChanges();
+        }
+
+        public void Patch(IMonsterPatchRequest patch)
+        {
+            var monster = _creationRepository.GetOpened();
+
+            _mapper.Patch(monster, patch);
+
+            monster.Saved = false;
+
             _creationRepository.SaveChanges();
         }
     }
