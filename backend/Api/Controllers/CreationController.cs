@@ -38,6 +38,14 @@ namespace Api.Controllers
             return Ok();
         }
         //
+        [HttpPut(nameof(Test))]
+        public IActionResult Test()
+        {
+            _context.OpenedMonsters.First().Initiative++;
+            _context.SaveChanges();
+            return Ok();
+        }
+        //
 
         [HttpGet(nameof(Get))]
         public ActionResult<OpenedMonster> Get()
