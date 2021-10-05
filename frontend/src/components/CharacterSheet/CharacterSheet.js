@@ -34,6 +34,8 @@ const CharacterSheet = ({ monster }) => {
     if (monster.sourceId === null) {
       dispatch(getOpenedMonster());
     } // update this monster with its sourceId
+    // ISSUE: dispatch(getOpenedMonster()) takes too long to resolve
+  // Therefore, sourceId doesn't get updated quickly enough
     dispatch(getMonsters());
   }
 
