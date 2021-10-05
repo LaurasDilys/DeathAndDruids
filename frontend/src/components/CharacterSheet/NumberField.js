@@ -5,7 +5,7 @@ import { patchMonster } from "../../state/actions/creationThunk";
 import { getMonsters } from "../../state/actions/monstersThunk";
 import field from '../../domain/FieldNames.json';
 
-const NumberField = ({ name, value }) => {
+const NumberField = ({ name, value, cannotBeSaved }) => {
   const [state, setState] = useState(value);
   const dispatch = useDispatch();
 
@@ -16,12 +16,18 @@ const NumberField = ({ name, value }) => {
   }, [value])
 
   const handleChange = event => {
+    if (event.target.value === "") {
+      cannotBeSaved(name, true);
+    } else {
+      cannotBeSaved(name, false);
+    }
+
     setState(event.target.value);
+    
     dispatch(patchMonster({
       name: name,
       value: event.target.value
     }));
-    dispatch(getMonsters()); // update saved monsters after every patch
   }
 
   return(
