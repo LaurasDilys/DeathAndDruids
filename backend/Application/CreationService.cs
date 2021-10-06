@@ -1,4 +1,6 @@
 ﻿using Business.Interfaces;
+using Business.Models;
+using Business.Services;
 using Data.Models;
 using Data.Repositories;
 using System;
@@ -10,14 +12,17 @@ namespace Application
         private readonly CreationRepository _creationRepository;
         private readonly MonstersRepository _monstersRepository;
         private readonly MapperService _mapper;
+        private readonly ConverterService _converter;
 
         public CreationService(CreationRepository creationRepository,
             MonstersRepository monstersRepository,
-            MapperService mapper)
+            MapperService mapper,
+            ConverterService converter)
         {
             _creationRepository = creationRepository;
             _monstersRepository = monstersRepository;
             _mapper = mapper;
+            _converter = converter;
         }
 
         public bool OpenedExists()
@@ -48,7 +53,7 @@ namespace Application
         {
             var monster = _creationRepository.GetOpened();
             
-            if (monster.SourceId != null)
+            if (monster.SourceId != null) // if this monster had already been saved
             {
                 var previuosSave = _monstersRepository.Get((int)monster.SourceId);
                 _mapper.ReplaceWith(monster, previuosSave);
@@ -65,17 +70,37 @@ namespace Application
             _creationRepository.SaveChanges();
         }
 
+        //public void Patch(IMonsterPatchRequest patch)
+        //{
+        //    var monster = _creationRepository.GetOpened();
+
+        //    if (patch.Name == "name")
+        //    {
+        //        _mapper.PatchName(monster, patch);
+        //    }
+        //    else
+        //    {
+        //        _mapper.Patch(monster, patch);
+        //    }
+
+        //    monster.Saved = false;
+
+        //    _creationRepository.SaveChanges();
+        //}
+
         public void Patch(IMonsterPatchRequest patch)
         {
             var monster = _creationRepository.GetOpened();
-
             if (patch.Name == "name")
             {
                 _mapper.PatchName(monster, patch);
             }
             else
             {
-                _mapper.Patch(monster, patch);
+                var experiment = new Character();
+                _converter.TransformIntoFullCharacter(experiment, monster);
+                _mapper.Patch(experiment, patch);
+                _converter.TransformIntoDataModel(monster, experiment);
             }
 
             monster.Saved = false;

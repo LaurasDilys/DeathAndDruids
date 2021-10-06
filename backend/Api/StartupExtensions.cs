@@ -1,4 +1,5 @@
 ﻿using Application;
+using Business.Services;
 using Data;
 using Data.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -21,7 +22,8 @@ namespace Api
             services.AddScoped<MonstersService>()
                     .AddScoped<MonstersRepository>();
 
-            services.AddTransient<MapperService>();
+            services.AddTransient<MapperService>()
+                    .AddTransient<ConverterService>();
         }
 
         public static void AddDatabase(this IServiceCollection services, string connectionString)

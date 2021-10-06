@@ -49,7 +49,22 @@ namespace Application
             }
         }
 
-        public void Patch(OpenedMonster monster, IMonsterPatchRequest patch)
+        //public void Patch(OpenedMonster monster, IMonsterPatchRequest patch)
+        //{
+        //    int newValue;
+
+        //    if (patch.Value != "" && int.TryParse(patch.Value, out newValue))
+        //    {
+        //        string propName = $"{char.ToUpper(patch.Name[0])}{patch.Name.Substring(1)}";
+        //        //try
+        //        //{
+        //            monster.GetType().GetProperty(propName).SetValue(monster, newValue);
+        //        //}
+        //        //finally
+        //    }
+        //}
+
+        public void Patch(Character creature, IMonsterPatchRequest patch)
         {
             int newValue;
 
@@ -58,7 +73,7 @@ namespace Application
                 string propName = $"{char.ToUpper(patch.Name[0])}{patch.Name.Substring(1)}";
                 //try
                 //{
-                    monster.GetType().GetProperty(propName).SetValue(monster, newValue);
+                creature.GetType().GetProperty(propName).SetValue(creature, newValue);
                 //}
                 //finally
             }
