@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOpenedMonster, saveMonster } from "../../state/actions/creationThunk";
 import { getMonsters } from "../../state/actions/monstersThunk";
 import { monstersState } from "../../state/selectors/creationSelectors";
+import CheckBox from "./CheckBox";
 import NameField from "./NameField";
 import NumberField from "./NumberField";
 
@@ -77,6 +78,11 @@ const CharacterSheet = ({ monster }) => {
         name={"initiative"}
         value={valueOf("initiative")}
         cannotBeSaved={handleSaveButtonValidation}
+      />
+      <br></br>
+      <CheckBox
+        name={"saved"}
+        value={valueOf("saved")}
       />
     </div>
   );
