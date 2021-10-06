@@ -13,8 +13,8 @@ const Creation = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOpenedMonster());
     dispatch(getMonsters());
+    dispatch(getOpenedMonster());
   }, [])
 
   const handleNew = () => {
