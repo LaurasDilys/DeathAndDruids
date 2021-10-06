@@ -1,14 +1,26 @@
 import { Button } from "@mui/material";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getOpenedMonster, saveMonster } from "../../state/actions/creationThunk";
 import { getMonsters } from "../../state/actions/monstersThunk";
+import { monstersState } from "../../state/selectors/creationSelectors";
 import NameField from "./NameField";
 import NumberField from "./NumberField";
 
 const CharacterSheet = ({ monster }) => {
   const [cannotBeSaved, setCannotBeSaved] = useState([]);
+  const { monsters } = useSelector(monstersState);
   const dispatch = useDispatch();
+  const nameRef = useRef();
+
+  useEffect(() => { // on first render or page refresh
+    const name = nameRef.current.value;
+    if (name === "" ||
+      monsters.filter(f => f.id !== monster.sourceId).map(m => m.name).includes(name))
+    {
+      setCannotBeSaved([...cannotBeSaved, "name"]);
+    }
+  }, []);
   
   const mapped = obj => {
     let array = [];
@@ -40,9 +52,9 @@ const CharacterSheet = ({ monster }) => {
   }
 
   const handleSaveButtonValidation = (field, bool) => {
-    if (bool === true) setCannotBeSaved([...cannotBeSaved, field]);
+    if (bool) setCannotBeSaved([...cannotBeSaved, field]);
     else setCannotBeSaved(cannotBeSaved.filter(x => x !== field));
-    console.log(`${field} cannot be saved: ${bool}`);
+    // console.log(`${field} cannot be saved: ${bool}`);
   }
 
   return(
@@ -51,7 +63,7 @@ const CharacterSheet = ({ monster }) => {
       <h1>SourceId: {monster.sourceId !== null ? monster.sourceId : 0}</h1>
       <h2>Name: {monster.name}</h2>
       <NameField
-        sourceId={monster.sourceId}
+        nameRef={nameRef}
         name={"name"}
         value={valueOf("name")}
         cannotBeSaved={handleSaveButtonValidation}

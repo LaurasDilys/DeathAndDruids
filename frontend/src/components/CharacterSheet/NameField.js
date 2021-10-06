@@ -2,14 +2,26 @@ import { TextField, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
-import { getMonsters } from "../../state/actions/monstersThunk";
 import field from '../../domain/FieldNames.json';
-import { monstersState } from "../../state/selectors/creationSelectors";
+import { creationState, monstersState } from "../../state/selectors/creationSelectors";
 
-const NameField = ({ sourceId, name, value, cannotBeSaved }) => {
+const NameField = ({ nameRef, name, value, cannotBeSaved }) => {
+  const { monster: thisMonster } = useSelector(creationState);
   const { monsters } = useSelector(monstersState);
   const [state, setState] = useState(value);
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   if (state === "" ||
+  //     newAndNameNotUnique(state))
+  //   {
+  //     cannotBeSaved(name, true);
+  //   }
+  //   else
+  //   {
+  //     cannotBeSaved(name, false);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (state !== value) {
@@ -17,9 +29,13 @@ const NameField = ({ sourceId, name, value, cannotBeSaved }) => {
     }
   }, [value])
 
+  const newAndNameNotUnique = (targetValue) => {
+    return monsters.filter(f => f.id !== thisMonster.sourceId).map(m => m.name).includes(targetValue);
+  }
+
   const handleChange = event => {
     if (event.target.value === "" ||
-      monsters.filter(f => f.id !== sourceId).map(m => m.name).includes(event.target.value))
+      newAndNameNotUnique(event.target.value))
     {
       cannotBeSaved(name, true);
     }
@@ -36,14 +52,11 @@ const NameField = ({ sourceId, name, value, cannotBeSaved }) => {
     }));
   }
 
-  const newAndNameNotUnique = () => {
-    return monsters.filter(f => f.id !== sourceId).map(m => m.name).includes(state);
-  }
-
   return(
-    <Tooltip title={newAndNameNotUnique() ? "This name is not unique" : ""}>
+    <Tooltip title={newAndNameNotUnique(state) ? "This name is not unique" : ""}>
       <TextField
-        error={state === "" || newAndNameNotUnique()}
+        inputRef={nameRef}
+        error={state === "" || newAndNameNotUnique(state)}
         label={field[name]}
         value={state}
         InputLabelProps={{
