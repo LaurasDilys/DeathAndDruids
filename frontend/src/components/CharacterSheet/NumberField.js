@@ -2,7 +2,6 @@ import { TextField } from "@mui/material";
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
-import { getMonsters } from "../../state/actions/monstersThunk";
 import field from '../../domain/FieldNames.json';
 
 const NumberField = ({ name, value, cannotBeSaved }) => {
