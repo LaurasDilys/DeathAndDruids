@@ -1,8 +1,10 @@
 ﻿using Business.Interfaces;
+using Business.Models;
 using Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,23 +12,34 @@ namespace Application
 {
     public class MapperService
     {
-        // Use reflection and common parent class
         public Monster NewMonsterFromOpened(OpenedMonster monster)
         {
-            return new Monster
-            {
-                Name = monster.Name,
-                Initiative = monster.Initiative,
-                Type = "monster"
-            };
+            var newMonster = new Monster { Type = "monster" };
+            SetValuesFrom(monster, newMonster);
+            return newMonster;
         }
 
-        // Use reflection and common parent class
         public void ReplaceWith(OpenedMonster monster, Monster previousSave)
         {
-            previousSave.Name = monster.Name;
-            previousSave.Initiative = monster.Initiative;
+            SetValuesFrom(monster, previousSave);
         }
+
+        private void SetValuesFrom(CharacterDataModel creature,
+            CharacterDataModel creatureWithOldValues)
+        {
+            foreach (var propertyInfo in typeof(CharacterDataModel)
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                var newValue = propertyInfo.GetValue(creature);
+                propertyInfo.SetValue(creatureWithOldValues, newValue);
+            }
+        }
+
+
+
+
+
+
 
         public void PatchName(OpenedMonster monster, IMonsterPatchRequest patch)
         {
