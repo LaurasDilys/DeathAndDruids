@@ -42,13 +42,17 @@ const CharacterSheet = ({ monster }) => {
   }
 
   const handleSave = () => {
-    dispatch(saveMonster());
-    if (monster.sourceId === null) {
+    if (monster.saved) {
+      alert("No changes have been made");
+    }
+    else {
+      dispatch(saveMonster());
       dispatch(getOpenedMonster());
-    } // update this monster with its sourceId
-    // ISSUE: dispatch(getOpenedMonster()) takes too long to resolve
-  // Therefore, sourceId doesn't get updated quickly enough
-    dispatch(getMonsters());
+      // update this monster with its sourceId and updated "saved" property
+      // ISSUE: dispatch(getOpenedMonster()) takes too long to resolve
+      // sourceId and "saved" property don't get updated quickly enough
+      dispatch(getMonsters());
+    }
   }
 
   const handleSaveButtonValidation = (field, bool) => {
