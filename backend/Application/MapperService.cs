@@ -106,8 +106,7 @@ namespace Application
 
         public void Patch(Character creature, IMonsterPatchRequest patch)
         {
-                                // CreationController Patch() method will catch this
-            if (patch.Value == "") throw new NullReferenceException();
+            if (patch.Value == "") return;
 
             int intValue;
             bool boolValue;
