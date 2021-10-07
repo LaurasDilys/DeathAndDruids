@@ -7,6 +7,9 @@ import { monstersState } from "../../state/selectors/creationSelectors";
 import CheckBox from "./CheckBox";
 import NameField from "./NameField";
 import NumberField from "./NumberField";
+import AbilityBlock from "./AbilityBlock";
+import SkillBlock from "./SkillBlock";
+import tree from '../Dictionaries/AbilityTree.json';
 
 const CharacterSheet = ({ monster }) => {
   const [cannotBeSaved, setCannotBeSaved] = useState([]);
@@ -79,11 +82,11 @@ const CharacterSheet = ({ monster }) => {
         value={valueOf("initiative")}
         cannotBeSaved={handleSaveButtonValidation}
       />
-      <br></br>
-      <CheckBox
-        name={"saved"}
-        value={valueOf("saved")}
-      />
+      <div>
+        {Object.keys(tree).map((ability, index) => <AbilityBlock key={index} name={ability}>
+          {tree[ability].map((skill, index) => <SkillBlock key={index} name={skill} /> )}
+        </AbilityBlock> )}
+      </div>
     </div>
   );
 };

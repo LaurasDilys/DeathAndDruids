@@ -2,7 +2,7 @@ import { Checkbox, FormControlLabel } from '@mui/material';
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
-import field from '../../domain/FieldNames.json';
+import field from '../Dictionaries/FieldNames.json';
 
 const CheckBox = ({ name, value }) => {
   const [state, setState] = useState(value);

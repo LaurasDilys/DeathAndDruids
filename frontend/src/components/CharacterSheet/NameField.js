@@ -2,8 +2,8 @@ import { TextField, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
-import field from '../../domain/FieldNames.json';
 import { creationState, monstersState } from "../../state/selectors/creationSelectors";
+import field from '../Dictionaries/FieldNames.json';
 
 const NameField = ({ nameRef, name, value, cannotBeSaved }) => {
   const { monster: thisMonster } = useSelector(creationState);
