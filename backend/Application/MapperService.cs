@@ -78,6 +78,7 @@ namespace Application
 
             int intValue;
             bool boolValue;
+            double doubleValue;
             var stringValue = patch.Value;
 
             // capitalize property name
@@ -131,6 +132,10 @@ namespace Application
                 else if (propType.Equals(typeof(bool)) && bool.TryParse(stringValue, out boolValue))
                 {
                     prop.SetValue(creature, boolValue);
+                }
+                else if (propType.Equals(typeof(double)) && double.TryParse(stringValue, out doubleValue))
+                {
+                    prop.SetValue(creature, doubleValue);
                 }
             }
         }

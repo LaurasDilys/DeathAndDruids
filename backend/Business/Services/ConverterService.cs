@@ -12,58 +12,37 @@ namespace Business.Services
         public void TransformIntoFullCharacter(Character character, CharacterDataModel characterDb)
         {
             character.Name = characterDb.Name;
-            //character.Class = characterDb.Class;
-            //character.Race = characterDb.Race;
-            //character.Background = characterDb.Background;
-            //character.Alignment = characterDb.Alignment;
-
-
-            //character.Level = characterDb.Level;
-            //character.ExperiencePoints = characterDb.ExperiencePoints;
+            character.Alignment = characterDb.Alignment;
+            character.ChallengeRating = characterDb.ChallengeRating;
             character.ProficiencyBonus = characterDb.ProficiencyBonus;
-            //character.Inspiration = characterDb.Inspiration;
 
 
-            //character.ArmorClass = characterDb.ArmorClass;
-            //character.CurrentArmorClass = characterDb.CurrentArmorClass;
+            character.ArmorClass = characterDb.ArmorClass;
+            character.CurrentArmorClass = characterDb.CurrentArmorClass;
 
 
-            //character.HitPoints = characterDb.HitPoints;
-            //character.TemporaryHitPoints = characterDb.TemporaryHitPoints;
-            //character.CurrentHitPoints = characterDb.CurrentHitPoints;
+            character.HitPoints = characterDb.HitPoints;
+            character.CurrentHitPoints = characterDb.CurrentHitPoints;
+            character.TemporaryHitPoints = characterDb.TemporaryHitPoints;
 
 
             character.Initiative = characterDb.Initiative;
-            //character.CurrentInitiative = characterDb.CurrentInitiative;
+            character.Speed = characterDb.Speed;
+            character.CurrentSpeed = characterDb.CurrentSpeed;
 
 
-            //character.Speed = characterDb.Speed;
-            //character.CurrentSpeed = characterDb.CurrentSpeed;
-
-
-            //character.UsedHitDice = characterDb.UsedHitDice;
-
-
-            //character.DeathSaveSuccess1 = characterDb.DeathSaveSuccess1;
-            //character.DeathSaveSuccess2 = characterDb.DeathSaveSuccess2;
-            //character.DeathSaveSuccess3 = characterDb.DeathSaveSuccess3;
-            //character.DeathSaveFailure1 = characterDb.DeathSaveFailure1;
-            //character.DeathSaveFailure2 = characterDb.DeathSaveFailure2;
-            //character.DeathSaveFailure3 = characterDb.DeathSaveFailure3;
-
-
-            //character.Traits = characterDb.Traits;
-            //character.Notes = characterDb.Notes;
+            character.Traits = characterDb.Traits;
+            character.Notes = characterDb.Notes;
 
 
             List<int> characterDbAbilityScores = new List<int>()
             {
                 characterDb.Strength,
-                //characterDb.Dexterity,
-                //characterDb.Constitution,
-                //characterDb.Intelligence,
-                //characterDb.Wisdom,
-                //characterDb.Charisma,
+                characterDb.Dexterity,
+                characterDb.Constitution,
+                characterDb.Intelligence,
+                characterDb.Wisdom,
+                characterDb.Charisma,
             };
 
             int i = 0;
@@ -79,32 +58,32 @@ namespace Business.Services
                 characterDb.StrengthSavingThrowProficiency,
                 characterDb.AthleticsProficiency,
 
-                //characterDb.DexteritySavingThrowProficiency,
-                //characterDb.AcrobaticsProficiency,
-                //characterDb.SleightOfHandProficiency,
-                //characterDb.StealthProficiency,
+                characterDb.DexteritySavingThrowProficiency,
+                characterDb.AcrobaticsProficiency,
+                characterDb.SleightOfHandProficiency,
+                characterDb.StealthProficiency,
 
-                //characterDb.ConstitutionSavingThrowProficiency,
+                characterDb.ConstitutionSavingThrowProficiency,
 
-                //characterDb.IntelligenceSavingThrowProficiency,
-                //characterDb.ArcanaProficiency,
-                //characterDb.HistoryProficiency,
-                //characterDb.InvestigationProficiency,
-                //characterDb.NatureProficiency,
-                //characterDb.ReligionProficiency,
+                characterDb.IntelligenceSavingThrowProficiency,
+                characterDb.ArcanaProficiency,
+                characterDb.HistoryProficiency,
+                characterDb.InvestigationProficiency,
+                characterDb.NatureProficiency,
+                characterDb.ReligionProficiency,
 
-                //characterDb.WisdomSavingThrowProficiency,
-                //characterDb.AnimalHandlingProficiency,
-                //characterDb.InsightProficiency,
-                //characterDb.MedicineProficiency,
-                //characterDb.PerceptionProficiency,
-                //characterDb.SurvivalProficiency,
+                characterDb.WisdomSavingThrowProficiency,
+                characterDb.AnimalHandlingProficiency,
+                characterDb.InsightProficiency,
+                characterDb.MedicineProficiency,
+                characterDb.PerceptionProficiency,
+                characterDb.SurvivalProficiency,
 
-                //characterDb.CharismaSavingThrowProficiency,
-                //characterDb.DeceptionProficiency,
-                //characterDb.IntimidationProficiency,
-                //characterDb.PerformanceProficiency,
-                //characterDb.PersuasionProficiency,
+                characterDb.CharismaSavingThrowProficiency,
+                characterDb.DeceptionProficiency,
+                characterDb.IntimidationProficiency,
+                characterDb.PerformanceProficiency,
+                characterDb.PersuasionProficiency,
             };
 
             int j = 0;
@@ -122,58 +101,37 @@ namespace Business.Services
         public void TransformIntoDataModel(CharacterDataModel characterDb, Character character)
         {
             characterDb.Name = character.Name;
-            //characterDb.Class = character.Class;
-            //characterDb.Race = character.Race;
-            //characterDb.Background = character.Background;
-            //characterDb.Alignment = character.Alignment;
-
-
-            //characterDb.Level = character.Level;
-            //characterDb.ExperiencePoints = character.ExperiencePoints;
+            characterDb.Alignment = character.Alignment;
+            characterDb.ChallengeRating = character.ChallengeRating;
             characterDb.ProficiencyBonus = character.ProficiencyBonus;
-            //characterDb.Inspiration = character.Inspiration;
 
 
-            //characterDb.ArmorClass = character.ArmorClass;
-            //characterDb.CurrentArmorClass = character.CurrentArmorClass;
+            characterDb.ArmorClass = character.ArmorClass;
+            characterDb.CurrentArmorClass = character.CurrentArmorClass;
 
 
-            //characterDb.HitPoints = character.HitPoints;
-            //characterDb.TemporaryHitPoints = character.TemporaryHitPoints;
-            //characterDb.CurrentHitPoints = character.CurrentHitPoints;
+            characterDb.HitPoints = character.HitPoints;
+            characterDb.CurrentHitPoints = character.CurrentHitPoints;
+            characterDb.TemporaryHitPoints = character.TemporaryHitPoints;
 
 
             characterDb.Initiative = character.Initiative;
-            //characterDb.CurrentInitiative = character.CurrentInitiative;
+            characterDb.Speed = character.Speed;
+            characterDb.CurrentSpeed = character.CurrentSpeed;
 
 
-            //characterDb.Speed = character.Speed;
-            //characterDb.CurrentSpeed = character.CurrentSpeed;
-
-
-            //characterDb.UsedHitDice = character.UsedHitDice;
-
-
-            //characterDb.DeathSaveSuccess1 = character.DeathSaveSuccess1;
-            //characterDb.DeathSaveSuccess2 = character.DeathSaveSuccess2;
-            //characterDb.DeathSaveSuccess3 = character.DeathSaveSuccess3;
-            //characterDb.DeathSaveFailure1 = character.DeathSaveFailure1;
-            //characterDb.DeathSaveFailure2 = character.DeathSaveFailure2;
-            //characterDb.DeathSaveFailure3 = character.DeathSaveFailure3;
-
-
-            //characterDb.Traits = character.Traits;
-            //characterDb.Notes = character.Notes;
+            characterDb.Traits = character.Traits;
+            characterDb.Notes = character.Notes;
 
 
             int i = 0;
 
             characterDb.Strength = character.Abilities[i++].Score;
-            //characterDb.Dexterity = character.Abilities[i++].Score;
-            //characterDb.Constitution = character.Abilities[i++].Score;
-            //characterDb.Intelligence = character.Abilities[i++].Score;
-            //characterDb.Wisdom = character.Abilities[i++].Score;
-            //characterDb.Charisma = character.Abilities[i].Score;
+            characterDb.Dexterity = character.Abilities[i++].Score;
+            characterDb.Constitution = character.Abilities[i++].Score;
+            characterDb.Intelligence = character.Abilities[i++].Score;
+            characterDb.Wisdom = character.Abilities[i++].Score;
+            characterDb.Charisma = character.Abilities[i].Score;
 
 
             List<bool> characterProficiencies = new List<bool>();
@@ -191,32 +149,32 @@ namespace Business.Services
             characterDb.StrengthSavingThrowProficiency = characterProficiencies[j++];
             characterDb.AthleticsProficiency = characterProficiencies[j++];
 
-            //characterDb.DexteritySavingThrowProficiency = characterProficiencies[j++];
-            //characterDb.AcrobaticsProficiency = characterProficiencies[j++];
-            //characterDb.SleightOfHandProficiency = characterProficiencies[j++];
-            //characterDb.StealthProficiency = characterProficiencies[j++];
+            characterDb.DexteritySavingThrowProficiency = characterProficiencies[j++];
+            characterDb.AcrobaticsProficiency = characterProficiencies[j++];
+            characterDb.SleightOfHandProficiency = characterProficiencies[j++];
+            characterDb.StealthProficiency = characterProficiencies[j++];
 
-            //characterDb.ConstitutionSavingThrowProficiency = characterProficiencies[j++];
+            characterDb.ConstitutionSavingThrowProficiency = characterProficiencies[j++];
 
-            //characterDb.IntelligenceSavingThrowProficiency = characterProficiencies[j++];
-            //characterDb.ArcanaProficiency = characterProficiencies[j++];
-            //characterDb.HistoryProficiency = characterProficiencies[j++];
-            //characterDb.InvestigationProficiency = characterProficiencies[j++];
-            //characterDb.NatureProficiency = characterProficiencies[j++];
-            //characterDb.ReligionProficiency = characterProficiencies[j++];
+            characterDb.IntelligenceSavingThrowProficiency = characterProficiencies[j++];
+            characterDb.ArcanaProficiency = characterProficiencies[j++];
+            characterDb.HistoryProficiency = characterProficiencies[j++];
+            characterDb.InvestigationProficiency = characterProficiencies[j++];
+            characterDb.NatureProficiency = characterProficiencies[j++];
+            characterDb.ReligionProficiency = characterProficiencies[j++];
 
-            //characterDb.WisdomSavingThrowProficiency = characterProficiencies[j++];
-            //characterDb.AnimalHandlingProficiency = characterProficiencies[j++];
-            //characterDb.InsightProficiency = characterProficiencies[j++];
-            //characterDb.MedicineProficiency = characterProficiencies[j++];
-            //characterDb.PerceptionProficiency = characterProficiencies[j++];
-            //characterDb.SurvivalProficiency = characterProficiencies[j++];
+            characterDb.WisdomSavingThrowProficiency = characterProficiencies[j++];
+            characterDb.AnimalHandlingProficiency = characterProficiencies[j++];
+            characterDb.InsightProficiency = characterProficiencies[j++];
+            characterDb.MedicineProficiency = characterProficiencies[j++];
+            characterDb.PerceptionProficiency = characterProficiencies[j++];
+            characterDb.SurvivalProficiency = characterProficiencies[j++];
 
-            //characterDb.CharismaSavingThrowProficiency = characterProficiencies[j++];
-            //characterDb.DeceptionProficiency = characterProficiencies[j++];
-            //characterDb.IntimidationProficiency = characterProficiencies[j++];
-            //characterDb.PerformanceProficiency = characterProficiencies[j++];
-            //characterDb.PersuasionProficiency = characterProficiencies[j];
+            characterDb.CharismaSavingThrowProficiency = characterProficiencies[j++];
+            characterDb.DeceptionProficiency = characterProficiencies[j++];
+            characterDb.IntimidationProficiency = characterProficiencies[j++];
+            characterDb.PerformanceProficiency = characterProficiencies[j++];
+            characterDb.PersuasionProficiency = characterProficiencies[j];
         }
     }
 }
