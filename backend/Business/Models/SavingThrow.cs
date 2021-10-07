@@ -15,9 +15,11 @@ namespace Business.Models
             set
             {
                 modifier = value;
-                //OnPropertyChanged();
+                if (modifier > 0) ModifierText = $"+{modifier}";
+                else ModifierText = modifier.ToString();
             }
         }
+        public string ModifierText { get; set; }
 
 
         private int proficiencyBonus;

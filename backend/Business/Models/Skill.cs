@@ -15,10 +15,12 @@ namespace Business.Models
             set
             {
                 modifier = value;
-                Passive = Modifier + 10; // Taip skaičiuojasi Passive Skill
-                //OnPropertyChanged();
+                Passive = Modifier + 10; // this is just how Passive Skill is determined
+                if (modifier > 0) ModifierText = $"+{modifier}";
+                else ModifierText = modifier.ToString();
             }
         }
+        public string ModifierText { get; set; }
 
 
         private int proficiencyBonus;

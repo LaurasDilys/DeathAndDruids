@@ -1,5 +1,5 @@
-﻿using Api.Dto;
-using Application;
+﻿using Application;
+using Application.Dto;
 using Business.Interfaces;
 using Business.Models;
 using Data;
@@ -49,7 +49,7 @@ namespace Api.Controllers
         //
 
         [HttpGet(nameof(Get))]
-        public ActionResult<OpenedMonster> Get()
+        public ActionResult<OpenedMonsterViewModel> Get()
         {
             if (!_service.OpenedExists())
                 return NotFound();

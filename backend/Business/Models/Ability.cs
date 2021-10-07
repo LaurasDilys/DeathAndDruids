@@ -21,14 +21,18 @@ namespace Business.Models
         }
 
 
-        private int modfier;
+        private int modifier;
         public int Modifier
         {
-            get { return modfier; }
-            set { modfier = value;
-                //OnPropertyChanged();
-                }
+            get { return modifier; }
+            set
+            {
+                modifier = value;
+                if (modifier > 0) ModifierText = $"+{modifier}";
+                else ModifierText = modifier.ToString();
+            }
         }
+        public string ModifierText { get; set; }
 
 
         public SavingThrow SavingThrow { get; set; } = new SavingThrow();

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class Monster: CharacterDataModel
+    public class Monster : CharacterDataModel
     {
         [Key]
         public int Id { get; set; }

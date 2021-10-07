@@ -1,4 +1,5 @@
-﻿using Business.Interfaces;
+﻿using Application.Dto;
+using Business.Interfaces;
 using Business.Models;
 using Business.Services;
 using Data.Models;
@@ -13,17 +14,14 @@ namespace Application
         private readonly CreationRepository _creationRepository;
         private readonly MonstersRepository _monstersRepository;
         private readonly MapperService _mapper;
-        private readonly ConverterService _converter;
 
         public CreationService(CreationRepository creationRepository,
             MonstersRepository monstersRepository,
-            MapperService mapper,
-            ConverterService converter)
+            MapperService mapper)
         {
             _creationRepository = creationRepository;
             _monstersRepository = monstersRepository;
             _mapper = mapper;
-            _converter = converter;
         }
 
         public bool OpenedExists()
@@ -31,18 +29,25 @@ namespace Application
             return _creationRepository.Exists();
         }
 
-        public OpenedMonster GetOpened()
+        public OpenedMonsterViewModel GetOpened()
         {
-            return _creationRepository.GetOpened();
+            var dataModel = _creationRepository.GetOpened();
+
+            var creature = new Character();
+            _mapper.TransformIntoFullCharacter(creature, dataModel);
+
+            var viewModel = new OpenedMonsterViewModel(
+                dataModel.Id, dataModel.SourceId, dataModel.Saved);
+            _mapper.TransformIntoViewModel(viewModel, creature);
+
+            return viewModel;
         }
 
         public void New()
         {
-            var monster = new OpenedMonster
-            {
-                Name = "",
-                Initiative = 0
-            };
+            var creature = new Character();
+            var monster = new OpenedMonster();
+            _mapper.TransformIntoDataModel(monster, creature);
 
             if (OpenedExists())
                 _creationRepository.DeleteAll();
@@ -80,9 +85,9 @@ namespace Application
             var monster = _creationRepository.GetOpened();
 
             var creature = new Character();
-            _converter.TransformIntoFullCharacter(creature, monster);
+            _mapper.TransformIntoFullCharacter(creature, monster);
             _mapper.Patch(creature, patch);
-            _converter.TransformIntoDataModel(monster, creature);
+            _mapper.TransformIntoDataModel(monster, creature);
 
             monster.Saved = false;
 

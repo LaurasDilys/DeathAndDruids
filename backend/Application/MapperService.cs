@@ -1,5 +1,7 @@
-﻿using Business.Interfaces;
+﻿using Application.Dto;
+using Business.Interfaces;
 using Business.Models;
+using Business.Services;
 using Data.Models;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,33 @@ namespace Application
 {
     public class MapperService
     {
+        private readonly ConverterService _converter;
+
+        public MapperService(ConverterService converter)
+        {
+            _converter = converter;
+        }
+
+        public void TransformIntoFullCharacter(Character character, CharacterDataModel characterDb)
+        {
+            _converter.TransformIntoFullCharacter(character, characterDb);
+        }
+
+        public void TransformIntoDataModel(CharacterDataModel characterDb, Character character)
+        {
+            _converter.TransformIntoDataModel(characterDb, character);
+        }
+
+        public void TransformIntoViewModel(OpenedMonsterViewModel viewModel, Character creature)
+        {
+            TransformIntoDataModel(viewModel, creature);
+
+            viewModel.StrengthModifier = creature.Strength.ModifierText;
+
+            viewModel.StrengthSavingThrow = creature.Strength.SavingThrow.ModifierText;
+            viewModel.Athletics = creature.Athletics.ModifierText;
+        }
+
         public Monster NewMonsterFromOpened(OpenedMonster monster)
         {
             var newMonster = new Monster { Type = "monster" };
