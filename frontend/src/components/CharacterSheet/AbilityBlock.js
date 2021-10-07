@@ -37,9 +37,9 @@ const AbilityBlock = ({ name, value, modifierValue, cannotBeSaved, children }) =
           label={name.charAt(0).toUpperCase() + name.slice(1)}
           value={state}
           type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
+          // InputLabelProps={{
+          //   shrink: true,
+          // }}
           onChange={handleChange}
         />
         <TextField

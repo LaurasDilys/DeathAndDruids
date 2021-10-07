@@ -34,9 +34,9 @@ const Field = ({ nameRef, name, value, cannotBeSaved }) => {
       error={state === ""}
       label={field[name]}
       value={state}
-      InputLabelProps={{
-        shrink: true,
-      }}
+      // InputLabelProps={{
+      //   shrink: true,
+      // }}
       onChange={handleChange}
     />
   );

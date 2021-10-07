@@ -35,9 +35,9 @@ const NumberField = ({ name, value, cannotBeSaved }) => {
       label={field[name]}
       value={state}
       type="number"
-      InputLabelProps={{
-        shrink: true,
-      }}
+      // InputLabelProps={{
+      //   shrink: true,
+      // }}
       onChange={handleChange}
     />
   );

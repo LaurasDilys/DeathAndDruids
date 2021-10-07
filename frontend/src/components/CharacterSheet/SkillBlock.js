@@ -30,7 +30,7 @@ const SkillBlock = ({ name, value, proficiency, proficiencyName }) => {
           checked={state}
           onChange={handleChange}
           color="default"
-          inputProps={{ 'aria-label': 'controlled' }}
+          // inputProps={{ 'aria-label': 'controlled' }}
         />}
         label={<>
           <span className="proficiency-span">{value}</span>

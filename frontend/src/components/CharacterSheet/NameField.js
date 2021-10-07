@@ -59,9 +59,9 @@ const NameField = ({ nameRef, name, value, cannotBeSaved }) => {
         error={state === "" || newAndNameNotUnique(state)}
         label={field[name]}
         value={state}
-        InputLabelProps={{
-          shrink: true,
-        }}
+        // InputLabelProps={{
+        //   shrink: true,
+        // }}
         onChange={handleChange}
       />
     </Tooltip>

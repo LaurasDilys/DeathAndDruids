@@ -30,7 +30,7 @@ const CheckBox = ({ name, value }) => {
         checked={state}
         onChange={handleChange}
         color="default"
-        inputProps={{ 'aria-label': 'controlled' }}
+        // inputProps={{ 'aria-label': 'controlled' }}
       />}
     />
   );
