@@ -34,13 +34,7 @@ namespace Application
                 propertyInfo.SetValue(creatureWithOldValues, newValue);
             }
         }
-
-
-
-
-
-
-
+        
         public void PatchName(OpenedMonster monster, IMonsterPatchRequest patch)
         {
             if (patch.Value != "")
@@ -49,33 +43,66 @@ namespace Application
             }
         }
 
-        //public void Patch(OpenedMonster monster, IMonsterPatchRequest patch)
-        //{
-        //    int newValue;
-
-        //    if (patch.Value != "" && int.TryParse(patch.Value, out newValue))
-        //    {
-        //        string propName = $"{char.ToUpper(patch.Name[0])}{patch.Name.Substring(1)}";
-        //        //try
-        //        //{
-        //            monster.GetType().GetProperty(propName).SetValue(monster, newValue);
-        //        //}
-        //        //finally
-        //    }
-        //}
-
         public void Patch(Character creature, IMonsterPatchRequest patch)
         {
-            int newValue;
+            if (patch.Value == "") return;
 
-            if (patch.Value != "" && int.TryParse(patch.Value, out newValue))
+            int intValue;
+            bool boolValue;
+            var stringValue = patch.Value;
+
+            // capitalize property name
+            var name = $"{char.ToUpper(patch.Name[0])}{patch.Name.Substring(1)}";
+            var type = typeof(Character);
+
+            var abilityNames = new string[]
             {
-                string propName = $"{char.ToUpper(patch.Name[0])}{patch.Name.Substring(1)}";
-                //try
-                //{
-                creature.GetType().GetProperty(propName).SetValue(creature, newValue);
-                //}
-                //finally
+                "Strength",
+                "Dexterity",
+                "Constitution",
+                "Intelligence",
+                "Wisdom",
+                "Charisma"
+            };
+
+            var abilityName = abilityNames.FirstOrDefault(x => name.Contains(x));
+            if (abilityName != null)
+            {
+                // setting the ability score, for example "Strength"
+                if (name == abilityName && int.TryParse(stringValue, out intValue))
+                {
+                    (type.GetProperty(abilityName).GetValue(creature) as Ability).Score = intValue;
+                }
+                // setting saving throw proficiency, for example "StrengthSavingThrowProficiency"
+                else if (bool.TryParse(stringValue, out boolValue))
+                {
+                    (type.GetProperty(abilityName).GetValue(creature) as Ability).SavingThrow.Proficiency = boolValue;
+                }
+            }
+            // setting other proficiency
+            else if (name.Contains("Proficiency") && bool.TryParse(stringValue, out boolValue))
+            {
+                // remove the "Proficiency" part
+                var skillName = name.Replace("Proficiency", "");
+                (type.GetProperty(skillName).GetValue(creature) as Skill).Proficiency = boolValue;
+            }
+            // setting any other value
+            else
+            {
+                var prop = type.GetProperty(name);
+                var propType = prop.PropertyType;
+                if (propType.Equals(typeof(string)))
+                {
+                    prop.SetValue(creature, stringValue);
+                }
+                else if (propType.Equals(typeof(int)) && int.TryParse(stringValue, out intValue))
+                {
+                    prop.SetValue(creature, intValue);
+                }
+                else if (propType.Equals(typeof(bool)) && bool.TryParse(stringValue, out boolValue))
+                {
+                    prop.SetValue(creature, boolValue);
+                }
             }
         }
     }

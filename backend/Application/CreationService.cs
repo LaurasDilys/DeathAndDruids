@@ -4,6 +4,7 @@ using Business.Services;
 using Data.Models;
 using Data.Repositories;
 using System;
+using System.Linq;
 
 namespace Application
 {
@@ -52,6 +53,10 @@ namespace Application
         public void Save()
         {
             var monster = _creationRepository.GetOpened();
+            var allMonsters = _monstersRepository.Get();
+
+            // do not allow saving of a monster with a name that's already in use
+            if (allMonsters.Select(x => x.Name).Contains(monster.Name)) return;
             
             if (monster.SourceId != null) // if this monster had already been saved
             {
@@ -70,38 +75,14 @@ namespace Application
             _creationRepository.SaveChanges();
         }
 
-        //public void Patch(IMonsterPatchRequest patch)
-        //{
-        //    var monster = _creationRepository.GetOpened();
-
-        //    if (patch.Name == "name")
-        //    {
-        //        _mapper.PatchName(monster, patch);
-        //    }
-        //    else
-        //    {
-        //        _mapper.Patch(monster, patch);
-        //    }
-
-        //    monster.Saved = false;
-
-        //    _creationRepository.SaveChanges();
-        //}
-
         public void Patch(IMonsterPatchRequest patch)
         {
             var monster = _creationRepository.GetOpened();
-            if (patch.Name == "name")
-            {
-                _mapper.PatchName(monster, patch);
-            }
-            else
-            {
-                var experiment = new Character();
-                _converter.TransformIntoFullCharacter(experiment, monster);
-                _mapper.Patch(experiment, patch);
-                _converter.TransformIntoDataModel(monster, experiment);
-            }
+
+            var creature = new Character();
+            _converter.TransformIntoFullCharacter(creature, monster);
+            _mapper.Patch(creature, patch);
+            _converter.TransformIntoDataModel(monster, creature);
 
             monster.Saved = false;
 
