@@ -26,16 +26,17 @@ const SkillBlock = ({ name, value, proficiency }) => {
   return(
     <div>
       <FormControlLabel className="proficiency"
-        label={value}
         control={<Checkbox
           checked={state}
           onChange={handleChange}
           color="default"
           inputProps={{ 'aria-label': 'controlled' }}
         />}
+        label={<>
+          <span className="proficiency-span">{value}</span>
+          <span>{name.includes("SavingThrow") ? "Saving Throw" : field[name]}</span>
+        </>}
       />
-      <label>{name.includes("SavingThrow") ? "Saving Throw" : field[name]}</label>
-      <label>Test</label>
     </div>
   );
 
