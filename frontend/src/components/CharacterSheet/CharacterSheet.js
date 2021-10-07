@@ -96,6 +96,7 @@ const CharacterSheet = ({ monster }) => {
             name={skill[0]}
             value={valueOf(skill[0])}
             proficiency={valueOf(skill[1])}
+            proficiencyName={skill[1]}
           /> )}
         </AbilityBlock> )}
       </div>

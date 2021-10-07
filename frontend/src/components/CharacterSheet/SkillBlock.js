@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
 import field from '../Dictionaries/FieldNames.json';
 
-const SkillBlock = ({ name, value, proficiency }) => {
+const SkillBlock = ({ name, value, proficiency, proficiencyName }) => {
   const [state, setState] = useState(proficiency);
   const dispatch = useDispatch();
 
@@ -18,7 +18,7 @@ const SkillBlock = ({ name, value, proficiency }) => {
     setState(event.target.checked);
     
     dispatch(patchMonster({
-      name: name,
+      name: proficiencyName,
       value: event.target.checked ? "true" : "false"
     }));
   }
