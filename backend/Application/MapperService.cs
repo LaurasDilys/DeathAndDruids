@@ -50,28 +50,27 @@ namespace Application
             viewModel.SleightOfHand = creature.SleightOfHand.ModifierText;
             viewModel.Stealth = creature.Stealth.ModifierText;
 
-            //viewModel.StrengthSavingThrow = creature.Strength.SavingThrow.ModifierText;
+            viewModel.ConstitutionSavingThrow = creature.Constitution.SavingThrow.ModifierText;
 
-            //viewModel.StrengthSavingThrow = creature.Strength.SavingThrow.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
+            viewModel.IntelligenceSavingThrow = creature.Intelligence.SavingThrow.ModifierText;
+            viewModel.Arcana = creature.Arcana.ModifierText;
+            viewModel.History = creature.History.ModifierText;
+            viewModel.Investigation = creature.Investigation.ModifierText;
+            viewModel.Nature = creature.Nature.ModifierText;
+            viewModel.Religion = creature.Religion.ModifierText;
 
-            //viewModel.StrengthSavingThrow = creature.Strength.SavingThrow.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
+            viewModel.WisdomSavingThrow = creature.Wisdom.SavingThrow.ModifierText;
+            viewModel.AnimalHandling = creature.AnimalHandling.ModifierText;
+            viewModel.Insight = creature.Insight.ModifierText;
+            viewModel.Medicine = creature.Medicine.ModifierText;
+            viewModel.Perception = creature.Perception.ModifierText;
+            viewModel.Survival = creature.Survival.ModifierText;
 
-            //viewModel.StrengthSavingThrow = creature.Strength.SavingThrow.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
-            //viewModel.Athletics = creature.Athletics.ModifierText;
-
+            viewModel.CharismaSavingThrow = creature.Charisma.SavingThrow.ModifierText;
+            viewModel.Deception = creature.Deception.ModifierText;
+            viewModel.Intimidation = creature.Intimidation.ModifierText;
+            viewModel.Performance = creature.Performance.ModifierText;
+            viewModel.Persuasion = creature.Persuasion.ModifierText;
         }
 
         public Monster NewMonsterFromOpened(OpenedMonster monster)
