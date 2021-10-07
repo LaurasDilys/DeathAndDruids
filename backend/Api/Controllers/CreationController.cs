@@ -1,6 +1,7 @@
 ﻿using Api.Dto;
 using Application;
 using Business.Interfaces;
+using Business.Models;
 using Data;
 using Data.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -41,10 +42,8 @@ namespace Api.Controllers
         }
         //
         [HttpPut(nameof(Test))]
-        public IActionResult Test()
+        public ActionResult<Character> Test()
         {
-            _context.OpenedMonsters.First().Initiative++;
-            _context.SaveChanges();
             return Ok();
         }
         //
