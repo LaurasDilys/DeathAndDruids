@@ -30,6 +30,7 @@ const SkillBlock = ({ name, value, proficiency, proficiencyName }) => {
           checked={state}
           onChange={handleChange}
           color="default"
+          style={{ transform: "scale(0.8)" }}
           // inputProps={{ 'aria-label': 'controlled' }}
         />}
         label={<>
@@ -39,13 +40,6 @@ const SkillBlock = ({ name, value, proficiency, proficiencyName }) => {
       />
     </div>
   );
-
-  // return(
-  //   <>
-  //     <p>{name}{value}{proficiency ? "true" : "false"}</p>
-
-  //   </>
-  // );
 };
 
 export default SkillBlock;

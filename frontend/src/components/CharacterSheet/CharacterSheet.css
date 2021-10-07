@@ -1,6 +1,13 @@
+.ability-block input[type=number]::-webkit-inner-spin-button, 
+.ability-block input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 .ability-block {
   /* background-color: aquamarine; */
   display: flex;
+  height: 8em;
 }
 
 .ability {
@@ -8,6 +15,7 @@
   display: flex;
   flex-direction: column;
   width: 4em;
+  margin-top: 0.36em;
 }
 
 .skills {
@@ -16,15 +24,21 @@
   flex-direction: column;
 }
 
+.skills span {
+  vertical-align: middle;
+  font-size: 0.75em;
+}
+
 .skills > * {
   /* background-color: gold; */
   display: flex;
   flex-direction: row;
-  margin: 0 0 -0.5em 0.5em;
+  margin: 0 0 -0.7em 0.5em;
 }
 
 .proficiency-span {
   display: inline-block;
   text-align: left;
   width: 2.2em;
+  margin: 0 0 0 -0.2em;
 }

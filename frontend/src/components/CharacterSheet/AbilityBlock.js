@@ -1,10 +1,19 @@
 import { TextField } from "@mui/material";
+import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
 import "./CharacterSheet.css"
 
-const AbilityBlock = ({ name, value, modifierValue, cannotBeSaved, children }) => {
+const styles = {
+  modifierStyle: {
+    height: "2em",
+    fontSize: "2em",
+    textAlign: "center"
+  }
+};
+
+const AbilityBlock = ({ name, value, modifierValue, cannotBeSaved, children, classes }) => {
   const [state, setState] = useState(value);
   const dispatch = useDispatch();
 
@@ -21,7 +30,11 @@ const AbilityBlock = ({ name, value, modifierValue, cannotBeSaved, children }) =
       cannotBeSaved(name, false);
     }
 
-    setState(event.target.value);
+    if (event.target.value > 99) {
+      setState(30) // max ability score
+    } else {
+      setState(event.target.value);
+    }
     
     dispatch(patchMonster({
       name: name,
@@ -41,10 +54,12 @@ const AbilityBlock = ({ name, value, modifierValue, cannotBeSaved, children }) =
           //   shrink: true,
           // }}
           onChange={handleChange}
+          inputProps={{style: { textAlign: "center" }}}
         />
-        <TextField
+        <TextField className="score"
           disabled
           value={modifierValue}
+          InputProps={{ classes: { input: classes.modifierStyle } }}
         />
       </div>
       <div className="skills">
@@ -54,4 +69,4 @@ const AbilityBlock = ({ name, value, modifierValue, cannotBeSaved, children }) =
   );
 };
 
-export default AbilityBlock;
+export default withStyles(styles)(AbilityBlock);;
