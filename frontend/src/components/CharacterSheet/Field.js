@@ -2,9 +2,9 @@ import { TextField } from "@mui/material";
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
-import "./CharacterSheet.css"
+import field from '../Dictionaries/FieldNames.json';
 
-const AbilityBlock = ({ name, value, modifierValue, cannotBeSaved, children }) => {
+const Field = ({ nameRef, name, value, cannotBeSaved }) => {
   const [state, setState] = useState(value);
   const dispatch = useDispatch();
 
@@ -30,28 +30,16 @@ const AbilityBlock = ({ name, value, modifierValue, cannotBeSaved, children }) =
   }
 
   return(
-    <div className="ability-block">
-      <div className="ability">
-        <TextField
-          error={state === ""}
-          label={name.charAt(0).toUpperCase() + name.slice(1)}
-          value={state}
-          type="number"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          onChange={handleChange}
-        />
-        <TextField
-          disabled
-          value={modifierValue}
-        />
-      </div>
-      <div className="skills">
-        {children}
-      </div>
-    </div>
+    <TextField
+      error={state === ""}
+      label={field[name]}
+      value={state}
+      InputLabelProps={{
+        shrink: true,
+      }}
+      onChange={handleChange}
+    />
   );
 };
 
-export default AbilityBlock;
+export default Field;

@@ -1,7 +1,9 @@
 {
-  "strength": [
-    "strengthSavingThrowProficiency",
-    "athleticsProficiency"
-  ],
-  "test": []
+  "strength": {
+    "modifier": "strengthModifier",
+    "skills": [
+      [ "strengthSavingThrow", "strengthSavingThrowProficiency" ],
+      [ "athletics", "athleticsProficiency" ]
+    ]
+  }
 }

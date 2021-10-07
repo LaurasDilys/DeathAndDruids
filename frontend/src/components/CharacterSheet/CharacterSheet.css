@@ -1,0 +1,28 @@
+.ability-block {
+  background-color: aquamarine;
+  display: flex;
+}
+
+.ability {
+  background-color: bisque;
+  display: flex;
+  flex-direction: column;
+}
+
+.skills {
+  background-color: blanchedalmond;
+  display: flex;
+  flex-direction: column;
+}
+
+.skills > * {
+  display: flex;
+  flex-direction: row;
+  /* font-size: 0.75em;
+  margin: auto 0 0; */
+}
+
+/* .proficiency {
+  background-color: gold;
+  width: 70px;
+} */

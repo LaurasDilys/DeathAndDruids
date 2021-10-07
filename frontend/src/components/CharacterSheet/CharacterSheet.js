@@ -15,16 +15,16 @@ const CharacterSheet = ({ monster }) => {
   const [cannotBeSaved, setCannotBeSaved] = useState([]);
   const { monsters } = useSelector(monstersState);
   const dispatch = useDispatch();
-  const nameRef = useRef();
+  // const nameRef = useRef();
 
-  useEffect(() => { // on first render or page refresh
-    const name = nameRef.current.value;
-    if (name === "" ||
-      monsters.filter(f => f.id !== monster.sourceId).map(m => m.name).includes(name))
-    {
-      setCannotBeSaved([...cannotBeSaved, "name"]);
-    }
-  }, []);
+  // useEffect(() => { // on first render or page refresh
+  //   const name = nameRef.current.value;
+  //   if (name === "" ||
+  //     monsters.filter(f => f.id !== monster.sourceId).map(m => m.name).includes(name))
+  //   {
+  //     setCannotBeSaved([...cannotBeSaved, "name"]);
+  //   }
+  // }, []);
   
   const mapped = obj => {
     let array = [];
@@ -67,7 +67,8 @@ const CharacterSheet = ({ monster }) => {
 
   return(
     <div>
-      <Button disabled={cannotBeSaved.length > 0} onClick={handleSave}>Save</Button>
+      <Button onClick={() => console.log(monster)}>Print Monster</Button>
+      {/* <Button disabled={cannotBeSaved.length > 0} onClick={handleSave}>Save</Button>
       <h1>SourceId: {monster.sourceId !== null ? monster.sourceId : 0}</h1>
       <h2>Name: {monster.name}</h2>
       <NameField
@@ -81,10 +82,21 @@ const CharacterSheet = ({ monster }) => {
         name={"initiative"}
         value={valueOf("initiative")}
         cannotBeSaved={handleSaveButtonValidation}
-      />
+      /> */}
       <div>
-        {Object.keys(tree).map((ability, index) => <AbilityBlock key={index} name={ability}>
-          {tree[ability].map((skill, index) => <SkillBlock key={index} name={skill} /> )}
+        {Object.keys(tree).map((ability, index) => <AbilityBlock
+          key={index}
+          name={ability}
+          value={valueOf(ability)}
+          modifierValue={valueOf(tree[ability]["modifier"])}
+          cannotBeSaved={handleSaveButtonValidation}
+        >
+          {tree[ability]["skills"].map((skill, index) => <SkillBlock
+            key={index}
+            name={skill[0]}
+            value={valueOf(skill[0])}
+            proficiency={valueOf(skill[1])}
+          /> )}
         </AbilityBlock> )}
       </div>
     </div>
