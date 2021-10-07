@@ -76,9 +76,16 @@ namespace Api.Controllers
         [HttpPatch(nameof(Patch))]
         public IActionResult Patch(MonsterPatchRequest patch)
         {
-            _service.Patch(patch);
+            try
+            {
+                _service.Patch(patch);
 
-            return Ok();
+                return Ok();
+            }
+            catch (NullReferenceException)
+            {
+                return BadRequest();
+            }
         }
     }
 }

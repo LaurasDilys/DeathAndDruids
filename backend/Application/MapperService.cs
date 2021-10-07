@@ -106,7 +106,8 @@ namespace Application
 
         public void Patch(Character creature, IMonsterPatchRequest patch)
         {
-            if (patch.Value == "") return;
+                                // CreationController Patch() method will catch this
+            if (patch.Value == "") throw new NullReferenceException();
 
             int intValue;
             bool boolValue;
@@ -128,6 +129,7 @@ namespace Application
             };
 
             var abilityName = abilityNames.FirstOrDefault(x => name.Contains(x));
+
             if (abilityName != null)
             {
                 // setting the ability score, for example "Strength"
