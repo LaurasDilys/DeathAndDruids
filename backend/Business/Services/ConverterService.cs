@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services
 {
-    public class ConverterService
+    public class ConverterService // CreatureMapperService
     {
         public void TransformIntoFullCharacter(Character character, CharacterDataModel characterDb)
         {

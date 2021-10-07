@@ -36,9 +36,42 @@ namespace Application
             TransformIntoDataModel(viewModel, creature);
 
             viewModel.StrengthModifier = creature.Strength.ModifierText;
+            viewModel.DexterityModifier = creature.Dexterity.ModifierText;
+            viewModel.ConstitutionModifier = creature.Constitution.ModifierText;
+            viewModel.IntelligenceModifier = creature.Intelligence.ModifierText;
+            viewModel.WisdomModifier = creature.Wisdom.ModifierText;
+            viewModel.CharismaModifier = creature.Charisma.ModifierText;
 
             viewModel.StrengthSavingThrow = creature.Strength.SavingThrow.ModifierText;
             viewModel.Athletics = creature.Athletics.ModifierText;
+
+            viewModel.DexteritySavingThrow = creature.Dexterity.SavingThrow.ModifierText;
+            viewModel.Acrobatics = creature.Acrobatics.ModifierText;
+            viewModel.SleightOfHand = creature.SleightOfHand.ModifierText;
+            viewModel.Stealth = creature.Stealth.ModifierText;
+
+            //viewModel.StrengthSavingThrow = creature.Strength.SavingThrow.ModifierText;
+
+            //viewModel.StrengthSavingThrow = creature.Strength.SavingThrow.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+
+            //viewModel.StrengthSavingThrow = creature.Strength.SavingThrow.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+
+            //viewModel.StrengthSavingThrow = creature.Strength.SavingThrow.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+            //viewModel.Athletics = creature.Athletics.ModifierText;
+
         }
 
         public Monster NewMonsterFromOpened(OpenedMonster monster)

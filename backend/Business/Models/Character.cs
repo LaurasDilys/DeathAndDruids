@@ -14,7 +14,7 @@ namespace Business.Models
             BuildListOfAbilities();
             SetInitialAbilityScoreValues();
 
-            ChallengeRating = 0;
+            //ChallengeRating = 0;
         }
 
         public string Name { get; set; } = "";

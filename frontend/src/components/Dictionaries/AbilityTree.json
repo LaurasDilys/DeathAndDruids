@@ -5,5 +5,52 @@
       [ "strengthSavingThrow", "strengthSavingThrowProficiency" ],
       [ "athletics", "athleticsProficiency" ]
     ]
+  },
+  "dexterity": {
+    "modifier": "dexterityModifier",
+    "skills": [
+      [ "dexteritySavingThrow", "dexteritySavingThrowProficiency" ],
+      [ "acrobatics", "acrobaticsProficiency" ],
+      [ "sleightOfHand", "sleightOfHandProficiency" ],
+      [ "stealth", "stealthProficiency" ]
+    ]
+  },
+  "constitution": {
+    "modifier": "constitutionModifier",
+    "skills": [
+      [ "constitutionSavingThrow", "constitutionSavingThrowProficiency" ]
+    ]
+  },
+  "intelligence": {
+    "modifier": "intelligenceModifier",
+    "skills": [
+      [ "intelligenceSavingThrow", "intelligenceSavingThrowProficiency" ],
+      [ "arcana", "arcanaProficiency" ],
+      [ "history", "historyProficiency" ],
+      [ "investigation", "investigationProficiency" ],
+      [ "nature", "natureProficiency" ],
+      [ "religion", "religionProficiency" ]
+    ]
+  },
+  "wisdom": {
+    "modifier": "wisdomModifier",
+    "skills": [
+      [ "wisdomSavingThrow", "wisdomSavingThrowProficiency" ],
+      [ "animalHandling", "animalHandlingProficiency" ],
+      [ "insight", "insightProficiency" ],
+      [ "medicine", "medicineProficiency" ],
+      [ "perception", "perceptionProficiency" ],
+      [ "survival", "survivalProficiency" ]
+    ]
+  },
+  "charisma": {
+    "modifier": "charismaModifier",
+    "skills": [
+      [ "charismaSavingThrow", "charismaSavingThrowProficiency" ],
+      [ "deception", "deceptionProficiency" ],
+      [ "intimidation", "intimidationProficiency" ],
+      [ "performance", "performanceProficiency" ],
+      [ "persuasion", "persuasionProficiency" ]
+    ]
   }
 }
