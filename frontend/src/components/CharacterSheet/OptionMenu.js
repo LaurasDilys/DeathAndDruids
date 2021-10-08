@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { newMonster } from '../../state/actions/creationThunk';
-import { openMonster } from '../../state/actions/monstersThunk';
+import { deleteOpenedMonster, openMonster } from '../../state/actions/monstersThunk';
 import { creationState, monstersState } from '../../state/selectors/creationSelectors';
 import './OptionMenu.css';
 import { whiteVar } from '../../Themes';
@@ -81,7 +81,7 @@ const OptionMenu = ({ onSave, cannotBeSaved, classes }) => {
     confirm && dispatch(newMonster());
   }
 
-  const handleOpen = (event) => {
+  const handleOpen = event => {
     setSelected(event.target.value);
     let confirm;
     const id = monsters.find(x => x.name === event.target.value).id;
@@ -96,6 +96,10 @@ const OptionMenu = ({ onSave, cannotBeSaved, classes }) => {
     }
     confirm && dispatch(openMonster(id));
   };
+
+  const handleDelete = () => {
+    dispatch(deleteOpenedMonster(thisMonster.id));
+  }
   
   return (
     <nav className={visibility ? "opt-viewport-height visible" : "opt-viewport-height"}>

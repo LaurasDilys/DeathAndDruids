@@ -47,15 +47,6 @@ namespace Api.Controllers
             return Ok();
         }
         //
-
-        [HttpGet(nameof(Get))]
-        public ActionResult<OpenedMonsterViewModel> Get()
-        {
-            if (!_service.OpenedExists())
-                return NotFound();
-
-            return Ok(_service.GetOpened());
-        }
         
         [HttpPost(nameof(New))]
         public IActionResult New()
@@ -65,15 +56,13 @@ namespace Api.Controllers
             return Ok();
         }
 
-        [HttpPut(nameof(Save))]
-        public IActionResult Save()
+        [HttpGet(nameof(Get))]
+        public ActionResult<OpenedMonsterViewModel> Get()
         {
             if (!_service.OpenedExists())
-                return BadRequest();
+                return NotFound();
 
-            _service.Save();
-
-            return Ok();
+            return Ok(_service.GetOpened());
         }
 
         [HttpPatch(nameof(Patch))]
@@ -87,6 +76,17 @@ namespace Api.Controllers
                 return Ok();
             }
             return BadRequest();
+        }
+
+        [HttpPut(nameof(Save))]
+        public IActionResult Save()
+        {
+            if (!_service.OpenedExists())
+                return BadRequest();
+
+            _service.Save();
+
+            return Ok();
         }
     }
 }
