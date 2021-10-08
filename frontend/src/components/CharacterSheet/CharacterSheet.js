@@ -9,7 +9,7 @@ import NameField from "./NameField";
 import NumberField from "./NumberField";
 import AbilityBlock from "./AbilityBlock";
 import SkillBlock from "./SkillBlock";
-import tree from '../Dictionaries/AbilityTree.json';
+import tree from '../../dictionaries/AbilityTree.json';
 import OptionMenu from "./OptionMenu";
 
 const CharacterSheet = ({ monster }) => {
