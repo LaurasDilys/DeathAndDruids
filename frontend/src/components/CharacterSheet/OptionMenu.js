@@ -1,4 +1,5 @@
-import { Button, FormControl, FormHelperText, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material';
+import { Button, FormControl, FormHelperText, Input, InputLabel, MenuItem, OutlinedInput, Select } from '@mui/material';
+import { withStyles } from '@mui/styles';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -6,15 +7,16 @@ import { newMonster } from '../../state/actions/creationThunk';
 import { openMonster } from '../../state/actions/monstersThunk';
 import { creationState, monstersState } from '../../state/selectors/creationSelectors';
 import './OptionMenu.css';
+import { whiteVar } from '../../Themes';
 
-const mouseEnteredNav = (component, event) => {
-  const width = component.clientWidth; // nav width
-  const height = component.clientHeight; // nav height
+const mouseEnteredOpt = (component, event) => {
+  const width = component.clientWidth; // opt width
+  const height = component.clientHeight; // opt height
   const x = event.clientX; // cursor's x-axis location
   const y = event.clientY; // cursor's y-axis location
 
-  // nav is in the middle of viewport height, so
-  // const margin is top and bottom nav margin
+  // opt is in the middle of viewport height, so
+  // const margin is top and bottom opt margin
   const margin = (window.innerHeight - height) / 2
   const windowWidth = window.innerWidth;
 
@@ -25,7 +27,15 @@ const mouseEnteredNav = (component, event) => {
   return false;
 }
 
-const OptionMenu = ({ onSave, cannotBeSaved }) => {
+const styles = {
+  select: {
+    paddingLeft: 20,
+    textAlign: "left",
+    color: whiteVar
+  }
+};
+
+const OptionMenu = ({ onSave, cannotBeSaved, classes }) => {
   const { monster: thisMonster } = useSelector(creationState);
   const { monsters } = useSelector(monstersState);
   const [selected, setSelected] = useState();
@@ -34,7 +44,7 @@ const OptionMenu = ({ onSave, cannotBeSaved }) => {
   const ref = useRef(null);
 
   const toggleOptionMenu = event => {
-    if (mouseEnteredNav(ref.current, event)) {
+    if (mouseEnteredOpt(ref.current, event)) {
       setVisibility(true);
     } else {
       setVisibility(false);
@@ -85,6 +95,7 @@ const OptionMenu = ({ onSave, cannotBeSaved }) => {
           <FormControl sx={{ m: 1, width: "160px" }} error>
             <InputLabel>Open</InputLabel>
               <Select
+                inputProps={{ classes: { select: classes.select } }}
                 value={selected}
                 label="Open"
                 onChange={handleChange}
@@ -92,10 +103,12 @@ const OptionMenu = ({ onSave, cannotBeSaved }) => {
               {monsters.map(monster => <MenuItem key={monster.name} value={monster.name}>{monster.name}</MenuItem>)}
             </Select>
           </FormControl>
+          <Button>Delete</Button>
+          <Button>Exit</Button>
         </div>
       </div>
     </nav>
   );
 };
 
-export default OptionMenu;
+export default withStyles(styles)(OptionMenu);

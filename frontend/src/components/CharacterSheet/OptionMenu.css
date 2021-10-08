@@ -18,7 +18,7 @@
   display: flex;
   margin: auto 0;
   padding: 10px 0;
-  background-color: var(--gray-var1);
+  background-color: var(--black-var);
 }
 
 .opt-items {
