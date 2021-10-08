@@ -87,18 +87,23 @@ namespace Application
             _creationRepository.SaveChanges();
         }
 
-        public void Patch(IMonsterPatchRequest patch)
+        public bool Patch(IMonsterPatchRequest patch)
        {
             var monster = _creationRepository.GetOpened();
 
             var creature = new Character();
             _mapper.TransformIntoFullCharacter(creature, monster);
-            _mapper.Patch(creature, patch);
-            _mapper.TransformIntoDataModel(monster, creature);
+            if (_mapper.Patch(creature, patch))
+            {
+                _mapper.TransformIntoDataModel(monster, creature);
 
-            monster.Saved = false;
+                monster.Saved = false;
 
-            _creationRepository.SaveChanges();
+                _creationRepository.SaveChanges();
+
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -68,6 +68,9 @@ namespace Api.Controllers
         [HttpPut(nameof(Save))]
         public IActionResult Save()
         {
+            if (!_service.OpenedExists())
+                return BadRequest();
+
             _service.Save();
 
             return Ok();
@@ -76,16 +79,14 @@ namespace Api.Controllers
         [HttpPatch(nameof(Patch))]
         public IActionResult Patch(MonsterPatchRequest patch)
         {
-            try
-            {
-                _service.Patch(patch);
+            if (!_service.OpenedExists())
+                return UnprocessableEntity();
 
+            if (_service.Patch(patch))
+            {
                 return Ok();
             }
-            catch (NullReferenceException)
-            {
-                return BadRequest();
-            }
+            return BadRequest();
         }
     }
 }

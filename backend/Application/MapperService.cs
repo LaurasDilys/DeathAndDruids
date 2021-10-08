@@ -111,7 +111,7 @@ namespace Application
             }
         }
 
-        public void Patch(Character creature, IMonsterPatchRequest patch)
+        public bool Patch(Character creature, IMonsterPatchRequest patch)
         {
             int intValue;
             bool boolValue;
@@ -152,12 +152,15 @@ namespace Application
             {
                 // remove the "Proficiency" part
                 var skillName = name.Replace("Proficiency", "");
-                (type.GetProperty(skillName).GetValue(creature) as Skill).Proficiency = boolValue;
+                var prop = type.GetProperty(skillName);
+                if (prop == null) return false;
+                (prop.GetValue(creature) as Skill).Proficiency = boolValue;
             }
             // setting any other value
             else
             {
                 var prop = type.GetProperty(name);
+                if (prop == null) return false;
                 var propType = prop.PropertyType;
                 if (propType.Equals(typeof(string)))
                 {
@@ -176,6 +179,8 @@ namespace Application
                     prop.SetValue(creature, doubleValue);
                 }
             }
+
+            return true;
         }
     }
 }
