@@ -1,9 +1,9 @@
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOpenedMonster, newMonster } from "../../state/actions/creationThunk";
+import { getOpenedMonster } from "../../state/actions/creationThunk";
 import { getMonsters } from "../../state/actions/monstersThunk";
-import { creationState, monstersState } from "../../state/selectors/creationSelectors";
+import { creationState } from "../../state/selectors/creationSelectors";
 import CharacterSheet from "../CharacterSheet/CharacterSheet";
 import './Creation.css';
 import Options from "./Options";
@@ -11,7 +11,6 @@ import Options from "./Options";
 const Creation = () => {
   const [canMount, setCanMount] = useState(true);
   const creation = useSelector(creationState);
-  const { monsters } = useSelector(monstersState);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,6 +20,7 @@ const Creation = () => {
 
   const handleUnmount = () => {
     setCanMount(false);
+    window.location.reload();
   }
 
   useEffect(() => {
@@ -35,7 +35,6 @@ const Creation = () => {
         </div>}
       {(!canMount || creation === null) &&
         <div className="flex-col">
-          <Button onClick={() => console.log(creation)} >CREATION</Button>
           <Options />
         </div>}
     </div>
