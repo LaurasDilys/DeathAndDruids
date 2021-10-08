@@ -2,9 +2,7 @@ import { Button, FormControl, FormHelperText, Input, InputLabel, MenuItem, Outli
 import { withStyles } from '@mui/styles';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import { newMonster } from '../../state/actions/creationThunk';
-import { deleteOpenedMonster, openMonster } from '../../state/actions/monstersThunk';
+import { closeMonster, deleteOpenedMonster, newMonster, openMonster } from '../../state/actions/creationThunk';
 import { creationState, monstersState } from '../../state/selectors/creationSelectors';
 import './OptionMenu.css';
 import { whiteVar } from '../../Themes';
@@ -103,15 +101,16 @@ const OptionMenu = ({ onSave, cannotBeSaved, unmountMe, classes }) => {
   const handleDelete = () => {
     if (thisMonster.sourceId !== null) {
       if (monsters.length === 1) unmountMe();
-      dispatch(deleteOpenedMonster());
-      //
-      console.log(monsters);
-      //
+      window.confirm("Are you sure you want to delete this monster?")
+      && dispatch(deleteOpenedMonster());
     }
   }
 
   const handleExit = () => {
-
+    if (thisMonster.saved || window.confirm("Changes have not been saved. Are you sure you want to continue?")) {
+      unmountMe();
+      dispatch(closeMonster());
+    }
   }
   
   return (

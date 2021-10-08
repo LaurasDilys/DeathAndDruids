@@ -6,6 +6,7 @@ import { getMonsters } from "../../state/actions/monstersThunk";
 import { creationState, monstersState } from "../../state/selectors/creationSelectors";
 import CharacterSheet from "../CharacterSheet/CharacterSheet";
 import './Creation.css';
+import Options from "./Options";
 
 const Creation = () => {
   const [canMount, setCanMount] = useState(true);
@@ -18,10 +19,6 @@ const Creation = () => {
     dispatch(getMonsters());
   }, [])
 
-  const handleNew = () => {
-    dispatch(newMonster());
-  }
-
   const handleUnmount = () => {
     setCanMount(false);
   }
@@ -32,15 +29,14 @@ const Creation = () => {
 
   return (
     <div className="flex-row">
-      {(!canMount || creation === null) &&
-        <div className="flex-col">
-          <Button onClick={handleNew}>Create New</Button>
-          {monsters.length > 0 &&
-          <Button>Load</Button>}
-        </div>}
       {canMount && creation !== null &&
         <div className="flex-col">
           <CharacterSheet unmountMe={handleUnmount} monster={creation.monster} />
+        </div>}
+      {(!canMount || creation === null) &&
+        <div className="flex-col">
+          <Button onClick={() => console.log(creation)} >CREATION</Button>
+          <Options />
         </div>}
     </div>
   );

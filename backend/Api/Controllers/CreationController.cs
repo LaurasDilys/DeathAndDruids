@@ -68,6 +68,18 @@ namespace Api.Controllers
             return Ok(_creationService.GetOpened());
         }
 
+        [HttpGet(nameof(GetLast))]
+        public ActionResult<OpenedMonsterViewModel> GetLast()
+        {
+            if (!_monstersService.Any())
+            {
+                return NotFound();
+            }
+
+            _monstersService.OpenLast();
+            return Ok(_creationService.GetOpened());
+        }
+
         [HttpPatch(nameof(Patch))]
         public IActionResult Patch(MonsterPatchRequest patch)
         {
@@ -101,19 +113,6 @@ namespace Api.Controllers
             }
 
             _monstersService.Open(key);
-
-            return Ok();
-        }
-
-        [HttpPost(nameof(OpenLast))]
-        public IActionResult OpenLast()
-        {
-            if (!_monstersService.Any())
-            {
-                return NotFound();
-            }
-
-            _monstersService.OpenLast();
 
             return Ok();
         }
