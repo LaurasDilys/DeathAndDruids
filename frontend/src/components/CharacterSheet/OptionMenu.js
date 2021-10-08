@@ -59,7 +59,7 @@ const OptionMenu = ({ onSave, cannotBeSaved, classes }) => {
   const handleUndo = () => {
     let confirm;
     if (thisMonster.sourceId == null) {
-      confirm = window.confirm("This creation is unsaved. Are you sure you want to revert back to new monster?");
+      confirm = window.confirm("This creation is unsaved. It will revert back to a new monster.");
       confirm && dispatch(newMonster());
     } else {
       confirm = window.confirm("Are you sure you want to undo the changes?");
@@ -74,15 +74,27 @@ const OptionMenu = ({ onSave, cannotBeSaved, classes }) => {
       return;
     }
     else if (thisMonster.sourceId == null) {
-      confirm = window.confirm("This creation is unsaved. Are you sure you want to open a new one?");
+      confirm = window.confirm("This creation is unsaved and will be permanently lost.");
     } else {
-      confirm = window.confirm("Changes have not been saved. Are you sure you want to open a new monster?");
+      confirm = window.confirm("Changes have not been saved. Are you sure you want to continue?");
     }
     confirm && dispatch(newMonster());
   }
 
-  const handleChange = (event) => {
+  const handleOpen = (event) => {
     setSelected(event.target.value);
+    let confirm;
+    const id = monsters.find(x => x.name === event.target.value).id;
+    if (thisMonster.saved) {
+      dispatch(openMonster(id));
+      return;
+    }
+    else if (thisMonster.sourceId == null) {
+      confirm = window.confirm("This creation is unsaved and will be permanently lost.");
+    } else {
+      confirm = window.confirm("Changes have not been saved. Are you sure you want to continue?");
+    }
+    confirm && dispatch(openMonster(id));
   };
   
   return (
@@ -98,7 +110,7 @@ const OptionMenu = ({ onSave, cannotBeSaved, classes }) => {
                 inputProps={{ classes: { select: classes.select } }}
                 value={selected}
                 label="Open"
-                onChange={handleChange}
+                onChange={handleOpen}
               >
               {monsters.map(monster => <MenuItem key={monster.name} value={monster.name}>{monster.name}</MenuItem>)}
             </Select>

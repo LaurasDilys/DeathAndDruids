@@ -64,19 +64,18 @@ namespace Application
             var monster = _creationRepository.GetOpened();
 
             if (monster.Name == "") return; // if attempting to save without a name
-
-            var allMonsters = _monstersRepository.Get();
-
-            // do not allow saving of a monster with a name that's already in use
-            if (allMonsters.Select(x => x.Name).Contains(monster.Name)) return;
             
             if (monster.SourceId != null) // if this monster had already been saved
             {
                 var previuosSave = _monstersRepository.Get((int)monster.SourceId);
                 _mapper.ReplaceWith(monster, previuosSave);
             }
-            else
+            else // if this is a new monster, that hasn't been saved before
             {
+                var allMonsters = _monstersRepository.Get();
+                // do not allow saving of a monster with a name that's already in use
+                if (allMonsters.Select(x => x.Name).Contains(monster.Name)) return;
+
                 var newMonster = _mapper.NewMonsterFromOpened(monster);
                 newMonster.InCreation = true;
                 int newId =_monstersRepository.Add(newMonster);

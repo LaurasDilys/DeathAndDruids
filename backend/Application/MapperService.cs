@@ -137,9 +137,17 @@ namespace Application
             if (abilityName != null)
             {
                 // setting the ability score, for example "Strength"
-                if (name == abilityName && int.TryParse(stringValue, out intValue))
+                if (name == abilityName)
                 {
-                    (type.GetProperty(abilityName).GetValue(creature) as Ability).Score = intValue;
+                    if (stringValue == "")
+                    {
+                        intValue = 0;
+                        (type.GetProperty(abilityName).GetValue(creature) as Ability).Score = intValue;
+                    }
+                    else if (int.TryParse(stringValue, out intValue))
+                    {
+                        (type.GetProperty(abilityName).GetValue(creature) as Ability).Score = intValue;
+                    }
                 }
                 // setting saving throw proficiency, for example "StrengthSavingThrowProficiency"
                 else if (bool.TryParse(stringValue, out boolValue))
