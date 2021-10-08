@@ -11,18 +11,6 @@ const NameField = ({ nameRef, name, value, cannotBeSaved }) => {
   const [state, setState] = useState(value);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (state === "" ||
-  //     newAndNameNotUnique(state))
-  //   {
-  //     cannotBeSaved(name, true);
-  //   }
-  //   else
-  //   {
-  //     cannotBeSaved(name, false);
-  //   }
-  // }, []);
-
   useEffect(() => {
     if (state !== value) {
       setState(value);

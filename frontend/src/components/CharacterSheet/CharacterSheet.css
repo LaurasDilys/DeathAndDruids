@@ -1,3 +1,15 @@
+.name-field-div * {
+  margin: 2em 0;
+}
+
+
+
+
+
+
+
+
+
 .ability-block input[type=number]::-webkit-inner-spin-button, 
 .ability-block input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
@@ -5,7 +17,7 @@
 }
 
 .ability-block {
-  /* background-color: aquamarine; */
+  background-color: aquamarine;
   display: flex;
   height: 8em;
 }

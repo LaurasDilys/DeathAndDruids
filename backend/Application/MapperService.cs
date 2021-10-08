@@ -80,6 +80,13 @@ namespace Application
             return newMonster;
         }
 
+        public void ReplaceWith(Monster monster, OpenedMonster previouslyOpened)
+        {
+            SetValuesFrom(monster, previouslyOpened);
+            previouslyOpened.SourceId = monster.Id;
+            previouslyOpened.Saved = true;
+        }
+
         public void ReplaceWith(OpenedMonster monster, Monster previousSave)
         {
             SetValuesFrom(monster, previousSave);
@@ -106,8 +113,6 @@ namespace Application
 
         public void Patch(Character creature, IMonsterPatchRequest patch)
         {
-            if (patch.Value == "") return;
-
             int intValue;
             bool boolValue;
             double doubleValue;

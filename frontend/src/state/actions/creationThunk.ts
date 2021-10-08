@@ -16,12 +16,13 @@ export const newMonster = () => (dispatch) => {
 
 export const saveMonster = () => (dispatch) => {
   API.put("creation/save")
+    .then(() => dispatch(getOpenedMonster()))
     .then(() => dispatch(getMonsters())) // updates saved monsters after creation is saved
     .catch(err => console.log(err));
 }
 
 export const patchMonster = (patchRequest) => (dispatch) => {
   API.patch("creation/patch", patchRequest)
-  .then(() => dispatch(getOpenedMonster())) // gets monster that was just patched
-  .catch(err => console.log(err));
+    .then(() => dispatch(getOpenedMonster())) // gets monster that was just patched
+    .catch(err => console.log(err));
 }

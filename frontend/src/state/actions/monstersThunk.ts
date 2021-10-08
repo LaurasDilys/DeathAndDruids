@@ -1,8 +1,15 @@
 import API from '../../domain/Api';
+import { getOpenedMonster } from './creationThunk';
 import { getMonstersAction } from './monstersActions';
 
 export const getMonsters = () => (dispatch) => {
   API.get("monsters/get")
     .then(res => dispatch(getMonstersAction(res.data)))
+    .catch(err => console.log(err));
+}
+
+export const openMonster = (key) => (dispatch) => {
+  API.get(`monsters/open/${key}`)
+    .then(() => dispatch(getOpenedMonster())) // gets monster that was just saved as "opened"
     .catch(err => console.log(err));
 }

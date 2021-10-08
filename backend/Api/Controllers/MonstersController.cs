@@ -25,5 +25,18 @@ namespace Api.Controllers
         {
             return Ok(_service.Get());
         }
+
+        [HttpGet("Open/{key:int}", Name = nameof(Open))]
+        public IActionResult Open(int key)
+        {
+            if (!_service.Exists(key))
+            {
+                return NotFound();
+            }
+
+            _service.Open(key);
+
+            return Ok();
+        }
     }
 }

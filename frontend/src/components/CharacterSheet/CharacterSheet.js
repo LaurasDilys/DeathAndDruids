@@ -10,21 +10,22 @@ import NumberField from "./NumberField";
 import AbilityBlock from "./AbilityBlock";
 import SkillBlock from "./SkillBlock";
 import tree from '../Dictionaries/AbilityTree.json';
+import OptionMenu from "./OptionMenu";
 
 const CharacterSheet = ({ monster }) => {
   const [cannotBeSaved, setCannotBeSaved] = useState([]);
   const { monsters } = useSelector(monstersState);
   const dispatch = useDispatch();
-  // const nameRef = useRef();
+  const nameRef = useRef();
 
-  // useEffect(() => { // on first render or page refresh
-  //   const name = nameRef.current.value;
-  //   if (name === "" ||
-  //     monsters.filter(f => f.id !== monster.sourceId).map(m => m.name).includes(name))
-  //   {
-  //     setCannotBeSaved([...cannotBeSaved, "name"]);
-  //   }
-  // }, []);
+  useEffect(() => { // on first render or page refresh
+    const name = nameRef.current.value;
+    if (name === "" ||
+      monsters.filter(f => f.id !== monster.sourceId).map(m => m.name).includes(name))
+    {
+      setCannotBeSaved([...cannotBeSaved, "name"]);
+    }
+  }, []);
   
   const mapped = obj => {
     let array = [];
@@ -51,11 +52,6 @@ const CharacterSheet = ({ monster }) => {
     }
     else {
       dispatch(saveMonster());
-      dispatch(getOpenedMonster());
-      // update this monster with its sourceId and updated "saved" property
-      // ISSUE: dispatch(getOpenedMonster()) takes too long to resolve
-      // sourceId and "saved" property don't get updated quickly enough
-      dispatch(getMonsters());
     }
   }
 
@@ -67,8 +63,11 @@ const CharacterSheet = ({ monster }) => {
 
   return(
     <div>
+      <OptionMenu onSave={handleSave} cannotBeSaved={cannotBeSaved} />
       <Button onClick={() => console.log(monster)}>Print Monster</Button>
-      {/* <Button disabled={cannotBeSaved.length > 0} onClick={handleSave}>Save</Button>
+      <h1>SourceId: {monster.sourceId}</h1>
+      <Button disabled={cannotBeSaved.length > 0} onClick={handleSave}>Save</Button>
+      {/* 
       <h1>SourceId: {monster.sourceId !== null ? monster.sourceId : 0}</h1>
       <h2>Name: {monster.name}</h2>
       <NameField
@@ -84,7 +83,15 @@ const CharacterSheet = ({ monster }) => {
         cannotBeSaved={handleSaveButtonValidation}
       /> */}
       <div>
-        {Object.keys(tree).map((ability, index) => <AbilityBlock
+        <div className="name-field-div">
+          <NameField
+            nameRef={nameRef}
+            name={"name"}
+            value={valueOf("name")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
+        </div>
+        {Object.keys(tree).slice(0, 3).map((ability, index) => <AbilityBlock
           key={index}
           name={ability}
           value={valueOf(ability)}

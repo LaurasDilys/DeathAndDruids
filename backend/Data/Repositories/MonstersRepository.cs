@@ -16,6 +16,15 @@ namespace Data.Repositories
             _context = context;
         }
 
+        public bool Exists(int key)
+        {
+            if (_context.Monsters.Find(key) == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public IEnumerable<Monster> Get()
         {
             return _context.Monsters;

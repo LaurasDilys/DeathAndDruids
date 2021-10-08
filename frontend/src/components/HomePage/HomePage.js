@@ -3,8 +3,8 @@ import './HomePage.css';
 const HomePage = () => {
   return (
     <>
-      <div className="flex-row">
-        <div className="flex-col">
+      <div className="home-row">
+        <div className="home-col">
           <h1>Death&amp;</h1>
           <h1>Druids</h1>
           <span>A D&amp;D combat and character creation assistant</span>

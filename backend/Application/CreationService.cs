@@ -50,7 +50,11 @@ namespace Application
             _mapper.TransformIntoDataModel(monster, creature);
 
             if (OpenedExists())
+            {
+                var previouslyInCreation = _monstersRepository.Get().Where(x => x.InCreation);
+                foreach (var creation in previouslyInCreation) creation.InCreation = false;
                 _creationRepository.DeleteAll();
+            }
 
             _creationRepository.Add(monster);
         }
@@ -58,6 +62,9 @@ namespace Application
         public void Save()
         {
             var monster = _creationRepository.GetOpened();
+
+            if (monster.Name == "") return; // if attempting to save without a name
+
             var allMonsters = _monstersRepository.Get();
 
             // do not allow saving of a monster with a name that's already in use
@@ -81,7 +88,7 @@ namespace Application
         }
 
         public void Patch(IMonsterPatchRequest patch)
-        {
+       {
             var monster = _creationRepository.GetOpened();
 
             var creature = new Character();

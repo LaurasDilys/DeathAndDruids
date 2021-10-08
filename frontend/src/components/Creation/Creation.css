@@ -1,5 +1,5 @@
-/* .flex-row {
-  background-color: gray;
+.flex-row {
+  /* background-color: gray; */
   display: flex;
   justify-content: center;
   height: 100vh;
@@ -7,12 +7,12 @@
 }
 
 .flex-col {
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
   display: flex;
   flex-direction: column;
   margin: auto;
   align-items: center;
-  text-shadow: 1px 1px white;
+  /* text-shadow: 1px 1px white; */
   text-align: center;
 }
 
@@ -37,4 +37,4 @@
 
 .fixed img {
   margin: auto 0 0 auto;
-} */
+}
