@@ -10,7 +10,7 @@ namespace Application
 {
     public class MonstersService
     {
-        private readonly MonstersRepository _monsterRepository;
+        private readonly MonstersRepository _monstersRepository;
         private readonly CreationRepository _creationRepository;
         private readonly MapperService _mapper;
 
@@ -18,37 +18,71 @@ namespace Application
             CreationRepository creationRepository,
             MapperService mapper)
         {
-            _monsterRepository = monsterRepository;
+            _monstersRepository = monsterRepository;
             _creationRepository = creationRepository;
             _mapper = mapper;
         }
 
-        public IEnumerable<Monster> Get()
+        public bool Any()
         {
-            return _monsterRepository.Get();
+            return _monstersRepository.Any();
         }
 
         public bool Exists(int key)
         {
-            return _monsterRepository.Exists(key);
+            return _monstersRepository.Exists(key);
         }
 
+        public IEnumerable<Monster> Get()
+        {
+            return _monstersRepository.Get();
+        }
+
+        // TO CREATION
         public void Open(int key)
         {
-            var monster = _monsterRepository.Get(key);
-            var previouslyOpened = _creationRepository.GetOpened();
-
-            int? prevId = previouslyOpened.SourceId;
-            if (prevId != null && prevId != monster.Id)
+            var monster = _monstersRepository.Get(key);
+            OpenedMonster currentlyOpened;
+            if (_creationRepository.Exists())
             {
-                // change previously opened accordingly
-                _monsterRepository.Get((int)previouslyOpened.SourceId).InCreation = false;
+                currentlyOpened = _creationRepository.GetOpened();
+
+                int? sourceId = currentlyOpened.SourceId;
+                if (sourceId != null && sourceId != monster.Id
+                    && _monstersRepository.Exists((int)sourceId)) // extra precaution
+                {
+                    // change previously opened accordingly
+                    _monstersRepository.Get((int)sourceId).InCreation = false;
+                }
+
+                _mapper.ReplaceWith(monster, currentlyOpened);
+                monster.InCreation = true;
+            }
+            else
+            {
+                currentlyOpened = new OpenedMonster();
+
+                _mapper.ReplaceWith(monster, currentlyOpened);
+                monster.InCreation = true;
+
+                currentlyOpened.SourceId = monster.Id;
+                _creationRepository.Add(currentlyOpened);
             }
 
-            _mapper.ReplaceWith(monster, previouslyOpened);
-            monster.InCreation = true;
+            _monstersRepository.SaveChanges();
+        }
 
-            _monsterRepository.SaveChanges();
+        public void OpenLast()
+        {
+            Open(_monstersRepository.Get().Last().Id);
+        }
+        //
+
+        public void Delete(int key)
+        {
+            var monster = _monstersRepository.Get(key);
+
+            _monstersRepository.Delete(monster);
         }
     }
 }

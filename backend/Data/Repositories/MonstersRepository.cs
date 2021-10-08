@@ -16,6 +16,11 @@ namespace Data.Repositories
             _context = context;
         }
 
+        public bool Any()
+        {
+            return _context.Monsters.Any();
+        }
+
         public bool Exists(int key)
         {
             if (_context.Monsters.Find(key) == null)
@@ -40,6 +45,12 @@ namespace Data.Repositories
             _context.Monsters.Add(monster);
             SaveChanges();
             return monster.Id;
+        }
+
+        public void Delete(Monster monster)
+        {
+            _context.Monsters.Remove(monster);
+            SaveChanges();
         }
 
 

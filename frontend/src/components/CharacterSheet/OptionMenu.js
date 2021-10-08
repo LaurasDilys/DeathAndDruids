@@ -35,7 +35,7 @@ const styles = {
   }
 };
 
-const OptionMenu = ({ onSave, cannotBeSaved, classes }) => {
+const OptionMenu = ({ onSave, cannotBeSaved, unmountMe, classes }) => {
   const { monster: thisMonster } = useSelector(creationState);
   const { monsters } = useSelector(monstersState);
   const [selected, setSelected] = useState();
@@ -58,7 +58,10 @@ const OptionMenu = ({ onSave, cannotBeSaved, classes }) => {
 
   const handleUndo = () => {
     let confirm;
-    if (thisMonster.sourceId == null) {
+    if (thisMonster.saved) {
+      return;
+    }
+    else if (thisMonster.sourceId == null) {
       confirm = window.confirm("This creation is unsaved. It will revert back to a new monster.");
       confirm && dispatch(newMonster());
     } else {
@@ -98,7 +101,17 @@ const OptionMenu = ({ onSave, cannotBeSaved, classes }) => {
   };
 
   const handleDelete = () => {
-    dispatch(deleteOpenedMonster(thisMonster.id));
+    if (thisMonster.sourceId !== null) {
+      if (monsters.length === 1) unmountMe();
+      dispatch(deleteOpenedMonster());
+      //
+      console.log(monsters);
+      //
+    }
+  }
+
+  const handleExit = () => {
+
   }
   
   return (
@@ -108,7 +121,7 @@ const OptionMenu = ({ onSave, cannotBeSaved, classes }) => {
           <Button disabled={thisMonster.name === "" || cannotBeSaved.length > 0 || thisMonster.saved} onClick={() => onSave()}>Save</Button>
           <Button disabled={thisMonster.saved} onClick={handleUndo}>Undo</Button>
           <Button onClick={handleNew}>New</Button>
-          <FormControl sx={{ m: 1, width: "160px" }} error>
+          <FormControl disabled={monsters.length === 0} sx={{ m: 1, width: "160px" }} error>
             <InputLabel>Open</InputLabel>
               <Select
                 inputProps={{ classes: { select: classes.select } }}
@@ -119,8 +132,8 @@ const OptionMenu = ({ onSave, cannotBeSaved, classes }) => {
               {monsters.map(monster => <MenuItem key={monster.name} value={monster.name}>{monster.name}</MenuItem>)}
             </Select>
           </FormControl>
-          <Button>Delete</Button>
-          <Button>Exit</Button>
+          <Button disabled={thisMonster.sourceId === null} onClick={handleDelete}>Delete</Button>
+          <Button onClick={handleExit}>Exit</Button>
         </div>
       </div>
     </nav>

@@ -20,21 +20,21 @@ namespace Api.Controllers
             _service = service;
         }
 
-        [HttpGet("Get", Name = nameof(Get))]
+        [HttpGet(nameof(Get))]
         public ActionResult<IEnumerable<Monster>> Get()
         {
             return Ok(_service.Get());
         }
 
-        [HttpGet("Open/{key:int}", Name = nameof(Open))]
-        public IActionResult Open(int key)
+        [HttpDelete("Delete/{key:int}", Name = nameof(Delete))]
+        public IActionResult Delete(int key)
         {
             if (!_service.Exists(key))
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            _service.Open(key);
+            _service.Delete(key);
 
             return Ok();
         }

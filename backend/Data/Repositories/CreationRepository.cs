@@ -24,7 +24,7 @@ namespace Data.Repositories
 
         public OpenedMonster GetOpened()
         {
-            return _context.OpenedMonsters.First();
+            return _context.OpenedMonsters.FirstOrDefault();
         }
 
         public void Add(OpenedMonster monster)

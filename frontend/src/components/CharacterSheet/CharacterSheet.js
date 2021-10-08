@@ -12,7 +12,7 @@ import SkillBlock from "./SkillBlock";
 import tree from '../../dictionaries/AbilityTree.json';
 import OptionMenu from "./OptionMenu";
 
-const CharacterSheet = ({ monster }) => {
+const CharacterSheet = ({ monster, unmountMe }) => {
   const [cannotBeSaved, setCannotBeSaved] = useState([]);
   const { monsters } = useSelector(monstersState);
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ const CharacterSheet = ({ monster }) => {
 
   return(
     <div>
-      <OptionMenu onSave={handleSave} cannotBeSaved={cannotBeSaved} />
+      <OptionMenu onSave={handleSave} cannotBeSaved={cannotBeSaved} unmountMe={() => unmountMe()} />
       <Button onClick={() => console.log(monster)}>Print Monster</Button>
       <h1>SourceId: {monster.sourceId}</h1>
       <Button disabled={cannotBeSaved.length > 0} onClick={handleSave}>Save</Button>

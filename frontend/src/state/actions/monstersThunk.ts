@@ -8,24 +8,35 @@ export const getMonsters = () => (dispatch) => {
     .catch(err => console.log(err));
 }
 
-// creation and POST
+export const deleteOpenedMonster = (key) => (dispatch) => {
+  API.delete("creation/delete")
+    .then(() => dispatch(getMonsters()))
+    .then(() => dispatch(openLastMonster())) // opens last created monster
+    .catch(err => console.log(err));
+}
+
+// export const deleteOpenedMonster = (key) => (dispatch) => {
+//   API.delete(`monsters/delete/${key}`)
+//     .then(() => dispatch(closeOpenedMonster()))
+//     .then(() => dispatch(getMonsters()))
+//     .then(() => dispatch(openLastMonster())) // opens last created monster
+//     .catch(err => console.log(err));
+// }
+
+// TO CREATION
+export const closeOpenedMonster = () => (dispatch) => {
+  API.delete("creation/close")
+    .catch(err => console.log(err));
+}
+
 export const openMonster = (key) => (dispatch) => {
-  API.get(`monsters/open/${key}`)
+  API.post(`creation/open/${key}`)
     .then(() => dispatch(getOpenedMonster())) // gets monster that was just saved as "opened"
     .catch(err => console.log(err));
 }
-//
 
-export const deleteOpenedMonster = (key) => (dispatch) => {
-  API.delete(`monsters/delete/${key}`)
-    .then(() => dispatch(getMonsters()))
-    .then(() => openLastMonster())
-    .catch(err => console.log(err));
-}
-
-// creation and POST
 export const openLastMonster = () => (dispatch) => {
-  API.get("monsters/openlast")
+  API.post("creation/openlast")
     .then(() => dispatch(getOpenedMonster()))
     .catch(err => console.log(err));
 }

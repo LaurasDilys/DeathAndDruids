@@ -59,6 +59,25 @@ namespace Application
             _creationRepository.Add(monster);
         }
 
+        public bool Patch(IMonsterPatchRequest patch)
+       {
+            var monster = _creationRepository.GetOpened();
+
+            var creature = new Character();
+            _mapper.TransformIntoFullCharacter(creature, monster);
+            if (_mapper.Patch(creature, patch))
+            {
+                _mapper.TransformIntoDataModel(monster, creature);
+
+                monster.Saved = false;
+
+                _creationRepository.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
         public void Save()
         {
             var monster = _creationRepository.GetOpened();
@@ -86,23 +105,34 @@ namespace Application
             _creationRepository.SaveChanges();
         }
 
-        public bool Patch(IMonsterPatchRequest patch)
-       {
+        public void Close()
+        {
             var monster = _creationRepository.GetOpened();
 
-            var creature = new Character();
-            _mapper.TransformIntoFullCharacter(creature, monster);
-            if (_mapper.Patch(creature, patch))
+            // if this monster had already been saved and also isn't deleted
+            if (monster.SourceId != null && _monstersRepository.Exists((int)monster.SourceId))
             {
-                _mapper.TransformIntoDataModel(monster, creature);
-
-                monster.Saved = false;
-
-                _creationRepository.SaveChanges();
-
-                return true;
+                _monstersRepository.Get((int)monster.SourceId).InCreation = false;
             }
-            return false;
+
+            _creationRepository.DeleteAll();
+        }
+
+        public void Delete()
+        {
+            var sourceId = _creationRepository.GetOpened().SourceId;
+
+            Close();
+
+            DeleteSource(sourceId);
+        }
+
+        private void DeleteSource(int? key)
+        {
+            if (key != null && _monstersRepository.Exists((int)key))
+            {
+                _monstersRepository.Delete(_monstersRepository.Get((int)key));
+            }
         }
     }
 }

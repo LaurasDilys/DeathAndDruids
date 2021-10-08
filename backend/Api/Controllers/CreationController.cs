@@ -18,15 +18,18 @@ namespace Api.Controllers
     [ApiController]
     public class CreationController : ControllerBase
     {
-        private readonly CreationService _service;
+        private readonly CreationService _creationService;
+        private readonly MonstersService _monstersService;
         //
         private readonly DataContext _context;
 
-        public CreationController(CreationService service,
+        public CreationController(CreationService creationService,
+            MonstersService monstersService,
             //
             DataContext context)
         {
-            _service = service;
+            _creationService = creationService;
+            _monstersService = monstersService;
             //
             _context = context;
         }
@@ -51,7 +54,7 @@ namespace Api.Controllers
         [HttpPost(nameof(New))]
         public IActionResult New()
         {
-            _service.New();
+            _creationService.New();
 
             return Ok();
         }
@@ -59,19 +62,19 @@ namespace Api.Controllers
         [HttpGet(nameof(Get))]
         public ActionResult<OpenedMonsterViewModel> Get()
         {
-            if (!_service.OpenedExists())
+            if (!_creationService.OpenedExists())
                 return NotFound();
 
-            return Ok(_service.GetOpened());
+            return Ok(_creationService.GetOpened());
         }
 
         [HttpPatch(nameof(Patch))]
         public IActionResult Patch(MonsterPatchRequest patch)
         {
-            if (!_service.OpenedExists())
+            if (!_creationService.OpenedExists())
                 return UnprocessableEntity();
 
-            if (_service.Patch(patch))
+            if (_creationService.Patch(patch))
             {
                 return Ok();
             }
@@ -81,10 +84,58 @@ namespace Api.Controllers
         [HttpPut(nameof(Save))]
         public IActionResult Save()
         {
-            if (!_service.OpenedExists())
+            if (!_creationService.OpenedExists())
                 return BadRequest();
 
-            _service.Save();
+            _creationService.Save();
+
+            return Ok();
+        }
+
+        [HttpPost("Open/{key:int}", Name = nameof(Open))]
+        public IActionResult Open(int key)
+        {
+            if (!_monstersService.Exists(key))
+            {
+                return NotFound();
+            }
+
+            _monstersService.Open(key);
+
+            return Ok();
+        }
+
+        [HttpPost(nameof(OpenLast))]
+        public IActionResult OpenLast()
+        {
+            if (!_monstersService.Any())
+            {
+                return NotFound();
+            }
+
+            _monstersService.OpenLast();
+
+            return Ok();
+        }
+
+        [HttpDelete(nameof(Close))]
+        public IActionResult Close()
+        {
+            if (!_creationService.OpenedExists())
+                return BadRequest();
+
+            _creationService.Close();
+
+            return Ok();
+        }
+
+        [HttpDelete(nameof(Delete))]
+        public IActionResult Delete()
+        {
+            if (!_creationService.OpenedExists())
+                return BadRequest();
+
+            _creationService.Delete();
 
             return Ok();
         }
