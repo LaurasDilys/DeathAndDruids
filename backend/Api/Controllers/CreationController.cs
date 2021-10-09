@@ -61,7 +61,7 @@ namespace Api.Controllers
         }
 
         [HttpGet(nameof(Get))]
-        public ActionResult<OpenedMonsterViewModel> Get()
+        public ActionResult<SavableOpenedMonsterViewModel> Get()
         {
             if (!_creationService.OpenedExists())
                 return NotFound();
@@ -70,7 +70,7 @@ namespace Api.Controllers
         }
 
         [HttpGet(nameof(GetLast))]
-        public ActionResult<OpenedMonsterViewModel> GetLast()
+        public ActionResult<SavableOpenedMonsterViewModel> GetLast()
         {
             if (!_monstersService.Any())
             {

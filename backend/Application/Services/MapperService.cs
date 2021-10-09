@@ -31,7 +31,7 @@ namespace Application.Services
             _creatureMapper.TransformIntoFlat(flatCreature, creature);
         }
 
-        public void TransformIntoViewModel(OpenedMonsterViewModel viewModel, Creature creature)
+        public void TransformIntoViewModel(SavableOpenedMonsterViewModel viewModel, Creature creature)
         {
             TransformIntoDataModel(viewModel, creature);
 

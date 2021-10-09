@@ -28,14 +28,14 @@ namespace Application.Services
             return _creationRepository.Exists();
         }
 
-        public OpenedMonsterViewModel GetOpened()
+        public SavableOpenedMonsterViewModel GetOpened()
         {
             var dataModel = _creationRepository.GetOpened();
 
             var creature = new Creature();
             _mapper.TransformIntoFullCharacter(creature, dataModel);
 
-            var viewModel = new OpenedMonsterViewModel(
+            var viewModel = new SavableOpenedMonsterViewModel(
                 dataModel.Id, dataModel.SourceId, dataModel.Saved);
             _mapper.TransformIntoViewModel(viewModel, creature);
 
