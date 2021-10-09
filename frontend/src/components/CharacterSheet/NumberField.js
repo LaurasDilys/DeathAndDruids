@@ -33,14 +33,14 @@ const NumberField = ({ name, value, cannotBeSaved, disabled }) => {
     <TextField
       disabled={disabled}
       error={state === ""}
-      // label={field[name]}
-      label={name}
+      label={field[name]}
       value={state}
       type="number"
       // InputLabelProps={{
       //   shrink: true,
       // }}
       onChange={handleChange}
+      inputProps={{style: { textAlign: "center" }}}
     />
   );
 };

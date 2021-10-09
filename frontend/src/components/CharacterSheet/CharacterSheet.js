@@ -1,10 +1,8 @@
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOpenedMonster, saveMonster } from "../../state/actions/creationThunk";
-import { getMonsters } from "../../state/actions/monstersThunk";
+import { saveMonster } from "../../state/actions/creationThunk";
 import { monstersState } from "../../state/selectors/creationSelectors";
-import CheckBox from "./CheckBox";
 import NameField from "./NameField";
 import NumberField from "./NumberField";
 import AbilityBlock from "./AbilityBlock";
@@ -18,6 +16,7 @@ const CharacterSheet = ({ monster, unmountMe }) => {
   const { monsters } = useSelector(monstersState);
   const dispatch = useDispatch();
   const nameRef = useRef();
+  const amountRef = useRef();
 
   useEffect(() => { // on first render or page refresh
     const name = nameRef.current.value;
@@ -64,13 +63,10 @@ const CharacterSheet = ({ monster, unmountMe }) => {
 
   return(
     <div className="char-sheet-row">
+
       <OptionMenu onSave={handleSave} cannotBeSaved={cannotBeSaved} unmountMe={() => unmountMe()} />
 
-      <div className="char-sheet-col">
-
-
-
-
+      <div className="first-char-sheet-column">
         <div className="name-field-div">
           <NameField
             nameRef={nameRef}
@@ -79,110 +75,126 @@ const CharacterSheet = ({ monster, unmountMe }) => {
             cannotBeSaved={handleSaveButtonValidation}
           />
         </div>
-
         <div>
-          {Object.keys(tree).slice(0, 3).map((ability, index) => <AbilityBlock
-            key={index}
-            name={ability}
-            value={valueOf(ability)}
-            modifierValue={valueOf(tree[ability]["modifier"])}
-            cannotBeSaved={handleSaveButtonValidation}
-          >
-            {tree[ability]["skills"].map((skill, index) => <SkillBlock
+          <div className="padding-top">
+            {Object.keys(tree).slice(0, 3).map((ability, index) => <AbilityBlock
               key={index}
-              name={skill[0]}
-              value={valueOf(skill[0])}
-              proficiency={valueOf(skill[1])}
-              proficiencyName={skill[1]}
-            /> )}
+              name={ability}
+              value={valueOf(ability)}
+              modifierValue={valueOf(tree[ability]["modifier"])}
+              cannotBeSaved={handleSaveButtonValidation}
+            >
+              {tree[ability]["skills"].map((skill, index) => <SkillBlock
+                key={index}
+                name={skill[0]}
+                value={valueOf(skill[0])}
+                proficiency={valueOf(skill[1])}
+                proficiencyName={skill[1]}
+              /> )}
           </AbilityBlock> )}
+          </div>
         </div>
       </div>
-
-      <div className="char-sheet-col">
-
-
-        
+      <div>
         <div className="triple">
           <NumberField
-            name={"CR"}
+            name={"challengeRating"}
             value={valueOf("challengeRating")}
             cannotBeSaved={handleSaveButtonValidation}
           />
           <NumberField
             disabled
-            name={"Prof"}
+            name={"proficiencyBonus"}
             value={valueOf("proficiencyBonus")}
             cannotBeSaved={handleSaveButtonValidation}
           />
           <Field
-            name={"Align"}
-            value={valueOf("challengeRating")}
+            name={"alignment"}
+            value={valueOf("alignment")}
             cannotBeSaved={handleSaveButtonValidation}
           />
         </div>
-
         <div>
-          {Object.keys(tree).slice(3, 6).map((ability, index) => <AbilityBlock
-            key={index}
-            name={ability}
-            value={valueOf(ability)}
-            modifierValue={valueOf(tree[ability]["modifier"])}
-            cannotBeSaved={handleSaveButtonValidation}
-          >
-            {tree[ability]["skills"].map((skill, index) => <SkillBlock
+          <div className="padding-top">
+            {Object.keys(tree).slice(3, 6).map((ability, index) => <AbilityBlock
               key={index}
-              name={skill[0]}
-              value={valueOf(skill[0])}
-              proficiency={valueOf(skill[1])}
-              proficiencyName={skill[1]}
-            /> )}
-          </AbilityBlock> )}
+              name={ability}
+              value={valueOf(ability)}
+              modifierValue={valueOf(tree[ability]["modifier"])}
+              cannotBeSaved={handleSaveButtonValidation}
+            >
+              {tree[ability]["skills"].map((skill, index) => <SkillBlock
+                key={index}
+                name={skill[0]}
+                value={valueOf(skill[0])}
+                proficiency={valueOf(skill[1])}
+                proficiencyName={skill[1]}
+              /> )}
+            </AbilityBlock> )}
+          </div>
         </div>
-
-
-        
-
-          
-          
-        </div>
-
-
-        <div className="char-sheet-col">
-
-
+      </div>
+      <div>
         <div className="triple">
           <NumberField
-            name={"AC"}
+            name={"armorClass"}
             value={valueOf("armorClass")}
             cannotBeSaved={handleSaveButtonValidation}
           />
           <NumberField
-            disabled
-            name={"Speed"}
+            name={"speed"}
             value={valueOf("speed")}
             cannotBeSaved={handleSaveButtonValidation}
           />
         </div>
-
         <div className="triple">
           <NumberField
-            name={"Current"}
+            name={"currentArmorClass"}
             value={valueOf("currentArmorClass")}
             cannotBeSaved={handleSaveButtonValidation}
           />
           <NumberField
-            disabled
-            name={"Current"}
+            name={"currentSpeed"}
             value={valueOf("currentSpeed")}
             cannotBeSaved={handleSaveButtonValidation}
           />
         </div>
-
-
-      
-
-
+        <div className="triple padding-top">
+          <NumberField
+            name={"hitPoints"}
+            value={valueOf("hitPoints")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
+          <NumberField
+            name={"currentHitPoints"}
+            value={valueOf("currentHitPoints")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
+          <NumberField
+            name={"temporaryHitPoints"}
+            value={valueOf("temporaryHitPoints")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
+        </div>
+        <div className="heal-damage">
+          <div className="heal">
+            <Button variant="contained" className="heal">
+              Heal
+            </Button>
+          </div>
+          <div className="amount">
+            <TextField
+              inputRef={amountRef}
+              label="Amount"
+              type="number"
+            />
+          </div>
+          <div className="damage">
+            <Button variant="contained" className="damage">
+              Damage
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

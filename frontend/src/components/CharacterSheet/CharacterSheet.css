@@ -1,15 +1,20 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.padding-top {
+  padding-top: 1.3em;
+}
+
 .char-sheet-row {
   display: flex;
 }
 
-.char-sheet-col {
-  margin: 0 20px;
+.first-char-sheet-column {
+  margin: 0 40px;
 }
-
-
-
-
-
 
 .name-field-div {
   display: flex;
@@ -20,33 +25,59 @@
   margin: 10px 0;
 }
 
-
 .triple {
-  background-color: gold;
+  /* background-color: gold; */
   margin: 10px 0;
 }
 
 .triple * {
-  width: 3.93em;
+  width: 4.85em;
 }
 
+.heal-damage {
+  display: flex;
+}
 
+.heal-damage button {
+  justify-content: center;
+  text-transform: unset;
+  font-size: 18px;
+  padding: 12px;
+  width: 95px;
+  border-radius: 3px;
+}
 
+.heal button {
+  background-color: green;
+  color: var(--white-var);
+}
 
-.ability-block input[type=number]::-webkit-inner-spin-button, 
-.ability-block input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+.heal button:hover {
+  background-color: var(--green);
+}
+
+.damage button {
+  background-color: var(--red-dark);
+  color: var(--white-var);
+}
+
+.damage button:hover {
+  background-color: var(--red);
+}
+
+.amount {
+  margin: 0 21px;
+  width: 4em;
 }
 
 .ability-block {
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
   display: flex;
   height: 8em;
 }
 
 .ability {
-  background-color: aqua;
+  /* background-color: aqua; */
   display: flex;
   flex-direction: column;
   width: 4em;

@@ -25,7 +25,7 @@ const CheckBox = ({ name, value }) => {
 
   return(
     <FormControlLabel
-      label={name} // field[name]
+      name={field[name]}
       control={<Checkbox
         checked={state}
         onChange={handleChange}

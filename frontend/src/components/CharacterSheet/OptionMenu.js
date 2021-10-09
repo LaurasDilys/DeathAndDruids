@@ -19,8 +19,8 @@ const mouseEnteredOpt = (component, event) => {
   const windowWidth = window.innerWidth;
 
   if (x > windowWidth - width &&
-    y > margin &&
-    y <= margin + height) return true;
+    y > margin + 40 &&
+    y <= margin + 40 + height) return true;
 
   return false;
 }
