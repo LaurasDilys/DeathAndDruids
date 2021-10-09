@@ -59,16 +59,7 @@ namespace Business.Models
         }
 
 
-        private int passive;
-        public int Passive
-        {
-            get { return passive; }
-            set
-            {
-                passive = value;
-                //OnPropertyChanged();
-            }
-        }
+        public int Passive { get; set; }
 
 
         private void UpdateModifier()
