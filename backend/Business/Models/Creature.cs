@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Business.Models
 {
-    public class Character // Creature
+    public class Creature
     {
-        public Character()
+        public Creature()
         {
             BuildListsOfSkills();
             BuildListOfAbilities();

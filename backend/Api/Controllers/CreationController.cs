@@ -1,5 +1,6 @@
 ﻿using Application;
 using Application.Dto;
+using Application.Services;
 using Business.Interfaces;
 using Business.Models;
 using Data;
@@ -34,22 +35,22 @@ namespace Api.Controllers
             _context = context;
         }
 
-        //
-        [HttpDelete(nameof(TruncateAllTables))]
-        public IActionResult TruncateAllTables()
-        {
-            _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [Monsters]");
-            _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [OpenedMonsters]");
-            _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [Players]");
-            return Ok();
-        }
-        //
-        [HttpPut(nameof(Test))]
-        public ActionResult<Character> Test()
-        {
-            return Ok();
-        }
-        //
+        ////
+        //[HttpDelete(nameof(TruncateAllTables))]
+        //public IActionResult TruncateAllTables()
+        //{
+        //    _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [Monsters]");
+        //    _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [OpenedMonsters]");
+        //    _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [Players]");
+        //    return Ok();
+        //}
+        ////
+        //[HttpPut(nameof(Test))]
+        //public ActionResult<Character> Test()
+        //{
+        //    return Ok();
+        //}
+        ////
         
         [HttpPost(nameof(New))]
         public IActionResult New()
@@ -76,21 +77,8 @@ namespace Api.Controllers
                 return NotFound();
             }
 
-            _monstersService.OpenLast();
+            _creationService.OpenLast();
             return Ok(_creationService.GetOpened());
-        }
-
-        [HttpPatch(nameof(Patch))]
-        public IActionResult Patch(MonsterPatchRequest patch)
-        {
-            if (!_creationService.OpenedExists())
-                return UnprocessableEntity();
-
-            if (_creationService.Patch(patch))
-            {
-                return Ok();
-            }
-            return BadRequest();
         }
 
         [HttpPut(nameof(Save))]
@@ -112,7 +100,7 @@ namespace Api.Controllers
                 return NotFound();
             }
 
-            _monstersService.Open(key);
+            _creationService.Open(key);
 
             return Ok();
         }

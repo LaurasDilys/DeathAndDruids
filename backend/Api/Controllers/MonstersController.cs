@@ -1,4 +1,6 @@
 ﻿using Application;
+using Application.Dto;
+using Application.Services;
 using Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,30 +15,45 @@ namespace Api.Controllers
     [ApiController]
     public class MonstersController : ControllerBase
     {
-        private readonly MonstersService _service;
+        private readonly MonstersService _monstersService;
+        private readonly PatchService _patchService;
 
-        public MonstersController(MonstersService service)
+        public MonstersController(MonstersService monstersService, PatchService patchService)
         {
-            _service = service;
-        }
-
-        [HttpGet(nameof(Get))]
-        public ActionResult<IEnumerable<Monster>> Get()
-        {
-            return Ok(_service.Get());
+            _monstersService = monstersService;
+            _patchService = patchService;
         }
 
         [HttpDelete("Delete/{key:int}", Name = nameof(Delete))]
         public IActionResult Delete(int key)
         {
-            if (!_service.Exists(key))
+            if (!_monstersService.Exists(key))
             {
                 return BadRequest();
             }
 
-            _service.Delete(key);
+            _monstersService.Delete(key);
 
             return Ok();
+        }
+
+        [HttpGet(nameof(Get))]
+        public ActionResult<IEnumerable<Monster>> Get()
+        {
+            return Ok(_monstersService.Get());
+        }
+
+        [HttpPatch(nameof(Patch))]
+        public IActionResult Patch(MonsterPatchRequest patch)
+        {
+            //if (!_patchService.OpenedExists())
+            //    return UnprocessableEntity();
+
+            if (_patchService.Patch(patch))
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

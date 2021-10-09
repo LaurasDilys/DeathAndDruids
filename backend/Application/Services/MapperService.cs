@@ -10,28 +10,28 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application
+namespace Application.Services
 {
     public class MapperService
     {
-        private readonly ConverterService _converter;
+        private readonly CreatureMapperService _creatureMapper;
 
-        public MapperService(ConverterService converter)
+        public MapperService(CreatureMapperService creatureMapper)
         {
-            _converter = converter;
+            _creatureMapper = creatureMapper;
         }
 
-        public void TransformIntoFullCharacter(Character character, CharacterDataModel characterDb)
+        public void TransformIntoFullCharacter(Creature creature, FlatCreature flatCreature)
         {
-            _converter.TransformIntoFullCharacter(character, characterDb);
+            _creatureMapper.TransformIntoExpanded(creature, flatCreature);
         }
 
-        public void TransformIntoDataModel(CharacterDataModel characterDb, Character character)
+        public void TransformIntoDataModel(FlatCreature flatCreature, Creature creature)
         {
-            _converter.TransformIntoDataModel(characterDb, character);
+            _creatureMapper.TransformIntoFlat(flatCreature, creature);
         }
 
-        public void TransformIntoViewModel(OpenedMonsterViewModel viewModel, Character creature)
+        public void TransformIntoViewModel(OpenedMonsterViewModel viewModel, Creature creature)
         {
             TransformIntoDataModel(viewModel, creature);
 
@@ -92,10 +92,10 @@ namespace Application
             SetValuesFrom(monster, previousSave);
         }
 
-        private void SetValuesFrom(CharacterDataModel creature,
-            CharacterDataModel creatureWithOldValues)
+        private void SetValuesFrom(FlatCreature creature,
+            FlatCreature creatureWithOldValues)
         {
-            foreach (var propertyInfo in typeof(CharacterDataModel)
+            foreach (var propertyInfo in typeof(FlatCreature)
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 var newValue = propertyInfo.GetValue(creature);
@@ -103,15 +103,15 @@ namespace Application
             }
         }
         
-        public void PatchName(OpenedMonster monster, IMonsterPatchRequest patch)
-        {
-            if (patch.Value != "")
-            {
-                monster.Name = patch.Value;
-            }
-        }
+        //public void PatchName(OpenedMonster monster, IMonsterPatchRequest patch)
+        //{
+        //    if (patch.Value != "")
+        //    {
+        //        monster.Name = patch.Value;
+        //    }
+        //}
 
-        public bool Patch(Character creature, IMonsterPatchRequest patch)
+        public bool Patch(Creature creature, IMonsterPatchRequest patch)
         {
             int intValue;
             bool boolValue;
@@ -120,7 +120,7 @@ namespace Application
 
             // capitalize property name
             var name = $"{char.ToUpper(patch.Name[0])}{patch.Name.Substring(1)}";
-            var type = typeof(Character);
+            var type = typeof(Creature);
 
             var abilityNames = new string[]
             {

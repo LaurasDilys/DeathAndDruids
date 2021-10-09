@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business.Models
 {
-    public class CharacterDataModel // FlatCreature
+    public class FlatCreature
     {
         public string Name { get; set; }
         public string Alignment { get; set; }

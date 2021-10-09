@@ -1,4 +1,5 @@
 ﻿using Application;
+using Application.Services;
 using Business.Services;
 using Data;
 using Data.Repositories;
@@ -23,7 +24,8 @@ namespace Api
                     .AddScoped<MonstersRepository>();
 
             services.AddTransient<MapperService>()
-                    .AddTransient<ConverterService>();
+                    .AddTransient<CreatureMapperService>()
+                    .AddTransient<PatchService>();
         }
 
         public static void AddDatabase(this IServiceCollection services, string connectionString)
