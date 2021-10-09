@@ -39,7 +39,8 @@ const Options = ({ classes }) => {
             label="Open"
             onChange={handleOpen}
           >
-          {monsters.map(monster => <MenuItem key={monster.name} value={monster.name}>{monster.name}</MenuItem>)}
+          {[...monsters].sort((a, b) => a.name.localeCompare(b.name))
+          .map(monster => <MenuItem key={monster.name} value={monster.name}>{monster.name}</MenuItem>)}
         </Select>
       </FormControl>}
     </div>
