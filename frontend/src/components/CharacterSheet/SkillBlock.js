@@ -1,7 +1,7 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
-import { patchMonster } from "../../state/actions/creationThunk";
+import { patchMonster } from "../../state/actions/monstersThunk";
 import field from '../../dictionaries/FieldNames.json';
 
 const SkillBlock = ({ name, value, proficiency, proficiencyName }) => {

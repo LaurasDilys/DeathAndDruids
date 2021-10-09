@@ -1,7 +1,7 @@
 import { TextField, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { patchMonster } from "../../state/actions/creationThunk";
+import { patchMonster } from "../../state/actions/monstersThunk";
 import { creationState, monstersState } from "../../state/selectors/creationSelectors";
 import field from '../../dictionaries/FieldNames.json';
 

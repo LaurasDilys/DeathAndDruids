@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
-import { patchMonster } from "../../state/actions/creationThunk";
+import { patchMonster } from "../../state/actions/monstersThunk";
 import "./CharacterSheet.css"
 
 const styles = {
