@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
 import field from '../../dictionaries/FieldNames.json';
 
-const Field = ({ nameRef, name, value, cannotBeSaved }) => {
+const Field = ({ nameRef, name, value, cannotBeSaved, notRequired }) => {
   const [state, setState] = useState(value);
   const dispatch = useDispatch();
 
@@ -31,7 +31,7 @@ const Field = ({ nameRef, name, value, cannotBeSaved }) => {
 
   return(
     <TextField
-      error={state === ""}
+      error={!notRequired && state === ""}
       label={field[name]}
       value={state}
       // InputLabelProps={{

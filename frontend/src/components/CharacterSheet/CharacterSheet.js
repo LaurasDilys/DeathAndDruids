@@ -1,7 +1,7 @@
 import { Button, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { saveMonster } from "../../state/actions/creationThunk";
+import { patchMonster, saveMonster } from "../../state/actions/creationThunk";
 import { monstersState } from "../../state/selectors/creationSelectors";
 import NameField from "./NameField";
 import NumberField from "./NumberField";
@@ -61,6 +61,63 @@ const CharacterSheet = ({ monster, unmountMe }) => {
     // console.log(`${field} cannot be saved: ${bool}`);
   }
 
+  const handleHeal = () => {
+    let heal = amountRef.current.value;
+
+    if (heal > 0) {
+      let currentHP = monster.currentHitPoints;
+      let maxHP = monster.hitPoints;
+
+      currentHP += heal;
+      if (currentHP > maxHP) currentHP = maxHP;
+
+      dispatch(patchMonster({
+        name: "currentHitPoints",
+        value: currentHP.toString()
+      }));
+
+      amountRef.current.value = 0;
+    }
+  }
+
+  const handleDamage = () => {
+    let damage = amountRef.current.value;
+
+    if (damage > 0) {
+      let temporary = monster.temporaryHitPoints;
+      let current = monster.currentHitPoints;
+
+      if (temporary > 0) { // damage takes away from temporary hit points first
+        if (temporary >= damage) {
+          temporary -= damage;
+          dispatch(patchMonster({
+            name: "temporaryHitPoints",
+            value: temporary.toString()
+          }));
+        } else {
+          damage -= temporary;
+          temporary = 0;
+          dispatch(patchMonster({
+            name: "temporaryHitPoints",
+            value: temporary.toString()
+          }));
+          current -= damage;
+          dispatch(patchMonster({
+            name: "currentHitPoints",
+            value: current.toString()
+          }));
+        }
+      } else {
+        current -= damage;
+        dispatch(patchMonster({
+          name: "currentHitPoints",
+          value: current.toString()
+        }));
+      }
+      amountRef.current.value = 0;
+    }
+  }
+
   return(
     <div className="char-sheet-row">
 
@@ -109,6 +166,7 @@ const CharacterSheet = ({ monster, unmountMe }) => {
             cannotBeSaved={handleSaveButtonValidation}
           />
           <Field
+            notRequired
             name={"alignment"}
             value={valueOf("alignment")}
             cannotBeSaved={handleSaveButtonValidation}
@@ -178,19 +236,19 @@ const CharacterSheet = ({ monster, unmountMe }) => {
         </div>
         <div className="heal-damage">
           <div className="heal">
-            <Button variant="contained" className="heal">
+            <Button variant="contained" className="heal" onClick={handleHeal}>
               Heal
             </Button>
           </div>
           <div className="amount">
             <TextField
-              inputRef={amountRef}
               label="Amount"
               type="number"
+              inputRef={amountRef}
             />
           </div>
           <div className="damage">
-            <Button variant="contained" className="damage">
+            <Button variant="contained" className="damage" onClick={handleDamage}>
               Damage
             </Button>
           </div>

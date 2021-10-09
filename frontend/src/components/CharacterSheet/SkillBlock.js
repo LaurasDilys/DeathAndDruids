@@ -35,7 +35,7 @@ const SkillBlock = ({ name, value, proficiency, proficiencyName }) => {
         />}
         label={<>
           <span className="proficiency-span">{value}</span>
-          <span>{name.includes("SavingThrow") ? "Saving Throw" : name/*field[name]*/}</span>
+          <span>{name.includes("SavingThrow") ? "Saving Throw" : field[name]}</span>
         </>}
       />
     </div>

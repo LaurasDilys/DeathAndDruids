@@ -114,44 +114,19 @@ const OptionMenu = ({ onSave, cannotBeSaved, unmountMe, classes }) => {
   }
   
   return (
-    <nav className={visibility ? "opt-viewport-height visible" : "opt-viewport-height"}>
-      <div ref={ref} className="opt">
-        <div className="opt-items">
-
-          {(thisMonster.name !== "" && cannotBeSaved.length === 0 && !thisMonster.saved) &&
-          <Button onClick={() => onSave()}>Save</Button>}
-
-          {!thisMonster.saved &&
-          <Button onClick={handleUndo}>Undo</Button>}
-
-          <Button onClick={handleNew}>New</Button>
-
-          {monsters.length > 0 &&
-          <FormControl disabled={monsters.length === 0} sx={{ m: 1, width: "160px" }} error>
-            <InputLabel>Open</InputLabel>
-              <Select
-                inputProps={{ classes: { select: classes.select } }}
-                value={selected}
-                label="Open"
-                onChange={handleOpen}
-              >
-              {monsters.map(monster => <MenuItem key={monster.name} value={monster.name}>{monster.name}</MenuItem>)}
-            </Select>
-          </FormControl>}
-
-          {thisMonster.sourceId !== null &&
-          <Button disabled={thisMonster.sourceId === null} onClick={handleDelete}>Delete</Button>}
-          
-          <Button onClick={handleExit}>Exit</Button>
-        </div>
-      </div>
-    </nav>
     // <nav className={visibility ? "opt-viewport-height visible" : "opt-viewport-height"}>
     //   <div ref={ref} className="opt">
     //     <div className="opt-items">
-    //       <Button disabled={thisMonster.name === "" || cannotBeSaved.length > 0 || thisMonster.saved} onClick={() => onSave()}>Save</Button>
-    //       <Button disabled={thisMonster.saved} onClick={handleUndo}>Undo</Button>
+
+    //       {(thisMonster.name !== "" && cannotBeSaved.length === 0 && !thisMonster.saved) &&
+    //       <Button onClick={() => onSave()}>Save</Button>}
+
+    //       {!thisMonster.saved &&
+    //       <Button onClick={handleUndo}>Undo</Button>}
+
     //       <Button onClick={handleNew}>New</Button>
+
+    //       {monsters.length > 0 &&
     //       <FormControl disabled={monsters.length === 0} sx={{ m: 1, width: "160px" }} error>
     //         <InputLabel>Open</InputLabel>
     //           <Select
@@ -162,12 +137,39 @@ const OptionMenu = ({ onSave, cannotBeSaved, unmountMe, classes }) => {
     //           >
     //           {monsters.map(monster => <MenuItem key={monster.name} value={monster.name}>{monster.name}</MenuItem>)}
     //         </Select>
-    //       </FormControl>
-    //       <Button disabled={thisMonster.sourceId === null} onClick={handleDelete}>Delete</Button>
+    //       </FormControl>}
+
+    //       {thisMonster.sourceId !== null &&
+    //       <Button disabled={thisMonster.sourceId === null} onClick={handleDelete}>Delete</Button>}
+          
     //       <Button onClick={handleExit}>Exit</Button>
     //     </div>
     //   </div>
     // </nav>
+    
+    <nav className={visibility ? "opt-viewport-height visible" : "opt-viewport-height"}>
+      <div ref={ref} className="opt">
+        <div className="opt-items">
+          <Button disabled={thisMonster.name === "" || cannotBeSaved.length > 0 || thisMonster.saved} onClick={() => onSave()}>Save</Button>
+          <Button disabled={thisMonster.saved} onClick={handleUndo}>Undo</Button>
+          <Button onClick={handleNew}>New</Button>
+          <FormControl disabled={monsters.length === 0} sx={{ m: 1, width: "160px" }} error>
+            <InputLabel>Open</InputLabel>
+              <Select
+                inputProps={{ classes: { select: classes.select } }}
+                value={selected}
+                label="Open"
+                onChange={handleOpen}
+              >
+              {[...monsters].sort((a, b) => a.name.localeCompare(b.name))
+              .map(monster => <MenuItem key={monster.name} value={monster.name}>{monster.name}</MenuItem>)}
+            </Select>
+          </FormControl>
+          <Button disabled={thisMonster.sourceId === null} onClick={handleDelete}>Delete</Button>
+          <Button onClick={handleExit}>Exit</Button>
+        </div>
+      </div>
+    </nav>
   );
 };
 

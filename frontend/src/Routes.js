@@ -4,7 +4,7 @@ import HomePage from './components/HomePage/HomePage';
 
 const Routes = [
   {
-    title: "Home",
+    title: "About",
     path: "/",
     getComponent: () => {return HomePage}
   },
