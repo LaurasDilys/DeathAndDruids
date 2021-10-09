@@ -2,10 +2,16 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
 import Routes from './Routes';
 import SideNav from './components/SideNav/SideNav';
+import { useDispatch } from 'react-redux';
+import { setRoute } from './state/actions/locationThunk';
 
 const LocationTracker = (props) => {
+  const dispatch = useDispatch();
   const location = useLocation();
-  console.log(location);
+
+  dispatch(setRoute({
+    route: location.pathname.slice(1)
+  }));
 
   return props.children;
 }

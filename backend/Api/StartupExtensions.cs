@@ -17,11 +17,16 @@ namespace Api
     {
         public static void ConfigureDependencyInjection(this IServiceCollection services)
         {
+            services.AddScoped<MonstersService>()
+                    .AddScoped<MonstersRepository>();
+
+            services.AddScoped<LocationService>()
+                    .AddScoped<LocationRepository>();
+
             services.AddScoped<CreationService>()
                     .AddScoped<CreationRepository>();
 
-            services.AddScoped<MonstersService>()
-                    .AddScoped<MonstersRepository>();
+            // add combat service and repository
 
             services.AddTransient<MapperService>()
                     .AddTransient<CreatureMapperService>()
