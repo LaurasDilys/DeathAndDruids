@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
 import field from '../../dictionaries/FieldNames.json';
 
-const Field = ({ nameRef, name, value, cannotBeSaved, notRequired }) => {
+const Field = ({ name, value, cannotBeSaved, notRequired }) => {
   const [state, setState] = useState(value);
   const dispatch = useDispatch();
 
