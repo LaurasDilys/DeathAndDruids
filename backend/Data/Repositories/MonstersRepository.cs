@@ -1,9 +1,6 @@
 ﻿using Data.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Repositories
 {
@@ -52,8 +49,6 @@ namespace Data.Repositories
             _context.Monsters.Remove(monster);
             SaveChanges();
         }
-
-
 
         public void SaveChanges()
         {
