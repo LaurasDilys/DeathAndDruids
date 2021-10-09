@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
 import field from '../../dictionaries/FieldNames.json';
 
-const NumberField = ({ name, value, cannotBeSaved }) => {
+const NumberField = ({ name, value, cannotBeSaved, disabled }) => {
   const [state, setState] = useState(value);
   const dispatch = useDispatch();
 
@@ -31,8 +31,10 @@ const NumberField = ({ name, value, cannotBeSaved }) => {
 
   return(
     <TextField
+      disabled={disabled}
       error={state === ""}
-      label={field[name]}
+      // label={field[name]}
+      label={name}
       value={state}
       type="number"
       // InputLabelProps={{

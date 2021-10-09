@@ -5,7 +5,7 @@ import { patchMonster } from "../../state/actions/creationThunk";
 import { creationState, monstersState } from "../../state/selectors/creationSelectors";
 import field from '../../dictionaries/FieldNames.json';
 
-const NameField = ({ nameRef, name, value, cannotBeSaved }) => {
+const NameField = ({ nameRef, name, value, cannotBeSaved, disabled }) => {
   const { monster: thisMonster } = useSelector(creationState);
   const { monsters } = useSelector(monstersState);
   const [state, setState] = useState(value);
@@ -43,6 +43,7 @@ const NameField = ({ nameRef, name, value, cannotBeSaved }) => {
   return(
     <Tooltip title={newAndNameNotUnique(state) ? "This name is not unique" : ""}>
       <TextField
+        disabled={disabled}
         inputRef={nameRef}
         error={state === "" || newAndNameNotUnique(state)}
         label={field[name]}

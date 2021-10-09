@@ -11,6 +11,7 @@ import AbilityBlock from "./AbilityBlock";
 import SkillBlock from "./SkillBlock";
 import tree from '../../dictionaries/AbilityTree.json';
 import OptionMenu from "./OptionMenu";
+import Field from "./Field";
 
 const CharacterSheet = ({ monster, unmountMe }) => {
   const [cannotBeSaved, setCannotBeSaved] = useState([]);
@@ -62,27 +63,14 @@ const CharacterSheet = ({ monster, unmountMe }) => {
   }
 
   return(
-    <div>
+    <div className="char-sheet-row">
       <OptionMenu onSave={handleSave} cannotBeSaved={cannotBeSaved} unmountMe={() => unmountMe()} />
-      <Button onClick={() => console.log(monster)}>Print Monster</Button>
-      <h1>SourceId: {monster.sourceId}</h1>
-      <Button disabled={cannotBeSaved.length > 0} onClick={handleSave}>Save</Button>
-      {/* 
-      <h1>SourceId: {monster.sourceId !== null ? monster.sourceId : 0}</h1>
-      <h2>Name: {monster.name}</h2>
-      <NameField
-        nameRef={nameRef}
-        name={"name"}
-        value={valueOf("name")}
-        cannotBeSaved={handleSaveButtonValidation}
-      />
-      <h2>Initiative: {monster.initiative}</h2>
-      <NumberField
-        name={"initiative"}
-        value={valueOf("initiative")}
-        cannotBeSaved={handleSaveButtonValidation}
-      /> */}
-      <div>
+
+      <div className="char-sheet-col">
+
+
+
+
         <div className="name-field-div">
           <NameField
             nameRef={nameRef}
@@ -91,21 +79,110 @@ const CharacterSheet = ({ monster, unmountMe }) => {
             cannotBeSaved={handleSaveButtonValidation}
           />
         </div>
-        {Object.keys(tree).slice(0, 3).map((ability, index) => <AbilityBlock
-          key={index}
-          name={ability}
-          value={valueOf(ability)}
-          modifierValue={valueOf(tree[ability]["modifier"])}
-          cannotBeSaved={handleSaveButtonValidation}
-        >
-          {tree[ability]["skills"].map((skill, index) => <SkillBlock
+
+        <div>
+          {Object.keys(tree).slice(0, 3).map((ability, index) => <AbilityBlock
             key={index}
-            name={skill[0]}
-            value={valueOf(skill[0])}
-            proficiency={valueOf(skill[1])}
-            proficiencyName={skill[1]}
-          /> )}
-        </AbilityBlock> )}
+            name={ability}
+            value={valueOf(ability)}
+            modifierValue={valueOf(tree[ability]["modifier"])}
+            cannotBeSaved={handleSaveButtonValidation}
+          >
+            {tree[ability]["skills"].map((skill, index) => <SkillBlock
+              key={index}
+              name={skill[0]}
+              value={valueOf(skill[0])}
+              proficiency={valueOf(skill[1])}
+              proficiencyName={skill[1]}
+            /> )}
+          </AbilityBlock> )}
+        </div>
+      </div>
+
+      <div className="char-sheet-col">
+
+
+        
+        <div className="triple">
+          <NumberField
+            name={"CR"}
+            value={valueOf("challengeRating")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
+          <NumberField
+            disabled
+            name={"Prof"}
+            value={valueOf("proficiencyBonus")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
+          <Field
+            name={"Align"}
+            value={valueOf("challengeRating")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
+        </div>
+
+        <div>
+          {Object.keys(tree).slice(3, 6).map((ability, index) => <AbilityBlock
+            key={index}
+            name={ability}
+            value={valueOf(ability)}
+            modifierValue={valueOf(tree[ability]["modifier"])}
+            cannotBeSaved={handleSaveButtonValidation}
+          >
+            {tree[ability]["skills"].map((skill, index) => <SkillBlock
+              key={index}
+              name={skill[0]}
+              value={valueOf(skill[0])}
+              proficiency={valueOf(skill[1])}
+              proficiencyName={skill[1]}
+            /> )}
+          </AbilityBlock> )}
+        </div>
+
+
+        
+
+          
+          
+        </div>
+
+
+        <div className="char-sheet-col">
+
+
+        <div className="triple">
+          <NumberField
+            name={"AC"}
+            value={valueOf("armorClass")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
+          <NumberField
+            disabled
+            name={"Speed"}
+            value={valueOf("speed")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
+        </div>
+
+        <div className="triple">
+          <NumberField
+            name={"Current"}
+            value={valueOf("currentArmorClass")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
+          <NumberField
+            disabled
+            name={"Current"}
+            value={valueOf("currentSpeed")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
+        </div>
+
+
+      
+
+
       </div>
     </div>
   );
