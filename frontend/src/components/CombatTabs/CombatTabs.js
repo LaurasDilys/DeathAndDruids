@@ -5,51 +5,55 @@ import TabPanel from '@mui/lab/TabPanel';
 import { useEffect, useState } from 'react';
 import TabLabel from './TabLabel';
 import { getColor, FadingTab } from './FadingTab';
+import CharacterSheet from '../CharacterSheet/CharacterSheet';
+import { useDispatch, useSelector } from 'react-redux';
+import { creationState } from '../../state/selectors/creationSelectors';
+import { getOpenedMonster } from '../../state/actions/creationThunk';
 
-const mockCharacters = [
-  {
-    id: 1,
-    name: "Sixth",
-    initiative: 1,
-    hp: 1,
-    maxHp: 11
-  },
-  {
-    id: 2,
-    name: "Fifth",
-    initiative: 2,
-    hp: 1,
-    maxHp: 10
-  },
-  {
-    id: 3,
-    name: "Fourth",
-    initiative: 4,
-    hp: 2,
-    maxHp: 10
-  },
-  {
-    id: 4,
-    name: "Third",
-    initiative: 6,
-    hp: 4,
-    maxHp: 10
-  },
-  {
-    id: 5,
-    name: "Second",
-    initiative: 8,
-    hp: 6,
-    maxHp: 10
-  },
-  {
-    id: 6,
-    name: "First",
-    initiative: 10,
-    hp: 8,
-    maxHp: 10
-  }
-]
+// const mockCharacters = [
+//   {
+//     id: 1,
+//     name: "Sixth",
+//     initiative: 1,
+//     currentHitPoints: 1,
+//     hitPoints: 11
+//   },
+//   {
+//     id: 2,
+//     name: "Fifth",
+//     initiative: 2,
+//     currentHitPoints: 1,
+//     hitPoints: 10
+//   },
+//   {
+//     id: 3,
+//     name: "Fourth",
+//     initiative: 4,
+//     currentHitPoints: 2,
+//     hitPoints: 10
+//   },
+//   {
+//     id: 4,
+//     name: "Third",
+//     initiative: 6,
+//     currentHitPoints: 4,
+//     hitPoints: 10
+//   },
+//   {
+//     id: 5,
+//     name: "Second",
+//     initiative: 8,
+//     currentHitPoints: 6,
+//     hitPoints: 10
+//   },
+//   {
+//     id: 6,
+//     name: "First",
+//     initiative: 10,
+//     currentHitPoints: 8,
+//     hitPoints: 10
+//   }
+// ]
 
 const sorted = (characters) => {
   return [...characters].sort((a, b) => {
@@ -63,9 +67,29 @@ const firstInInitiative = (characters) => {
 }
 
 const CombatTabs = () => {
-  const [characters, setCharacters] = useState(mockCharacters);
+  const [characters, setCharacters] = useState([]);
   const [tabChangeAttempt, setTabChangeAttempt] = useState();
-  const [selectedTab, setSelectedTab] = useState(firstInInitiative(characters));
+  const [selectedTab, setSelectedTab] = useState();
+  
+  
+  //
+  //
+  const creation = useSelector(creationState);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getOpenedMonster);
+  }, []);
+
+  useEffect(() => {
+    if (creation !== null) {
+      setCharacters([creation.monster]);
+      setSelectedTab(firstInInitiative([creation.monster]));
+    }
+  }, [creation])
+  //
+  //
+
 
   const handleInitiativeChange = (id, initiative) => {
     setCharacters(characters.map(c => {
@@ -104,7 +128,10 @@ const CombatTabs = () => {
             onChange={handleSelectedTabChange}>
               {sorted(characters).map(character =>
                 <FadingTab
-                  style={getColor(character.hp / character.maxHp)}
+                  style={getColor(
+                    (character.currentHitPoints +
+                    character.temporaryHitPoints) /
+                    character.hitPoints)} // color depends on creature's HP ratio
                   key={character.id}
                   value={character.id}
                   label={<TabLabel
@@ -119,7 +146,12 @@ const CombatTabs = () => {
             <TabPanel
               key={character.id}
               value={character.id}>
-                {character.name}{character.initiative}
+                {creation === null ? character.name + character.initiative :
+                <div className="flex-row">
+                  <div className="flex-col">
+                   <CharacterSheet monster={character} />
+                  </div>
+                </div>}
             </TabPanel>)}
       </TabContext>
     </Box>
