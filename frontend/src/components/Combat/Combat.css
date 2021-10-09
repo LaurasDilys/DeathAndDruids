@@ -4,14 +4,19 @@
   height: 100vh;
 }
 
+.combat-selection-bookends {
+  display: flex;
+  justify-content: center;
+  margin: 2em 0 1em;
+}
+
 .combat-selection-col {
-  background-color: aquamarine;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.combat-row {
+.combatant-row {
   display: flex;
   justify-content: center;
 }
