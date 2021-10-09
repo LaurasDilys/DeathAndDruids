@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Dto
 {
-    public class OpenedMonsterViewModel : OpenedMonster
+    public class OpenedMonsterViewModel : SavableOpenedMonster
     {
         public OpenedMonsterViewModel(int id, int? sourceId, bool saved)
         {

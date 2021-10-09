@@ -73,21 +73,21 @@ namespace Application.Services
             viewModel.Persuasion = creature.Persuasion.ModifierText;
         }
 
-        public Monster NewMonsterFromOpened(OpenedMonster monster)
+        public Monster NewMonsterFromOpened(SavableOpenedMonster monster)
         {
             var newMonster = new Monster { Type = "monster" };
             SetValuesFrom(monster, newMonster);
             return newMonster;
         }
 
-        public void ReplaceWith(Monster monster, OpenedMonster previouslyOpened)
+        public void ReplaceWith(Monster monster, SavableOpenedMonster previouslyOpened)
         {
             SetValuesFrom(monster, previouslyOpened);
             previouslyOpened.SourceId = monster.Id;
             previouslyOpened.Saved = true;
         }
 
-        public void ReplaceWith(OpenedMonster monster, Monster previousSave)
+        public void ReplaceWith(SavableOpenedMonster monster, Monster previousSave)
         {
             SetValuesFrom(monster, previousSave);
         }

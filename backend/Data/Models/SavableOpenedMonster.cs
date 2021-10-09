@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class OpenedMonster : FlatCreature
+    public class SavableOpenedMonster : OpenedMonster
     {
-        [Key]
-        public int Id { get; set; }
-        public int? SourceId { get; set; }
+        public bool Saved { get; set; } // onChange => false
     }
 }

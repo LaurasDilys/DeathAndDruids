@@ -19,23 +19,23 @@ namespace Data.Repositories
 
         public bool Exists()
         {
-            return _context.OpenedMonsters.Any();
+            return _context.Creation.Any();
         }
 
-        public OpenedMonster GetOpened()
+        public SavableOpenedMonster GetOpened()
         {
-            return _context.OpenedMonsters.FirstOrDefault();
+            return _context.Creation.FirstOrDefault();
         }
 
-        public void Add(OpenedMonster monster)
+        public void Add(SavableOpenedMonster monster)
         {
-            _context.OpenedMonsters.Add(monster);
+            _context.Creation.Add(monster);
             SaveChanges();
         }
 
         public void DeleteAll()
         {
-            _context.OpenedMonsters.RemoveRange(_context.OpenedMonsters);
+            _context.Creation.RemoveRange(_context.Creation);
             SaveChanges();
         }
 

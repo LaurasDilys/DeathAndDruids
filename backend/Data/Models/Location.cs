@@ -1,5 +1,4 @@
-﻿using Business.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    public class OpenedMonster : FlatCreature
+    public class Location
     {
         [Key]
         public int Id { get; set; }
-        public int? SourceId { get; set; }
+        public string Route { get; set; }
+        public int? SelectedTab { get; set; }
     }
 }

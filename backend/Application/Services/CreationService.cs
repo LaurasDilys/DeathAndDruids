@@ -45,7 +45,7 @@ namespace Application.Services
         public void New()
         {
             var creature = new Creature();
-            var monster = new OpenedMonster();
+            var monster = new SavableOpenedMonster();
             _mapper.TransformIntoDataModel(monster, creature);
 
             if (OpenedExists())
@@ -87,7 +87,7 @@ namespace Application.Services
         public void Open(int key)
         {
             var monster = _monstersRepository.Get(key);
-            OpenedMonster currentlyOpened;
+            SavableOpenedMonster currentlyOpened;
             if (_creationRepository.Exists())
             {
                 currentlyOpened = _creationRepository.GetOpened();
@@ -105,7 +105,7 @@ namespace Application.Services
             }
             else
             {
-                currentlyOpened = new OpenedMonster();
+                currentlyOpened = new SavableOpenedMonster();
 
                 _mapper.ReplaceWith(monster, currentlyOpened);
                 monster.InCreation = true;
