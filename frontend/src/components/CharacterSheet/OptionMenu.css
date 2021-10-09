@@ -1,0 +1,45 @@
+.opt-viewport-height {
+  z-index: 2;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 210px;
+  right: -200px;
+  transition: 350ms;
+}
+
+.opt-viewport-height.visible {
+  right: 0;
+  transition: 350ms;
+}
+
+.opt {
+  display: flex;
+  margin: auto 0;
+  padding: 10px 0;
+  background-color: var(--black-var);
+}
+
+.opt-items {
+  display: flex;
+  flex-direction: column;
+  margin-left: 22px;
+}
+
+.opt-items button {
+  justify-content: flex-start;
+  text-transform: unset;
+  margin-left: 20px;
+  margin: 10px 8px;
+  font-size: 18px;
+  padding: 10px 20px;
+  width: 160px;
+  border-radius: 3px;
+  background-color: var(--red-dark);
+  color: var(--white-var);
+}
+
+.opt-items button:hover {
+  background-color: var(--red);
+}

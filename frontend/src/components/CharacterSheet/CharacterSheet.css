@@ -1,0 +1,110 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.padding-top {
+  padding-top: 1.3em;
+}
+
+.char-sheet-row {
+  display: flex;
+}
+
+.first-char-sheet-column {
+  margin: 0 40px;
+}
+
+.name-field-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.name-field-div * {
+  margin: 10px 0;
+}
+
+.triple {
+  /* background-color: gold; */
+  margin: 10px 0;
+}
+
+.triple * {
+  width: 4.85em;
+}
+
+.heal-damage {
+  display: flex;
+}
+
+.heal-damage button {
+  justify-content: center;
+  text-transform: unset;
+  font-size: 18px;
+  padding: 12px;
+  width: 95px;
+  border-radius: 3px;
+}
+
+.heal button {
+  background-color: green;
+  color: var(--white-var);
+}
+
+.heal button:hover {
+  background-color: var(--green);
+}
+
+.damage button {
+  background-color: var(--red-dark);
+  color: var(--white-var);
+}
+
+.damage button:hover {
+  background-color: var(--red);
+}
+
+.amount {
+  margin: 0 21px;
+  width: 4em;
+}
+
+.ability-block {
+  /* background-color: aquamarine; */
+  display: flex;
+  height: 8em;
+}
+
+.ability {
+  /* background-color: aqua; */
+  display: flex;
+  flex-direction: column;
+  width: 4em;
+  margin-top: 0.36em;
+}
+
+.skills {
+  /* background-color: blanchedalmond; */
+  display: flex;
+  flex-direction: column;
+}
+
+.skills span {
+  vertical-align: middle;
+  font-size: 0.75em;
+}
+
+.skills > * {
+  /* background-color: gold; */
+  display: flex;
+  flex-direction: row;
+  margin: 0 0 -0.7em 0.5em;
+}
+
+.proficiency-span {
+  display: inline-block;
+  text-align: left;
+  width: 2.2em;
+  margin: 0 0 0 -0.2em;
+}
