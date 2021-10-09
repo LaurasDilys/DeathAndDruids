@@ -33,7 +33,7 @@ namespace Application.Services
             var dataModel = _creationRepository.GetOpened();
 
             var creature = new Creature();
-            _mapper.TransformIntoFullCharacter(creature, dataModel);
+            _mapper.TransformIntoExpanded(creature, dataModel);
 
             var viewModel = new SavableOpenedMonsterViewModel(
                 dataModel.Id, dataModel.SourceId, dataModel.Saved);
@@ -46,7 +46,7 @@ namespace Application.Services
         {
             var creature = new Creature();
             var monster = new SavableOpenedMonster();
-            _mapper.TransformIntoDataModel(monster, creature);
+            _mapper.TransformIntoFlat(monster, creature);
 
             if (OpenedExists())
             {

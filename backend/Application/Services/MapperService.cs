@@ -21,19 +21,19 @@ namespace Application.Services
             _creatureMapper = creatureMapper;
         }
 
-        public void TransformIntoFullCharacter(Creature creature, FlatCreature flatCreature)
+        public void TransformIntoExpanded(Creature creature, FlatCreature flatCreature)
         {
             _creatureMapper.TransformIntoExpanded(creature, flatCreature);
         }
 
-        public void TransformIntoDataModel(FlatCreature flatCreature, Creature creature)
+        public void TransformIntoFlat(FlatCreature flatCreature, Creature creature)
         {
             _creatureMapper.TransformIntoFlat(flatCreature, creature);
         }
 
         public void TransformIntoViewModel(SavableOpenedMonsterViewModel viewModel, Creature creature)
         {
-            TransformIntoDataModel(viewModel, creature);
+            TransformIntoFlat(viewModel, creature);
 
             viewModel.StrengthModifier = creature.Strength.ModifierText;
             viewModel.DexterityModifier = creature.Dexterity.ModifierText;
@@ -80,6 +80,12 @@ namespace Application.Services
             return newMonster;
         }
 
+        public void ReplaceWith(Monster monster, OpenedMonster monsterToBeOpened)
+        {
+            SetValuesFrom(monster, monsterToBeOpened);
+            monsterToBeOpened.SourceId = monster.Id;
+        }
+
         public void ReplaceWith(Monster monster, SavableOpenedMonster previouslyOpened)
         {
             SetValuesFrom(monster, previouslyOpened);
@@ -92,7 +98,7 @@ namespace Application.Services
             SetValuesFrom(monster, previousSave);
         }
 
-        private void SetValuesFrom(FlatCreature creature,
+        public void SetValuesFrom(FlatCreature creature,
             FlatCreature creatureWithOldValues)
         {
             foreach (var propertyInfo in typeof(FlatCreature)

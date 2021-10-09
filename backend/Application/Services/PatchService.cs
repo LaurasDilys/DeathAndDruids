@@ -25,10 +25,10 @@ namespace Application.Services
             var monster = _creationRepository.GetOpened();
 
             var creature = new Creature();
-            _mapper.TransformIntoFullCharacter(creature, monster);
+            _mapper.TransformIntoExpanded(creature, monster);
             if (_mapper.Patch(creature, patch))
             {
-                _mapper.TransformIntoDataModel(monster, creature);
+                _mapper.TransformIntoFlat(monster, creature);
 
                 monster.Saved = false;
 

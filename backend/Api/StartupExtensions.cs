@@ -26,7 +26,8 @@ namespace Api
             services.AddScoped<CreationService>()
                     .AddScoped<CreationRepository>();
 
-            // add combat service and repository
+            services.AddScoped<CombatService>()
+                    .AddScoped<CombatRepository>();
 
             services.AddTransient<MapperService>()
                     .AddTransient<CreatureMapperService>()
