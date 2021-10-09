@@ -1,0 +1,17 @@
+.combat-selection-row {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.combat-selection-col {
+  background-color: aquamarine;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.combat-row {
+  display: flex;
+  justify-content: center;
+}
