@@ -3,7 +3,7 @@ import { withStyles } from '@mui/styles';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { newMonster, openMonster } from '../../state/actions/creationThunk';
-import { monstersState } from '../../state/selectors/creationSelectors';
+import { monstersState } from '../../state/selectors';
 
 const styles = {
   select: {

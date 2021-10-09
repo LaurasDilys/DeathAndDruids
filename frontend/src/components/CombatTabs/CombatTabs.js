@@ -7,7 +7,7 @@ import TabLabel from './TabLabel';
 import { getColor, FadingTab } from './FadingTab';
 import CharacterSheet from '../CharacterSheet/CharacterSheet';
 import { useDispatch, useSelector } from 'react-redux';
-import { creationState } from '../../state/selectors/creationSelectors';
+import { creationState } from '../../state/selectors';
 import { getOpenedMonster } from '../../state/actions/creationThunk';
 
 // const mockCharacters = [

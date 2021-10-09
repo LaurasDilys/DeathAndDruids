@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveMonster } from "../../state/actions/creationThunk";
 import { patchMonster } from "../../state/actions/monstersThunk";
-import { monstersState } from "../../state/selectors/creationSelectors";
+import { monstersState } from "../../state/selectors";
 import NameField from "./NameField";
 import NumberField from "./NumberField";
 import AbilityBlock from "./AbilityBlock";

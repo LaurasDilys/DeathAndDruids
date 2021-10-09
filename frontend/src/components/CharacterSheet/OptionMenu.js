@@ -3,7 +3,7 @@ import { withStyles } from '@mui/styles';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeMonster, deleteOpenedMonster, newMonster, openMonster } from '../../state/actions/creationThunk';
-import { creationState, monstersState } from '../../state/selectors/creationSelectors';
+import { creationState, monstersState } from '../../state/selectors';
 import './OptionMenu.css';
 import { whiteVar } from '../../Themes';
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getOpenedMonster } from "../../state/actions/creationThunk";
 import { getMonsters } from "../../state/actions/monstersThunk";
-import { creationState } from "../../state/selectors/creationSelectors";
+import { creationState } from "../../state/selectors";
 import CharacterSheet from "../CharacterSheet/CharacterSheet";
 import './Creation.css';
 import Options from "./Options";
