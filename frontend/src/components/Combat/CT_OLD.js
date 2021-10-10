@@ -5,9 +5,12 @@ import TabPanel from '@mui/lab/TabPanel';
 import { useEffect, useState } from 'react';
 import TabLabel from './TabLabel';
 import { getColor, FadingTab } from './FadingTab';
-import { useSelector } from 'react-redux';
-import { combatState } from '../../state/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { combatState, locationState } from '../../state/selectors';
 import CombatSheet from '../CharacterSheet/CombatSheet';
+import { getSelectedTab, setSelectedTab } from '../../state/actions/locationThunk';
+import { patchMonster } from "../../state/actions/monstersThunk";
+import { deleteCombatant } from '../../state/actions/combatThunk';
 
 const sorted = (characters) => {
   return [...characters].sort((a, b) => {
@@ -21,25 +24,32 @@ const firstInInitiative = (characters) => {
 }
 
 const CT_OLD = () => {
-  const { combatants } = useSelector(combatState);
-  const [characters, setCharacters] = useState(combatants);
+  const { combatants: characters } = useSelector(combatState);
+  const dispatch = useDispatch();
+
+
+  const setFirst = () => {
+    const id = firstInInitiative(characters);
+    dispatch(setSelectedTab(id));
+    return id;
+  }
+  const [tab, setTab] = useState(setFirst());
   const [tabChangeAttempt, setTabChangeAttempt] = useState();
-  const [selectedTab, setSelectedTab] = useState(firstInInitiative(characters));
 
   const handleInitiativeChange = (id, initiative) => {
-    setCharacters(characters.map(c => {
-      if (c.id === id) c.initiative = initiative;
-      return c;
+    dispatch(patchMonster({
+      name: "initiative",
+      value: initiative
     }));
   };
 
   const handleCloseTab = (id) => {
-    if (selectedTab === id) { // if selected tab is the one, that's being closed
+    if (tab === id) { // if selected tab is the one, that's being closed
       const ids = sorted(characters).map(c => c.id);
       const nextId = ids[ids.indexOf(id) + 1] !== undefined ? ids[ids.indexOf(id) + 1] : ids[ids.indexOf(id) - 1]
-      setSelectedTab(nextId); // switch to tab to the right of closed tab – or to the left, if there are no tabs to the right
+      setTab(nextId); // switch to tab to the right of closed tab – or to the left, if there are no tabs to the right
     }
-    setCharacters(characters.filter(c => c.id !== id));
+    dispatch(deleteCombatant(id));
   }
 
   const handleSelectedTabChange = (event, newValue) => { // close button also selects tab,
@@ -47,14 +57,15 @@ const CT_OLD = () => {
   };
   
   useEffect(() => { // and useEffect checks, if tabChangeAttempt is a non-closed tab
-    if (characters.map(c => c.id).includes(tabChangeAttempt)) {
-      setSelectedTab(tabChangeAttempt);
+    if (characters.map(c => c.id).includes(tabChangeAttempt) && tabChangeAttempt !== tab) {
+      dispatch(setSelectedTab(tabChangeAttempt));
+      setTab(tabChangeAttempt);
     }
   }, [tabChangeAttempt])
 
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
-      <TabContext value={selectedTab}>
+      <TabContext value={tab}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList
             // TabIndicatorProps={{ style: { background: "firebrick" } }}

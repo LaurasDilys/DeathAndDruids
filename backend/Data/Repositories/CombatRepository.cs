@@ -31,6 +31,12 @@ namespace Data.Repositories
             return _context.Combat.Find(key);
         }
 
+        public void Delete(OpenedMonster monster)
+        {
+            _context.Combat.Remove(monster);
+            SaveChanges();
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

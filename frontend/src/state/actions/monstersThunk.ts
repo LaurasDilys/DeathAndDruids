@@ -11,7 +11,7 @@ export const getMonsters = () => (dispatch) => {
 
 export const patchMonster = (patchRequest) => (dispatch) => {
   API.patch("monsters/patch", patchRequest)
-    .then(() => dispatch(getOpenedMonster())) // gets monster that was just patched
     .then(() => dispatch(getCombatants())) // in case a combatant was patched instead
+    .then(() => dispatch(getOpenedMonster())) // gets monster that was just patched
     .catch(err => console.log(err));
 }

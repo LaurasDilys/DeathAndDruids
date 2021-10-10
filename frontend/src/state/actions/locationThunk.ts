@@ -8,12 +8,12 @@ export const setRoute = (routeChangeRequest) => (dispatch) => {
 
 export const setSelectedTab = (id) => (dispatch) => {
   API.put("location/selectedTab", { selectedTab: id } )
-    .then(() => getSelectedTabAction({ selectedTab: id }))
+    .then(() => getSelectedTabAction(id))
     .catch(err => console.log(err));
 }
 
 export const getSelectedTab = () => (dispatch) => {
   API.get("location/selectedTab")
-    .then((res) => getSelectedTabAction(res.data))
+    .then((res) => getSelectedTabAction(res.data.selectedTab))
     .catch(err => console.log(err));
 }

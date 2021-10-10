@@ -11,6 +11,7 @@ import SkillBlock from "./SkillBlock";
 import tree from '../../dictionaries/AbilityTree.json';
 import OptionMenu from "./OptionMenu";
 import Field from "./Field";
+import { getCombatants } from "../../state/actions/combatThunk";
 
 const CombatSheet = ({ monster, unmountMe, creation }) => {
   const dispatch = useDispatch();
@@ -93,21 +94,19 @@ const CombatSheet = ({ monster, unmountMe, creation }) => {
   }
 
   const handleSaveButtonValidation = (field, bool) => {
-
+    dispatch(getCombatants());
   }
 
   return(
     <div className="char-sheet-row">
       <div className="first-char-sheet-column">
-        {/* <div className="name-field-div">
-          <NameField
-            disabled={!creation}
-            nameRef={nameRef}
-            name={"name"}
-            value={valueOf("name")}
-            cannotBeSaved={handleSaveButtonValidation}
+        <div className="name-field-div">
+          <TextField
+            disabled
+            label="Name"
+            value={monster.name}
           />
-        </div> */}
+        </div>
         <div>
           <div className="padding-top">
             {Object.keys(tree).slice(0, 3).map((ability, index) => <AbilityBlock

@@ -12,3 +12,9 @@ export const getCombatants = () => (dispatch) => {
     .then((res) => dispatch(getCombatantsAction(res.data)))
     .catch(err => console.log(err));
 }
+
+export const deleteCombatant = (key) => (dispatch) => {
+  API.delete(`combat/delete/${key}`)
+    .then(() => dispatch(getCombatants()))
+    .catch(err => console.log(err));
+}

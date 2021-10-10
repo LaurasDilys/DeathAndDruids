@@ -24,19 +24,6 @@ namespace Api.Controllers
             _patchService = patchService;
         }
 
-        [HttpDelete("Delete/{key:int}", Name = nameof(Delete))]
-        public IActionResult Delete(int key)
-        {
-            if (!_monstersService.Exists(key))
-            {
-                return BadRequest();
-            }
-
-            _monstersService.Delete(key);
-
-            return Ok();
-        }
-
         [HttpGet(nameof(Get))]
         public ActionResult<IEnumerable<Monster>> Get()
         {

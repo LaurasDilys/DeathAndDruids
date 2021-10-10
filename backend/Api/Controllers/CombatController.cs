@@ -37,5 +37,16 @@ namespace Api.Controllers
         {
             return Ok(_service.Get());
         }
+
+        [HttpDelete("Delete/{key:int}", Name = nameof(Delete))]
+        public IActionResult Delete(int key)
+        {
+            if (!_service.Delete(key))
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
     }
 }
