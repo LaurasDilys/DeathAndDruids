@@ -1,6 +1,7 @@
 import API from '../../domain/Api';
 import { getMonstersAction } from './monstersActions';
 import { getOpenedMonster } from './creationThunk';
+import { getCombatants } from './combatThunk';
 
 export const getMonsters = () => (dispatch) => {
   API.get("monsters/get")
@@ -11,6 +12,6 @@ export const getMonsters = () => (dispatch) => {
 export const patchMonster = (patchRequest) => (dispatch) => {
   API.patch("monsters/patch", patchRequest)
     .then(() => dispatch(getOpenedMonster())) // gets monster that was just patched
-    // .then(() => dispatch(getCombatMonsters())) // in case a combatant was patched instead
+    .then(() => dispatch(getCombatants())) // in case a combatant was patched instead
     .catch(err => console.log(err));
 }

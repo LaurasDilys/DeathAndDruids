@@ -3,9 +3,7 @@ import * as actionTypes from "../actions/actionTypes";
 export type Monster = {
   id: number,
   name: string,
-  initiative: number,
-  sourceId: number,
-  saved: boolean
+  initiative: number
 }
 
 export type CreationState = {
