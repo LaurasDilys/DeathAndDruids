@@ -75,7 +75,7 @@ namespace Application.Services
         //    }
         //}
 
-        public bool Patch(Creature creature, IMonsterPatchRequest patch)
+        public bool Patch(Creature creature, ICreationPatchRequest patch)
         {
             int intValue;
             bool boolValue;

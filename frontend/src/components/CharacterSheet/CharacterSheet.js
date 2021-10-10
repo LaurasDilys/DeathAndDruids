@@ -63,57 +63,62 @@ const CharacterSheet = ({ monster, unmountMe }) => {
   }
 
   const handleHeal = () => {
-    let heal = parseInt(amountRef.current.value, 10);
+    if (amountRef.current.value !== "") {
+
+      let heal = parseInt(amountRef.current.value, 10);
     
-    if (heal > 0) {
-      let currentHP = monster.currentHitPoints;
-      let maxHP = monster.hitPoints;
-      
-      currentHP += heal;
-      if (currentHP > maxHP) currentHP = maxHP;
+      if (heal > 0) {
+        let currentHP = monster.currentHitPoints;
+        let maxHP = monster.hitPoints;
+        
+        currentHP += heal;
+        if (currentHP > maxHP) currentHP = maxHP;
 
-      dispatch(patchMonster({
-        name: "currentHitPoints",
-        value: currentHP.toString()
-      }));
-
+        dispatch(patchMonster({
+          name: "currentHitPoints",
+          value: currentHP.toString()
+        }));
+      }
       amountRef.current.value = 0;
     }
   }
 
   const handleDamage = () => {
-    let damage = parseInt(amountRef.current.value, 10);
+    if (amountRef.current.value !== ""){
 
-    if (damage > 0) {
-      let temporary = monster.temporaryHitPoints;
-      let current = monster.currentHitPoints;
+      let damage = parseInt(amountRef.current.value, 10);
 
-      if (temporary > 0) { // damage takes away from temporary hit points first
-        if (temporary >= damage) {
-          temporary -= damage;
-          dispatch(patchMonster({
-            name: "temporaryHitPoints",
-            value: temporary.toString()
-          }));
+      if (damage > 0) {
+        let temporary = monster.temporaryHitPoints;
+        let current = monster.currentHitPoints;
+
+        if (temporary > 0) { // damage takes away from temporary hit points first
+          if (temporary >= damage) {
+            temporary -= damage;
+            dispatch(patchMonster({
+              name: "temporaryHitPoints",
+              value: temporary.toString()
+            }));
+          } else {
+            damage -= temporary;
+            temporary = 0;
+            dispatch(patchMonster({
+              name: "temporaryHitPoints",
+              value: temporary.toString()
+            }));
+            current -= damage;
+            dispatch(patchMonster({
+              name: "currentHitPoints",
+              value: current.toString()
+            }));
+          }
         } else {
-          damage -= temporary;
-          temporary = 0;
-          dispatch(patchMonster({
-            name: "temporaryHitPoints",
-            value: temporary.toString()
-          }));
           current -= damage;
           dispatch(patchMonster({
             name: "currentHitPoints",
             value: current.toString()
           }));
         }
-      } else {
-        current -= damage;
-        dispatch(patchMonster({
-          name: "currentHitPoints",
-          value: current.toString()
-        }));
       }
       amountRef.current.value = 0;
     }

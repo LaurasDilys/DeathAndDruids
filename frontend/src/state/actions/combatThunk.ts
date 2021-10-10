@@ -13,6 +13,12 @@ export const getCombatants = () => (dispatch) => {
     .catch(err => console.log(err));
 }
 
+export const patchCombatant = (patchRequest) => (dispatch) => {
+  API.patch("combat/patch", patchRequest)
+    .then(() => dispatch(getCombatants()))
+    .catch(err => console.log(err));
+}
+
 export const deleteCombatant = (key) => (dispatch) => {
   API.delete(`combat/delete/${key}`)
     .then(() => dispatch(getCombatants()))

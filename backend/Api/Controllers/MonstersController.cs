@@ -31,9 +31,9 @@ namespace Api.Controllers
         }
 
         [HttpPatch(nameof(Patch))]
-        public IActionResult Patch(MonsterPatchRequest patch)
+        public IActionResult Patch(CreationPatchRequest patch)
         {
-            if (_patchService.Patch(patch))
+            if (_patchService.PatchCreation(patch))
             {
                 return Ok();
             }

@@ -20,3 +20,13 @@
   display: flex;
   justify-content: center;
 }
+
+.tab-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.tab-label button {
+  margin-left: 1em;
+}

@@ -6,49 +6,47 @@ import { useEffect, useState } from 'react';
 import TabLabel from './TabLabel';
 import { getColor, FadingTab } from './FadingTab';
 import { useDispatch, useSelector } from 'react-redux';
-import { combatState, locationState } from '../../state/selectors';
+import { combatState } from '../../state/selectors';
 import CombatSheet from '../CharacterSheet/CombatSheet';
-import { getSelectedTab, setSelectedTab } from '../../state/actions/locationThunk';
-import { patchMonster } from "../../state/actions/monstersThunk";
-import { deleteCombatant } from '../../state/actions/combatThunk';
+import { deleteCombatant, patchCombatant } from '../../state/actions/combatThunk';
 
-const sorted = (characters) => {
-  return [...characters].sort((a, b) => {
+const getHpRatio = (combatant) => {
+  return (combatant.currentHitPoints + combatant.temporaryHitPoints) / combatant.hitPoints;
+}
+
+const sorted = (combatants) => {
+  return [...combatants].sort((a, b) => {
     return b.initiative - a.initiative;
   });
 }
 
-const firstInInitiative = (characters) => {
-  const list = sorted(characters);
+const firstInInitiative = (combatants) => {
+  const list = sorted(combatants);
   return list.length === 0 ? 0 : list[0].id;
 }
 
 const CT_OLD = () => {
-  const { combatants: characters } = useSelector(combatState);
+  const { combatants } = useSelector(combatState);
+  const [selectedTab, setSelectedTab] = useState(firstInInitiative(combatants));
+  const [tabChangeAttempt, setTabChangeAttempt] = useState(0);
+  const [lastClosed, setLastClosed] = useState(0);
   const dispatch = useDispatch();
 
-
-  const setFirst = () => {
-    const id = firstInInitiative(characters);
-    dispatch(setSelectedTab(id));
-    return id;
-  }
-  const [tab, setTab] = useState(setFirst());
-  const [tabChangeAttempt, setTabChangeAttempt] = useState();
-
   const handleInitiativeChange = (id, initiative) => {
-    dispatch(patchMonster({
+    dispatch(patchCombatant({
+      id: id,
       name: "initiative",
       value: initiative
     }));
   };
 
   const handleCloseTab = (id) => {
-    if (tab === id) { // if selected tab is the one, that's being closed
-      const ids = sorted(characters).map(c => c.id);
+    if (selectedTab === id) { // if selected tab is the one, that's being closed
+      const ids = sorted(combatants).map(c => c.id);
       const nextId = ids[ids.indexOf(id) + 1] !== undefined ? ids[ids.indexOf(id) + 1] : ids[ids.indexOf(id) - 1]
-      setTab(nextId); // switch to tab to the right of closed tab – or to the left, if there are no tabs to the right
+      setSelectedTab(nextId); // switch to tab to the right of closed tab – or to the left, if there are no tabs to the right
     }
+    setLastClosed(id);
     dispatch(deleteCombatant(id));
   }
 
@@ -57,41 +55,39 @@ const CT_OLD = () => {
   };
   
   useEffect(() => { // and useEffect checks, if tabChangeAttempt is a non-closed tab
-    if (characters.map(c => c.id).includes(tabChangeAttempt) && tabChangeAttempt !== tab) {
-      dispatch(setSelectedTab(tabChangeAttempt));
-      setTab(tabChangeAttempt);
+    if (tabChangeAttempt !== lastClosed) {
+      setSelectedTab(tabChangeAttempt);
     }
   }, [tabChangeAttempt])
 
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
-      <TabContext value={tab}>
+      <TabContext value={selectedTab}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList
-            // TabIndicatorProps={{ style: { background: "firebrick" } }}
             variant="scrollable"
             scrollButtons="auto"
             onChange={handleSelectedTabChange}>
-              {sorted(characters).map(character =>
+              {sorted(combatants).map(combatant =>
                 <FadingTab
-                  style={getColor(character.hp / character.maxHp)}
-                  key={character.id}
-                  value={character.id}
+                  style={getColor(getHpRatio(combatant))}
+                  key={combatant.id}
+                  value={combatant.id}
                   label={<TabLabel
-                    id={character.id}
-                    name={character.name}
-                    init={character.initiative}
+                    id={combatant.id}
+                    name={combatant.name}
+                    init={combatant.initiative}
                     onInitiativeChange={handleInitiativeChange}
                     onClose={handleCloseTab}/>}/>)}
           </TabList>
         </Box>
-          {characters.map(character =>
+          {combatants.map(combatant =>
             <TabPanel
-              key={character.id}
-              value={character.id}>
+              key={combatant.id}
+              value={combatant.id}>
                 <div className="flex-row-80">
                   <div className="flex-col">
-                    <CombatSheet monster={character} />
+                    <CombatSheet monster={combatant} />
                   </div>
                 </div>
             </TabPanel>)}
