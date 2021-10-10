@@ -1,17 +1,7 @@
-﻿using Application;
-using Application.Dto;
+﻿using Application.Dto;
 using Application.Services;
-using Business.Interfaces;
-using Business.Models;
 using Data;
-using Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api.Controllers
 {
@@ -21,36 +11,13 @@ namespace Api.Controllers
     {
         private readonly CreationService _creationService;
         private readonly MonstersService _monstersService;
-        //
-        private readonly DataContext _context;
 
         public CreationController(CreationService creationService,
-            MonstersService monstersService,
-            //
-            DataContext context)
+            MonstersService monstersService)
         {
             _creationService = creationService;
             _monstersService = monstersService;
-            //
-            _context = context;
         }
-
-        ////
-        //[HttpDelete(nameof(TruncateAllTables))]
-        //public IActionResult TruncateAllTables()
-        //{
-        //    _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [Monsters]");
-        //    _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [OpenedMonsters]");
-        //    _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [Players]");
-        //    return Ok();
-        //}
-        ////
-        //[HttpPut(nameof(Test))]
-        //public ActionResult<Character> Test()
-        //{
-        //    return Ok();
-        //}
-        ////
         
         [HttpPost(nameof(New))]
         public IActionResult New()

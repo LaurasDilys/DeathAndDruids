@@ -1,15 +1,10 @@
-﻿using Application;
-using Application.Services;
+﻿using Application.Services;
 using Business.Services;
 using Data;
 using Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api
 {
