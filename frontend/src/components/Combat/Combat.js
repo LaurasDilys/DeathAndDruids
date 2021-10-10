@@ -23,11 +23,17 @@ const Combat = () => {
   return (
     <div className="combat-selection-row">
       <div className="combat-selection-col">
-        {monsters.length > 0 ? <CombatantList /> :
+        {monsters.length === 0 ?
+        // if there are no created monsters, user is redirected to Creation
         <Fab variant="extended" onClick={() => history.push('/creation')}>
           <NavigateBeforeIcon sx={{ mr: 1 }}/>
           Create some monsters first
-        </Fab>}
+        </Fab> : // else (there are created monsters)
+        (combatants.length === 0 ?
+        // if combat isn't in progress, user is asked to choose combatants
+        <CombatantList /> :
+        // if combatants are chosen, then CombatTabs are rendered
+        <p>Combat</p>)}
       </div>
     </div>
   );
