@@ -155,7 +155,7 @@ namespace Application.Services
             return true;
         }
 
-        public void TransformIntoViewModel(SavableOpenedMonsterViewModel viewModel, Creature creature)
+        public void TransformIntoViewModel(OpenedMonsterViewModel viewModel, Creature creature)
         {
             TransformIntoFlat(viewModel, creature);
 
@@ -196,7 +196,5 @@ namespace Application.Services
             viewModel.Performance = creature.Performance.ModifierText;
             viewModel.Persuasion = creature.Persuasion.ModifierText;
         }
-
-
     }
 }
