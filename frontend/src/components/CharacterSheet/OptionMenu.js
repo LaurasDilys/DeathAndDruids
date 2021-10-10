@@ -129,7 +129,7 @@ const OptionMenu = ({ onSave, cannotBeSaved, unmountMe, classes }) => {
                 onChange={handleOpen}
               >
               {[...monsters].sort((a, b) => a.name.localeCompare(b.name))
-              .map(monster => <MenuItem key={monster.name} value={monster.name}>{monster.name}</MenuItem>)}
+              .map(monster => <MenuItem disabled={monster.inCombat} key={monster.name} value={monster.name}>{monster.name}</MenuItem>)}
             </Select>
           </FormControl>
           <Button disabled={thisMonster.sourceId === null} onClick={handleDelete}>Delete</Button>

@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import { getMonsters } from "../../state/actions/monstersThunk";
 import { getCombatants } from "../../state/actions/combatThunk";
 import CombatTabs from "./CombatTabs";
-import CT_OLD from "./CT_OLD";
 
 const Combat = () => {
   const { monsters } = useSelector(monstersState);
@@ -25,7 +24,7 @@ const Combat = () => {
   return (
     <>
       {combatants.length > 0 ?
-      <CT_OLD /> :
+      <CombatTabs /> :
       <div className="combat-selection-row">
         <div className="combat-selection-col">
           {monsters.length > 0 ?

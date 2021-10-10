@@ -3,9 +3,8 @@ import type { StateType } from 'typesafe-actions';
 import creation from './creationReducer';
 import monsters from './monstersReducer';
 import combatants from './combatReducer';
-import location from './locationReducer';
 
-const reducers = combineReducers({ creation, monsters, combatants, location });
+const reducers = combineReducers({ creation, monsters, combatants });
 export type RootState = StateType<typeof reducers>;
 
 export default reducers;
