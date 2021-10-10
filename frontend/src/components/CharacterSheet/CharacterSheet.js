@@ -63,12 +63,12 @@ const CharacterSheet = ({ monster, unmountMe }) => {
   }
 
   const handleHeal = () => {
-    let heal = amountRef.current.value;
-
+    let heal = parseInt(amountRef.current.value, 10);
+    
     if (heal > 0) {
       let currentHP = monster.currentHitPoints;
       let maxHP = monster.hitPoints;
-
+      
       currentHP += heal;
       if (currentHP > maxHP) currentHP = maxHP;
 
@@ -82,7 +82,7 @@ const CharacterSheet = ({ monster, unmountMe }) => {
   }
 
   const handleDamage = () => {
-    let damage = amountRef.current.value;
+    let damage = parseInt(amountRef.current.value, 10);
 
     if (damage > 0) {
       let temporary = monster.temporaryHitPoints;
