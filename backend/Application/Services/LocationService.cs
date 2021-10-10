@@ -1,4 +1,5 @@
-﻿using Data.Repositories;
+﻿using Application.Dto;
+using Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,12 @@ namespace Application.Services
         public void SetSelectedTab(int selectedTab)
         {
             _repository.SetSelectedTab(selectedTab);
+        }
+
+        public SelectedTabResponse GetSelectedTab()
+        {
+            var tab = _repository.GetSelectedTab();
+            return new SelectedTabResponse { SelectedTab = tab };
         }
     }
 }

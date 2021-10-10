@@ -7,7 +7,7 @@ import TabLabel from './TabLabel';
 import { getColor, FadingTab } from './FadingTab';
 import CharacterSheet from '../CharacterSheet/CharacterSheet';
 import { useDispatch, useSelector } from 'react-redux';
-import { creationState } from '../../state/selectors';
+import { combatState, creationState, locationState } from '../../state/selectors';
 import { getOpenedMonster } from '../../state/actions/creationThunk';
 
 // const mockCharacters = [
@@ -55,67 +55,82 @@ import { getOpenedMonster } from '../../state/actions/creationThunk';
 //   }
 // ]
 
-const sorted = (characters) => {
-  return [...characters].sort((a, b) => {
+const sorted = (combatants) => {
+  return [...combatants].sort((a, b) => {
     return b.initiative - a.initiative;
   });
 }
 
-const firstInInitiative = (characters) => {
-  const list = sorted(characters);
+const firstInInitiative = (combatants) => {
+  const list = sorted(combatants);
   return list.length === 0 ? 0 : list[0].id;
 }
 
 const CombatTabs = () => {
-  const [characters, setCharacters] = useState([]);
+  const { selectedTab: previouslySelected } = useSelector(locationState);
+  const { combatants } = useSelector(combatState);
+
+  const getFirst = () => {
+    if (previouslySelected !== null) return previouslySelected;
+    else return firstInInitiative(combatants);
+  }
+
+  const [selectedTab, setSelectedTab] = useState(getFirst());
   const [tabChangeAttempt, setTabChangeAttempt] = useState();
-  const [selectedTab, setSelectedTab] = useState();
-  
-  
-  //
-  //
-  const creation = useSelector(creationState);
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
-    dispatch(getOpenedMonster);
-  }, []);
+    console.log(combatants);
+  }, [])
 
-  useEffect(() => {
-    if (creation !== null) {
-      setCharacters([creation.monster]);
-      setSelectedTab(firstInInitiative([creation.monster]));
-    }
-  }, [creation])
+  //
+  //
+  // const [combatants, setCombatants] = useState([]);
+  // const [tabChangeAttempt, setTabChangeAttempt] = useState();
+  // const [selectedTab, setSelectedTab] = useState();
+
+  // const creation = useSelector(creationState);
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(getOpenedMonster);
+  // }, []);
+
+  // useEffect(() => {
+  //   if (creation !== null) {
+  //     setCombatants([creation.monster]);
+  //     setSelectedTab(firstInInitiative([creation.monster]));
+  //   }
+  // }, [creation])
   //
   //
 
 
   const handleInitiativeChange = (id, initiative) => {
-    setCharacters(characters.map(c => {
-      if (c.id === id) c.initiative = initiative;
-      return c;
-    }));
+    // setCombatants(combatants.map(c => {
+    //   if (c.id === id) c.initiative = initiative;
+    //   return c;
+    // }));
   };
 
   const handleCloseTab = (id) => {
-    if (selectedTab === id) { // if selected tab is the one, that's being closed
-      const ids = sorted(characters).map(c => c.id);
-      const nextId = ids[ids.indexOf(id) + 1] !== undefined ? ids[ids.indexOf(id) + 1] : ids[ids.indexOf(id) - 1]
-      setSelectedTab(nextId); // switch to tab to the right of closed tab – or to the left, if there are no tabs to the right
-    }
-    setCharacters(characters.filter(c => c.id !== id));
+    // if (selectedTab === id) { // if selected tab is the one, that's being closed
+    //   const ids = sorted(combatants).map(c => c.id);
+    //   const nextId = ids[ids.indexOf(id) + 1] !== undefined ? ids[ids.indexOf(id) + 1] : ids[ids.indexOf(id) - 1]
+    //   setSelectedTab(nextId); // switch to tab to the right of closed tab – or to the left, if there are no tabs to the right
+    // }
+    // setCombatants(combatants.filter(c => c.id !== id));
   }
 
   const handleSelectedTabChange = (event, newValue) => { // close button also selects tab,
-    setTabChangeAttempt(newValue); // so each tab select only attempts to change tab
+    // setTabChangeAttempt(newValue); // so each tab select only attempts to change tab
   };
   
-  useEffect(() => { // and useEffect checks, if tabChangeAttempt is a non-closed tab
-    if (characters.map(c => c.id).includes(tabChangeAttempt)) {
-      setSelectedTab(tabChangeAttempt);
-    }
-  }, [tabChangeAttempt])
+  // useEffect(() => { // and useEffect checks, if tabChangeAttempt is a non-closed tab
+  //   if (combatants.map(c => c.id).includes(tabChangeAttempt)) {
+  //     setSelectedTab(tabChangeAttempt);
+  //   }
+  // }, [tabChangeAttempt])
 
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
@@ -126,30 +141,30 @@ const CombatTabs = () => {
             variant="scrollable"
             scrollButtons="auto"
             onChange={handleSelectedTabChange}>
-              {sorted(characters).map(character =>
+              {sorted(combatants).map(combatant =>
                 <FadingTab
                   style={getColor(
-                    (character.currentHitPoints +
-                    character.temporaryHitPoints) /
-                    character.hitPoints)} // color depends on creature's HP ratio
-                  key={character.id}
-                  value={character.id}
+                    (combatant.currentHitPoints +
+                    combatant.temporaryHitPoints) /
+                    combatant.hitPoints)} // color depends on creature's HP ratio
+                  key={combatant.id}
+                  value={combatant.id}
                   label={<TabLabel
-                    id={character.id}
-                    name={character.name}
-                    init={character.initiative}
+                    id={combatant.id}
+                    name={combatant.name}
+                    init={combatant.initiative}
                     onInitiativeChange={handleInitiativeChange}
                     onClose={handleCloseTab}/>}/>)}
           </TabList>
         </Box>
-          {characters.map(character =>
+          {combatants.map(combatant =>
             <TabPanel
-              key={character.id}
-              value={character.id}>
-                {creation === null ? character.name + character.initiative :
+              key={combatant.id}
+              value={combatant.id}>
                 <div className="flex-row">
                   <div className="flex-col">
-                   <CharacterSheet monster={character} />
+                    {combatant.name}
+                   {/* <CharacterSheet monster={combatant} /> */}
                   </div>
                 </div>}
             </TabPanel>)}

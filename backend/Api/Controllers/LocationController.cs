@@ -35,5 +35,11 @@ namespace Api.Controllers
 
             return Ok();
         }
+
+        [HttpGet(nameof(SelectedTab))]
+        public ActionResult<SelectedTabResponse> SelectedTab()
+        {
+            return Ok(_service.GetSelectedTab());
+        }
     }
 }
