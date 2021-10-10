@@ -1,4 +1,5 @@
-﻿using Data.Models;
+﻿using Business.Models;
+using Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace Application.Dto
 {
-    public class OpenedMonsterViewModel : OpenedMonster
+    public class OpenedMonsterViewModel : FlatCreature
     {
-        public OpenedMonsterViewModel(int id, int? sourceId, bool saved)
+        public OpenedMonsterViewModel(int id, int? sourceId)
         {
             Id = id;
             SourceId = sourceId;
         }
+
+        public int Id { get; set; }
+        public int? SourceId { get; set; }
 
         public string StrengthModifier { get; set; }
         public string DexterityModifier { get; set; }
