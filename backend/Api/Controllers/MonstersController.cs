@@ -46,9 +46,6 @@ namespace Api.Controllers
         [HttpPatch(nameof(Patch))]
         public IActionResult Patch(MonsterPatchRequest patch)
         {
-            //if (!_patchService.OpenedExists())
-            //    return UnprocessableEntity();
-
             if (_patchService.Patch(patch))
             {
                 return Ok();

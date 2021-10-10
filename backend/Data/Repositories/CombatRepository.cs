@@ -26,6 +26,11 @@ namespace Data.Repositories
             return _context.Combat;
         }
 
+        public OpenedMonster Get(int key)
+        {
+            return _context.Combat.Find(key);
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();
