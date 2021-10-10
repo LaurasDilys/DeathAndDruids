@@ -21,6 +21,11 @@ namespace Data.Repositories
             _context.Combat.AddRange(monsters);
         }
 
+        public IEnumerable<OpenedMonster> Get()
+        {
+            return _context.Combat;
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();

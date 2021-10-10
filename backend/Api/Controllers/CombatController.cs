@@ -1,4 +1,6 @@
-﻿using Application.Services;
+﻿using Application.Dto;
+using Application.Services;
+using Data.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -20,11 +22,20 @@ namespace Api.Controllers
         }
 
         [HttpPost(nameof(Start))]
-        public ActionResult Start()
+        public IActionResult Start(CombatRequest request)
         {
-            _service.Add(3);
+            if (!_service.Add(request))
+            {
+                return BadRequest();
+            }
 
             return Ok();
+        }
+
+        [HttpGet(nameof(Get))]
+        public ActionResult<IEnumerable<OpenedMonster>> Get()
+        {
+            return Ok(_service.Get());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Business.Models;
+﻿using Application.Dto;
+using Business.Models;
 using Data.Models;
 using Data.Repositories;
 using System;
@@ -24,22 +25,36 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public void Add(int amount)
+        public bool Add(CombatRequest request)
         {
-            var monster = _monstersRepository.Get(1);
-            monster.InCombat = true;
+            var req = request.Request;
+            var ids = req.Select(r => r.Id);
+            var monsters = _monstersRepository.Get().Where(m => ids.Contains(m.Id));
 
-            var combatants = new List<OpenedMonster>(amount);
+            // Some incorrect ids were requested
+            if (monsters.Count() != ids.Count()) return false;
 
-            for (int i = 0; i < 3; i++)
+            var combatants = new List<OpenedMonster>(req.Sum(r => r.Amount));
+            foreach (var requestedMonster in req)
             {
-                var combatant = new OpenedMonster();
-                _mapper.ReplaceWith(monster, combatant);
-                combatants.Add(combatant);
-            }
+                var monster = monsters.Single(m => m.Id == requestedMonster.Id);
+                monster.InCombat = true;
 
+                for (int i = 0; i < requestedMonster.Amount; i++)
+                {
+                    var combatant = new OpenedMonster();
+                    _mapper.ReplaceWith(monster, combatant);
+                    combatants.Add(combatant);
+                }
+            }
             _combatRepository.AddRange(combatants);
             _combatRepository.SaveChanges();
+            return true;
+        }
+
+        public IEnumerable<OpenedMonster> Get()
+        {
+            return _combatRepository.Get();
         }
     }
 }
