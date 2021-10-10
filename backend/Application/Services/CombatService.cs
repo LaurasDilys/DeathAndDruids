@@ -52,9 +52,25 @@ namespace Application.Services
             return true;
         }
 
-        public IEnumerable<OpenedMonster> Get()
+        public IEnumerable<OpenedMonsterViewModel> Get()
         {
-            return _combatRepository.Get();
+            var dataModels = _combatRepository.Get();
+
+            var combatants = new List<OpenedMonsterViewModel>(dataModels.Count());
+
+            foreach (var dataModel in dataModels)
+            {
+                var creature = new Creature();
+                _mapper.TransformIntoExpanded(creature, dataModel);
+
+                var viewModel = new OpenedMonsterViewModel(
+                    dataModel.Id, dataModel.SourceId);
+                _mapper.TransformIntoViewModel(viewModel, creature);
+
+                combatants.Add(viewModel);
+            }
+
+            return combatants;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Api.Controllers
         }
 
         [HttpGet(nameof(Get))]
-        public ActionResult<IEnumerable<OpenedMonster>> Get()
+        public ActionResult<IEnumerable<OpenedMonsterViewModel>> Get()
         {
             return Ok(_service.Get());
         }
