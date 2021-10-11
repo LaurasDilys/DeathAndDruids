@@ -1,5 +1,5 @@
 import { Button, List } from '@mui/material';
-import Combatant from './Combatant'
+import CombatantListItem from './CombatantListItem'
 import './Combat.css'
 import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
@@ -33,9 +33,10 @@ const CombatantList = () => {
       <div className="combatant-row">
         <List>
           {[...monsters].sort((a, b) => a.name.localeCompare(b.name))
-          .map(monster => <Combatant
+          .map(monster => <CombatantListItem
             id={monster.id}
             name={monster.name}
+            disabled={monster.inCreation}
             onSelectAmount={handleSelectAmount}
           />)}
         </List>

@@ -1,13 +1,12 @@
-﻿using Business.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Dto
+namespace Business.Interfaces
 {
-    public class MonsterPatchRequest : IMonsterPatchRequest
+    public interface ICreationPatchRequest
     {
         public string Name { get; set; }
         public string Value { get; set; }

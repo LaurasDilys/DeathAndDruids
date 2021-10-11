@@ -2,7 +2,7 @@ import { Button, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveMonster } from "../../state/actions/creationThunk";
-import { patchMonster } from "../../state/actions/creationThunk";
+import { patchMonster } from "../../state/actions/monstersThunk";
 import { monstersState } from "../../state/selectors";
 import NameField from "./NameField";
 import NumberField from "./NumberField";
@@ -11,23 +11,11 @@ import SkillBlock from "./SkillBlock";
 import tree from '../../dictionaries/AbilityTree.json';
 import OptionMenu from "./OptionMenu";
 import Field from "./Field";
-import { TextFields } from "@mui/icons-material";
+import { patchCombatant } from "../../state/actions/combatThunk";
 
-const CharacterSheet = ({ monster, unmountMe }) => {
-  const [cannotBeSaved, setCannotBeSaved] = useState([]);
-  const { monsters } = useSelector(monstersState);
+const CombatSheet = ({ monster }) => {
   const dispatch = useDispatch();
-  const nameRef = useRef();
   const amountRef = useRef();
-
-  useEffect(() => { // on first render or page refresh
-    const name = nameRef.current.value;
-    if (name === "" ||
-      monsters.filter(f => f.id !== monster.sourceId).map(m => m.name).includes(name))
-    {
-      setCannotBeSaved([...cannotBeSaved, "name"]);
-    }
-  }, []);
   
   const mapped = obj => {
     let array = [];
@@ -48,21 +36,6 @@ const CharacterSheet = ({ monster, unmountMe }) => {
     return mapped(monster).find(x => x.name === name).value;
   }
 
-  const handleSave = () => {
-    if (monster.saved) {
-      alert("No changes have been made");
-    }
-    else {
-      dispatch(saveMonster());
-    }
-  }
-
-  const handleSaveButtonValidation = (field, bool) => {
-    if (bool) setCannotBeSaved([...cannotBeSaved, field]);
-    else setCannotBeSaved(cannotBeSaved.filter(x => x !== field));
-    // console.log(`${field} cannot be saved: ${bool}`);
-  }
-
   const handleHeal = () => {
     if (amountRef.current.value !== "") {
 
@@ -75,7 +48,8 @@ const CharacterSheet = ({ monster, unmountMe }) => {
         currentHP += heal;
         if (currentHP > maxHP) currentHP = maxHP;
 
-        dispatch(patchMonster({
+        dispatch(patchCombatant({
+          id: monster.id,
           name: "currentHitPoints",
           value: currentHP.toString()
         }));
@@ -96,26 +70,30 @@ const CharacterSheet = ({ monster, unmountMe }) => {
         if (temporary > 0) { // damage takes away from temporary hit points first
           if (temporary >= damage) {
             temporary -= damage;
-            dispatch(patchMonster({
+            dispatch(patchCombatant({
+              id: monster.id,
               name: "temporaryHitPoints",
               value: temporary.toString()
             }));
           } else {
             damage -= temporary;
             temporary = 0;
-            dispatch(patchMonster({
+            dispatch(patchCombatant({
+              id: monster.id,
               name: "temporaryHitPoints",
               value: temporary.toString()
             }));
             current -= damage;
-            dispatch(patchMonster({
+            dispatch(patchCombatant({
+              id: monster.id,
               name: "currentHitPoints",
               value: current.toString()
             }));
           }
         } else {
           current -= damage;
-          dispatch(patchMonster({
+          dispatch(patchCombatant({
+            id: monster.id,
             name: "currentHitPoints",
             value: current.toString()
           }));
@@ -125,23 +103,24 @@ const CharacterSheet = ({ monster, unmountMe }) => {
     }
   }
 
+  const handleSaveButtonValidation = stats => {
+    
+  }
+
   return(
     <div className="char-sheet-row">
-
-      <OptionMenu onSave={handleSave} cannotBeSaved={cannotBeSaved} unmountMe={() => unmountMe()} />
-
       <div className="first-char-sheet-column">
         <div className="name-field-div">
-          <NameField
-            nameRef={nameRef}
-            name={"name"}
-            value={valueOf("name")}
-            cannotBeSaved={handleSaveButtonValidation}
+          <TextField
+            disabled
+            label="Name"
+            value={monster.name}
           />
         </div>
         <div>
           <div className="padding-top">
             {Object.keys(tree).slice(0, 3).map((ability, index) => <AbilityBlock
+              id={monster.id}
               key={index}
               name={ability}
               value={valueOf(ability)}
@@ -149,6 +128,7 @@ const CharacterSheet = ({ monster, unmountMe }) => {
               cannotBeSaved={handleSaveButtonValidation}
             >
               {tree[ability]["skills"].map((skill, index) => <SkillBlock
+                id={monster.id}
                 key={index}
                 name={skill[0]}
                 value={valueOf(skill[0])}
@@ -162,6 +142,7 @@ const CharacterSheet = ({ monster, unmountMe }) => {
       <div>
         <div className="triple">
           <NumberField
+            disabled
             name={"challengeRating"}
             value={valueOf("challengeRating")}
             cannotBeSaved={handleSaveButtonValidation}
@@ -173,6 +154,7 @@ const CharacterSheet = ({ monster, unmountMe }) => {
             cannotBeSaved={handleSaveButtonValidation}
           />
           <Field
+            id={monster.id}
             notRequired
             name={"alignment"}
             value={valueOf("alignment")}
@@ -182,6 +164,7 @@ const CharacterSheet = ({ monster, unmountMe }) => {
         <div>
           <div className="padding-top">
             {Object.keys(tree).slice(3, 6).map((ability, index) => <AbilityBlock
+              id={monster.id}
               key={index}
               name={ability}
               value={valueOf(ability)}
@@ -189,6 +172,7 @@ const CharacterSheet = ({ monster, unmountMe }) => {
               cannotBeSaved={handleSaveButtonValidation}
             >
               {tree[ability]["skills"].map((skill, index) => <SkillBlock
+                id={monster.id}
                 key={index}
                 name={skill[0]}
                 value={valueOf(skill[0])}
@@ -202,11 +186,13 @@ const CharacterSheet = ({ monster, unmountMe }) => {
       <div>
         <div className="triple">
           <NumberField
+            disabled
             name={"armorClass"}
             value={valueOf("armorClass")}
             cannotBeSaved={handleSaveButtonValidation}
           />
           <NumberField
+            disabled
             name={"speed"}
             value={valueOf("speed")}
             cannotBeSaved={handleSaveButtonValidation}
@@ -214,11 +200,13 @@ const CharacterSheet = ({ monster, unmountMe }) => {
         </div>
         <div className="triple">
           <NumberField
+            id={monster.id}
             name={"currentArmorClass"}
             value={valueOf("currentArmorClass")}
             cannotBeSaved={handleSaveButtonValidation}
           />
           <NumberField
+            id={monster.id}
             name={"currentSpeed"}
             value={valueOf("currentSpeed")}
             cannotBeSaved={handleSaveButtonValidation}
@@ -226,16 +214,19 @@ const CharacterSheet = ({ monster, unmountMe }) => {
         </div>
         <div className="triple padding-top">
           <NumberField
+            id={monster.id}
             name={"hitPoints"}
             value={valueOf("hitPoints")}
             cannotBeSaved={handleSaveButtonValidation}
           />
           <NumberField
+            id={monster.id}
             name={"currentHitPoints"}
             value={valueOf("currentHitPoints")}
             cannotBeSaved={handleSaveButtonValidation}
           />
           <NumberField
+            id={monster.id}
             name={"temporaryHitPoints"}
             value={valueOf("temporaryHitPoints")}
             cannotBeSaved={handleSaveButtonValidation}
@@ -274,4 +265,4 @@ const CharacterSheet = ({ monster, unmountMe }) => {
   );
 };
 
-export default CharacterSheet;
+export default CombatSheet;

@@ -3,12 +3,8 @@ using Business.Interfaces;
 using Business.Models;
 using Business.Services;
 using Data.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -75,7 +71,7 @@ namespace Application.Services
         //    }
         //}
 
-        public bool Patch(Creature creature, IMonsterPatchRequest patch)
+        public bool Patch(Creature creature, ICreationPatchRequest patch)
         {
             int intValue;
             bool boolValue;

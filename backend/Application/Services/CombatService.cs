@@ -5,8 +5,6 @@ using Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Services
 {
@@ -71,6 +69,23 @@ namespace Application.Services
             }
 
             return combatants;
+        }
+
+        public bool Delete(int key)
+        {
+            var combatant = _combatRepository.Get(key);
+            if (combatant == null) return false;
+
+            var sourceId = combatant.SourceId;
+            // if this is the last copy of the same monster
+            if (_combatRepository.Get().Count(c => c.SourceId == sourceId) == 1)
+            {
+                _monstersRepository.Get((int)combatant.SourceId).InCombat = false;
+            }
+
+            _combatRepository.Delete(combatant);
+
+            return true;
         }
     }
 }

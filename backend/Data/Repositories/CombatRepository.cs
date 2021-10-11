@@ -1,9 +1,5 @@
 ﻿using Data.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Data.Repositories
 {
@@ -29,6 +25,12 @@ namespace Data.Repositories
         public OpenedMonster Get(int key)
         {
             return _context.Combat.Find(key);
+        }
+
+        public void Delete(OpenedMonster monster)
+        {
+            _context.Combat.Remove(monster);
+            SaveChanges();
         }
 
         public void SaveChanges()

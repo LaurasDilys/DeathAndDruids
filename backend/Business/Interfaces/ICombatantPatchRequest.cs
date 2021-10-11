@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Business.Interfaces
 {
-    public interface IMonsterPatchRequest
+    public interface ICombatantPatchRequest
     {
-        public string Name { get; set; }
-        public string Value { get; set; }
+        int Id { get; set; }
+        string Name { get; set; }
+        string Value { get; set; }
     }
 }

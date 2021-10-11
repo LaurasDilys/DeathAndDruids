@@ -1,11 +1,6 @@
 ﻿using Application.Dto;
 using Application.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api.Controllers
 {
@@ -34,6 +29,12 @@ namespace Api.Controllers
             _service.SetSelectedTab(tab.SelectedTab);
 
             return Ok();
+        }
+
+        [HttpGet(nameof(SelectedTab))]
+        public ActionResult<SelectedTabResponse> SelectedTab()
+        {
+            return Ok(_service.GetSelectedTab());
         }
     }
 }
