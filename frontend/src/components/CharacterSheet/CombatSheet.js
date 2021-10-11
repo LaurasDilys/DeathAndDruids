@@ -253,6 +253,7 @@ const CombatSheet = ({ monster }) => {
         </div>
         <div className="notes">
           <Field
+            id={monster.id}
             multiline
             notRequired
             name={"notes"}
