@@ -3,7 +3,7 @@ import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 import { patchCombatant } from "../../state/actions/combatThunk";
-import { patchMonster } from "../../state/actions/monstersThunk";
+import { patchMonster } from "../../state/actions/creationThunk";
 import "./CharacterSheet.css"
 
 const styles = {

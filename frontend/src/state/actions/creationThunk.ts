@@ -33,6 +33,12 @@ export const openMonster = (key) => (dispatch) => {
     .catch(err => console.log(err));
 }
 
+export const patchMonster = (patchRequest) => (dispatch) => {
+  API.patch("creation/patch", patchRequest)
+    .then(() => dispatch(getOpenedMonster())) // gets monster that was just patched
+    .catch(err => console.log(err));
+}
+
 export const closeMonster = () => (dispatch) => {
   API.delete("creation/close")
     .catch(err => console.log(err));

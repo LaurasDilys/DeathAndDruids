@@ -11,14 +11,17 @@ namespace Api.Controllers
     {
         private readonly CreationService _creationService;
         private readonly MonstersService _monstersService;
+        private readonly PatchService _patchService;
 
         public CreationController(CreationService creationService,
-            MonstersService monstersService)
+            MonstersService monstersService,
+            PatchService patchService)
         {
             _creationService = creationService;
             _monstersService = monstersService;
+            _patchService = patchService;
         }
-        
+
         [HttpPost(nameof(New))]
         public IActionResult New()
         {
@@ -70,6 +73,16 @@ namespace Api.Controllers
             _creationService.Open(key);
 
             return Ok();
+        }
+
+        [HttpPatch(nameof(Patch))]
+        public IActionResult Patch(CreationPatchRequest patch)
+        {
+            if (_patchService.PatchCreation(patch))
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
 
         [HttpDelete(nameof(Close))]

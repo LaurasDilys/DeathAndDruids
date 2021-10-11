@@ -2,7 +2,7 @@ import { Button, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveMonster } from "../../state/actions/creationThunk";
-import { patchMonster } from "../../state/actions/monstersThunk";
+import { patchMonster } from "../../state/actions/creationThunk";
 import { monstersState } from "../../state/selectors";
 import NameField from "./NameField";
 import NumberField from "./NumberField";
