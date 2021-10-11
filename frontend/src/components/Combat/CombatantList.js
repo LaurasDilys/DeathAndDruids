@@ -24,12 +24,9 @@ const CombatantList = () => {
 
   return (
     <>
-      <Button
-        onClick={handleStartCombat}
-        className="combat-selection-bookends"
-        disabled={combatRequest.length === 0}>
-        Start Combat
-      </Button>
+      <div className="bookend">
+        <i>Select monsters for combat</i>
+      </div>
       <div className="combatant-row">
         <List>
           {[...monsters].sort((a, b) => a.name.localeCompare(b.name))
@@ -41,8 +38,13 @@ const CombatantList = () => {
           />)}
         </List>
       </div>
-      <div className="combat-selection-bookends">
-        <i>Select monsters for combat</i>
+      <div className="start-combat bookend">
+        <Button
+          variant="contained"
+          onClick={handleStartCombat}
+          disabled={combatRequest.length === 0}>
+          Start Combat
+        </Button>
       </div>
     </>
   );
