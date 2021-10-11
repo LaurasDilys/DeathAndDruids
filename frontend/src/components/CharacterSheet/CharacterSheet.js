@@ -11,6 +11,7 @@ import SkillBlock from "./SkillBlock";
 import tree from '../../dictionaries/AbilityTree.json';
 import OptionMenu from "./OptionMenu";
 import Field from "./Field";
+import { TextFields } from "@mui/icons-material";
 
 const CharacterSheet = ({ monster, unmountMe }) => {
   const [cannotBeSaved, setCannotBeSaved] = useState([]);
@@ -258,6 +259,15 @@ const CharacterSheet = ({ monster, unmountMe }) => {
               Damage
             </Button>
           </div>
+        </div>
+        <div className="notes">
+          <Field
+            multiline
+            notRequired
+            name={"notes"}
+            value={valueOf("notes")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
         </div>
       </div>
     </div>

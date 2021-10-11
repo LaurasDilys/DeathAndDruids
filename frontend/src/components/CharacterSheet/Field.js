@@ -5,7 +5,7 @@ import { patchMonster } from "../../state/actions/creationThunk";
 import field from '../../dictionaries/FieldNames.json';
 import { patchCombatant } from "../../state/actions/combatThunk";
 
-const Field = ({ id, name, value, cannotBeSaved, notRequired }) => {
+const Field = ({ id, name, value, cannotBeSaved, notRequired, multiline }) => {
   const [state, setState] = useState(value);
   const dispatch = useDispatch();
 
@@ -43,10 +43,10 @@ const Field = ({ id, name, value, cannotBeSaved, notRequired }) => {
       error={!notRequired && state === ""}
       label={field[name]}
       value={state}
-      // InputLabelProps={{
-      //   shrink: true,
-      // }}
       onChange={handleChange}
+      multiline={multiline}
+      rows={multiline && 10}
+      fullWidth={multiline}
     />
   );
 };

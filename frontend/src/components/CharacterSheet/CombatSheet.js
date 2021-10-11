@@ -251,6 +251,15 @@ const CombatSheet = ({ monster }) => {
             </Button>
           </div>
         </div>
+        <div className="notes">
+          <Field
+            multiline
+            notRequired
+            name={"notes"}
+            value={valueOf("notes")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
+        </div>
       </div>
     </div>
   );

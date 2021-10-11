@@ -29,5 +29,6 @@
   "temporaryHitPoints": "Temp HP",
   "initiative": "Initiative",
   "speed": "Speed",
-  "currentSpeed": "Current"
+  "currentSpeed": "Current",
+  "notes": "Notes"
 }
