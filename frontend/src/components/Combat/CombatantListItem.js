@@ -24,15 +24,15 @@ const CombatantListItem = ({ id, name, onSelectAmount, disabled }) => {
       <div>
         <ListItem>
           <ListItemAvatar>
-            <Fab size="small" color="primary" onClick={onRemove} disabled={disabled}>
+            <Fab size="small" onClick={onRemove} disabled={disabled}>
               <RemoveIcon/>
             </Fab>
           </ListItemAvatar>
           <ListItemAvatar>
-            <Chip label={amount} color="primary" variant="outlined" style={{width: 41}} />
+            <Chip label={amount} variant="outlined" style={{width: 41}} />
           </ListItemAvatar>
           <ListItemAvatar>
-            <Fab size="small" color="primary" onClick={onAdd} disabled={disabled}>
+            <Fab size="small" onClick={onAdd} disabled={disabled}>
               <AddIcon />
             </Fab>
           </ListItemAvatar>

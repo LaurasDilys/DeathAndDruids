@@ -4,10 +4,10 @@
   height: 100vh;
 }
 
-.combat-selection-bookends {
+.bookend {
   display: flex;
   justify-content: center;
-  margin: 2em 0 1em;
+  margin: 2.2em 0 2em;
 }
 
 .combat-selection-col {
@@ -29,4 +29,18 @@
 
 .tab-label button {
   margin-left: 1em;
+}
+
+.start-combat {
+  display: flex;
+}
+
+.start-combat button {
+  margin: 0 auto;
+  background-color: var(--red-dark);
+  color: var(--white-var);
+}
+
+.start-combat button:hover {
+  background-color: var(--red);
 }
