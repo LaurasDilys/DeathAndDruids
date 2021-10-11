@@ -1,20 +1,17 @@
-﻿using Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Business.Models;
 
 namespace Application.Dto
 {
-    public class OpenedMonsterViewModel : OpenedMonster
+    public class OpenedMonsterViewModel : FlatCreature
     {
-        public OpenedMonsterViewModel(int id, int? sourceId, bool saved)
+        public OpenedMonsterViewModel(int id, int? sourceId)
         {
             Id = id;
             SourceId = sourceId;
-            Saved = saved;
         }
+
+        public int Id { get; set; }
+        public int? SourceId { get; set; }
 
         public string StrengthModifier { get; set; }
         public string DexterityModifier { get; set; }
@@ -30,23 +27,23 @@ namespace Application.Dto
         public string Acrobatics { get; set; }
         public string SleightOfHand { get; set; }
         public string Stealth { get; set; }
-        
+
         public string ConstitutionSavingThrow { get; set; }
-        
+
         public string IntelligenceSavingThrow { get; set; }
         public string Arcana { get; set; }
         public string History { get; set; }
         public string Investigation { get; set; }
         public string Nature { get; set; }
         public string Religion { get; set; }
-        
+
         public string WisdomSavingThrow { get; set; }
         public string AnimalHandling { get; set; }
         public string Insight { get; set; }
         public string Medicine { get; set; }
         public string Perception { get; set; }
         public string Survival { get; set; }
-        
+
         public string CharismaSavingThrow { get; set; }
         public string Deception { get; set; }
         public string Intimidation { get; set; }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Business.Models
+﻿namespace Business.Models
 {
     public class Skill
     {
@@ -59,16 +53,7 @@ namespace Business.Models
         }
 
 
-        private int passive;
-        public int Passive
-        {
-            get { return passive; }
-            set
-            {
-                passive = value;
-                //OnPropertyChanged();
-            }
-        }
+        public int Passive { get; set; }
 
 
         private void UpdateModifier()

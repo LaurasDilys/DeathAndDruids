@@ -1,14 +1,10 @@
-﻿using Application;
+﻿using Application.Services;
 using Business.Services;
 using Data;
 using Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api
 {
@@ -16,14 +12,21 @@ namespace Api
     {
         public static void ConfigureDependencyInjection(this IServiceCollection services)
         {
-            services.AddScoped<CreationService>()
-                    .AddScoped<CreationRepository>();
-
             services.AddScoped<MonstersService>()
                     .AddScoped<MonstersRepository>();
 
+            services.AddScoped<LocationService>()
+                    .AddScoped<LocationRepository>();
+
+            services.AddScoped<CreationService>()
+                    .AddScoped<CreationRepository>();
+
+            services.AddScoped<CombatService>()
+                    .AddScoped<CombatRepository>();
+
             services.AddTransient<MapperService>()
-                    .AddTransient<ConverterService>();
+                    .AddTransient<CreatureMapperService>()
+                    .AddTransient<PatchService>();
         }
 
         public static void AddDatabase(this IServiceCollection services, string connectionString)

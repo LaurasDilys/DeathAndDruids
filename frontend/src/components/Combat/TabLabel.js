@@ -1,4 +1,5 @@
-import { Button, TextField } from "@mui/material";
+import { Button, Fab, TextField } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import { useEffect, useState } from "react";
 
 const TabLabel = ({ id, name, init, onInitiativeChange, onClose }) => {
@@ -18,7 +19,7 @@ const TabLabel = ({ id, name, init, onInitiativeChange, onClose }) => {
   }
 
   return (
-    <div>
+    <div className="tab-label">
       <span style={{paddingLeft: 15, paddingRight: 30}}>{name}</span>
       <TextField
         value={initiative}
@@ -26,7 +27,7 @@ const TabLabel = ({ id, name, init, onInitiativeChange, onClose }) => {
         size="small"
         style = {{width: 50}}>
       </TextField>
-      <Button disableRipple onClick={onClick}>x</Button>
+      <Button disableRipple onClick={onClick}><CloseIcon /></Button>
     </div>
   );
 }

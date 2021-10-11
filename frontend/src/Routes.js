@@ -1,12 +1,12 @@
-import CombatTabs from './components/CombatTabs/CombatTabs';
+import Combat from './components/Combat/Combat';
 import Creation from './components/Creation/Creation';
-import HomePage from './components/HomePage/HomePage';
+import AboutPage from './components/AboutPage/AboutPage';
 
 const Routes = [
   {
     title: "About",
     path: "/",
-    getComponent: () => {return HomePage}
+    getComponent: () => {return AboutPage}
   },
   {
     title: "Creation",
@@ -16,7 +16,7 @@ const Routes = [
   {
     title: "Combat",
     path: "/combat",
-    getComponent: () => {return CombatTabs}
+    getComponent: () => {return Combat}
   },
   
 ]

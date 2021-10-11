@@ -1,16 +1,7 @@
-﻿using Application;
-using Application.Dto;
-using Business.Interfaces;
-using Business.Models;
+﻿using Application.Dto;
+using Application.Services;
 using Data;
-using Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api.Controllers
 {
@@ -20,37 +11,17 @@ namespace Api.Controllers
     {
         private readonly CreationService _creationService;
         private readonly MonstersService _monstersService;
-        //
-        private readonly DataContext _context;
+        private readonly PatchService _patchService;
 
         public CreationController(CreationService creationService,
             MonstersService monstersService,
-            //
-            DataContext context)
+            PatchService patchService)
         {
             _creationService = creationService;
             _monstersService = monstersService;
-            //
-            _context = context;
+            _patchService = patchService;
         }
 
-        //
-        [HttpDelete(nameof(TruncateAllTables))]
-        public IActionResult TruncateAllTables()
-        {
-            _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [Monsters]");
-            _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [OpenedMonsters]");
-            _context.Database.ExecuteSqlRaw($"TRUNCATE TABLE [Players]");
-            return Ok();
-        }
-        //
-        [HttpPut(nameof(Test))]
-        public ActionResult<Character> Test()
-        {
-            return Ok();
-        }
-        //
-        
         [HttpPost(nameof(New))]
         public IActionResult New()
         {
@@ -60,7 +31,7 @@ namespace Api.Controllers
         }
 
         [HttpGet(nameof(Get))]
-        public ActionResult<OpenedMonsterViewModel> Get()
+        public ActionResult<SavableOpenedMonsterViewModel> Get()
         {
             if (!_creationService.OpenedExists())
                 return NotFound();
@@ -69,28 +40,15 @@ namespace Api.Controllers
         }
 
         [HttpGet(nameof(GetLast))]
-        public ActionResult<OpenedMonsterViewModel> GetLast()
+        public ActionResult<SavableOpenedMonsterViewModel> GetLast()
         {
             if (!_monstersService.Any())
             {
                 return NotFound();
             }
 
-            _monstersService.OpenLast();
+            _creationService.OpenLast();
             return Ok(_creationService.GetOpened());
-        }
-
-        [HttpPatch(nameof(Patch))]
-        public IActionResult Patch(MonsterPatchRequest patch)
-        {
-            if (!_creationService.OpenedExists())
-                return UnprocessableEntity();
-
-            if (_creationService.Patch(patch))
-            {
-                return Ok();
-            }
-            return BadRequest();
         }
 
         [HttpPut(nameof(Save))]
@@ -112,9 +70,19 @@ namespace Api.Controllers
                 return NotFound();
             }
 
-            _monstersService.Open(key);
+            _creationService.Open(key);
 
             return Ok();
+        }
+
+        [HttpPatch(nameof(Patch))]
+        public IActionResult Patch(CreationPatchRequest patch)
+        {
+            if (_patchService.PatchCreation(patch))
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
 
         [HttpDelete(nameof(Close))]

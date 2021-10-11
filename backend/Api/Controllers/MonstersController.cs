@@ -1,11 +1,8 @@
-﻿using Application;
+﻿using Application.Dto;
+using Application.Services;
 using Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Api.Controllers
 {
@@ -13,30 +10,17 @@ namespace Api.Controllers
     [ApiController]
     public class MonstersController : ControllerBase
     {
-        private readonly MonstersService _service;
+        private readonly MonstersService _monstersService;
 
-        public MonstersController(MonstersService service)
+        public MonstersController(MonstersService monstersService)
         {
-            _service = service;
+            _monstersService = monstersService;
         }
 
         [HttpGet(nameof(Get))]
         public ActionResult<IEnumerable<Monster>> Get()
         {
-            return Ok(_service.Get());
-        }
-
-        [HttpDelete("Delete/{key:int}", Name = nameof(Delete))]
-        public IActionResult Delete(int key)
-        {
-            if (!_service.Exists(key))
-            {
-                return BadRequest();
-            }
-
-            _service.Delete(key);
-
-            return Ok();
+            return Ok(_monstersService.Get());
         }
     }
 }

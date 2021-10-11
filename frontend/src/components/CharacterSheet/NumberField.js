@@ -3,8 +3,9 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
 import field from '../../dictionaries/FieldNames.json';
+import { patchCombatant } from "../../state/actions/combatThunk";
 
-const NumberField = ({ name, value, cannotBeSaved, disabled }) => {
+const NumberField = ({ id, name, value, cannotBeSaved, disabled }) => {
   const [state, setState] = useState(value);
   const dispatch = useDispatch();
 
@@ -23,10 +24,18 @@ const NumberField = ({ name, value, cannotBeSaved, disabled }) => {
 
     setState(event.target.value);
     
-    dispatch(patchMonster({
-      name: name,
-      value: event.target.value
-    }));
+    if (id) {
+      dispatch(patchCombatant({
+        id: id,
+        name: name,
+        value: event.target.value
+      }));
+    } else {
+      dispatch(patchMonster({
+        name: name,
+        value: event.target.value
+      }));
+    }
   }
 
   return(

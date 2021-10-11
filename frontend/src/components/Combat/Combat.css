@@ -1,0 +1,32 @@
+.combat-selection-row {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.combat-selection-bookends {
+  display: flex;
+  justify-content: center;
+  margin: 2em 0 1em;
+}
+
+.combat-selection-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.combatant-row {
+  display: flex;
+  justify-content: center;
+}
+
+.tab-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.tab-label button {
+  margin-left: 1em;
+}

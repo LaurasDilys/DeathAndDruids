@@ -20,12 +20,6 @@ export const newMonster = () => (dispatch) => {
     .catch(err => console.log(err));
 }
 
-export const patchMonster = (patchRequest) => (dispatch) => {
-  API.patch("creation/patch", patchRequest)
-    .then(() => dispatch(getOpenedMonster())) // gets monster that was just patched
-    .catch(err => console.log(err));
-}
-
 export const saveMonster = () => (dispatch) => {
   API.put("creation/save")
     .then(() => dispatch(getOpenedMonster()))
@@ -36,6 +30,12 @@ export const saveMonster = () => (dispatch) => {
 export const openMonster = (key) => (dispatch) => {
   API.post(`creation/open/${key}`)
     .then(() => dispatch(getOpenedMonster())) // gets monster that was just saved as "opened"
+    .catch(err => console.log(err));
+}
+
+export const patchMonster = (patchRequest) => (dispatch) => {
+  API.patch("creation/patch", patchRequest)
+    .then(() => dispatch(getOpenedMonster())) // gets monster that was just patched
     .catch(err => console.log(err));
 }
 

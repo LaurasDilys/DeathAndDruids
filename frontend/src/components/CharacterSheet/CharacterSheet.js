@@ -1,8 +1,9 @@
 import { Button, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { patchMonster, saveMonster } from "../../state/actions/creationThunk";
-import { monstersState } from "../../state/selectors/creationSelectors";
+import { saveMonster } from "../../state/actions/creationThunk";
+import { patchMonster } from "../../state/actions/creationThunk";
+import { monstersState } from "../../state/selectors";
 import NameField from "./NameField";
 import NumberField from "./NumberField";
 import AbilityBlock from "./AbilityBlock";
@@ -10,6 +11,7 @@ import SkillBlock from "./SkillBlock";
 import tree from '../../dictionaries/AbilityTree.json';
 import OptionMenu from "./OptionMenu";
 import Field from "./Field";
+import { TextFields } from "@mui/icons-material";
 
 const CharacterSheet = ({ monster, unmountMe }) => {
   const [cannotBeSaved, setCannotBeSaved] = useState([]);
@@ -62,57 +64,62 @@ const CharacterSheet = ({ monster, unmountMe }) => {
   }
 
   const handleHeal = () => {
-    let heal = amountRef.current.value;
+    if (amountRef.current.value !== "") {
 
-    if (heal > 0) {
-      let currentHP = monster.currentHitPoints;
-      let maxHP = monster.hitPoints;
+      let heal = parseInt(amountRef.current.value, 10);
+    
+      if (heal > 0) {
+        let currentHP = monster.currentHitPoints;
+        let maxHP = monster.hitPoints;
+        
+        currentHP += heal;
+        if (currentHP > maxHP) currentHP = maxHP;
 
-      currentHP += heal;
-      if (currentHP > maxHP) currentHP = maxHP;
-
-      dispatch(patchMonster({
-        name: "currentHitPoints",
-        value: currentHP.toString()
-      }));
-
+        dispatch(patchMonster({
+          name: "currentHitPoints",
+          value: currentHP.toString()
+        }));
+      }
       amountRef.current.value = 0;
     }
   }
 
   const handleDamage = () => {
-    let damage = amountRef.current.value;
+    if (amountRef.current.value !== ""){
 
-    if (damage > 0) {
-      let temporary = monster.temporaryHitPoints;
-      let current = monster.currentHitPoints;
+      let damage = parseInt(amountRef.current.value, 10);
 
-      if (temporary > 0) { // damage takes away from temporary hit points first
-        if (temporary >= damage) {
-          temporary -= damage;
-          dispatch(patchMonster({
-            name: "temporaryHitPoints",
-            value: temporary.toString()
-          }));
+      if (damage > 0) {
+        let temporary = monster.temporaryHitPoints;
+        let current = monster.currentHitPoints;
+
+        if (temporary > 0) { // damage takes away from temporary hit points first
+          if (temporary >= damage) {
+            temporary -= damage;
+            dispatch(patchMonster({
+              name: "temporaryHitPoints",
+              value: temporary.toString()
+            }));
+          } else {
+            damage -= temporary;
+            temporary = 0;
+            dispatch(patchMonster({
+              name: "temporaryHitPoints",
+              value: temporary.toString()
+            }));
+            current -= damage;
+            dispatch(patchMonster({
+              name: "currentHitPoints",
+              value: current.toString()
+            }));
+          }
         } else {
-          damage -= temporary;
-          temporary = 0;
-          dispatch(patchMonster({
-            name: "temporaryHitPoints",
-            value: temporary.toString()
-          }));
           current -= damage;
           dispatch(patchMonster({
             name: "currentHitPoints",
             value: current.toString()
           }));
         }
-      } else {
-        current -= damage;
-        dispatch(patchMonster({
-          name: "currentHitPoints",
-          value: current.toString()
-        }));
       }
       amountRef.current.value = 0;
     }
@@ -252,6 +259,15 @@ const CharacterSheet = ({ monster, unmountMe }) => {
               Damage
             </Button>
           </div>
+        </div>
+        <div className="notes">
+          <Field
+            multiline
+            notRequired
+            name={"notes"}
+            value={valueOf("notes")}
+            cannotBeSaved={handleSaveButtonValidation}
+          />
         </div>
       </div>
     </div>

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Business.Models
 {
-    public class Character // Creature
+    public class Creature
     {
-        public Character()
+        public Creature()
         {
             BuildListsOfSkills();
             BuildListOfAbilities();

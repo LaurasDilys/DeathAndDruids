@@ -3,7 +3,7 @@ import { withStyles } from '@mui/styles';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { newMonster, openMonster } from '../../state/actions/creationThunk';
-import { monstersState } from '../../state/selectors/creationSelectors';
+import { monstersState } from '../../state/selectors';
 
 const styles = {
   select: {
@@ -39,7 +39,8 @@ const Options = ({ classes }) => {
             label="Open"
             onChange={handleOpen}
           >
-          {monsters.map(monster => <MenuItem key={monster.name} value={monster.name}>{monster.name}</MenuItem>)}
+          {[...monsters].sort((a, b) => a.name.localeCompare(b.name))
+          .map(monster => <MenuItem disabled={monster.inCombat} key={monster.name} value={monster.name}>{monster.name}</MenuItem>)}
         </Select>
       </FormControl>}
     </div>

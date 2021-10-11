@@ -3,99 +3,59 @@ using Business.Interfaces;
 using Business.Models;
 using Business.Services;
 using Data.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application
+namespace Application.Services
 {
     public class MapperService
     {
-        private readonly ConverterService _converter;
+        private readonly CreatureMapperService _creatureMapper;
 
-        public MapperService(ConverterService converter)
+        public MapperService(CreatureMapperService creatureMapper)
         {
-            _converter = converter;
+            _creatureMapper = creatureMapper;
         }
 
-        public void TransformIntoFullCharacter(Character character, CharacterDataModel characterDb)
+        public void TransformIntoExpanded(Creature creature, FlatCreature flatCreature)
         {
-            _converter.TransformIntoFullCharacter(character, characterDb);
+            _creatureMapper.TransformIntoExpanded(creature, flatCreature);
         }
 
-        public void TransformIntoDataModel(CharacterDataModel characterDb, Character character)
+        public void TransformIntoFlat(FlatCreature flatCreature, Creature creature)
         {
-            _converter.TransformIntoDataModel(characterDb, character);
+            _creatureMapper.TransformIntoFlat(flatCreature, creature);
         }
 
-        public void TransformIntoViewModel(OpenedMonsterViewModel viewModel, Character creature)
-        {
-            TransformIntoDataModel(viewModel, creature);
-
-            viewModel.StrengthModifier = creature.Strength.ModifierText;
-            viewModel.DexterityModifier = creature.Dexterity.ModifierText;
-            viewModel.ConstitutionModifier = creature.Constitution.ModifierText;
-            viewModel.IntelligenceModifier = creature.Intelligence.ModifierText;
-            viewModel.WisdomModifier = creature.Wisdom.ModifierText;
-            viewModel.CharismaModifier = creature.Charisma.ModifierText;
-
-            viewModel.StrengthSavingThrow = creature.Strength.SavingThrow.ModifierText;
-            viewModel.Athletics = creature.Athletics.ModifierText;
-
-            viewModel.DexteritySavingThrow = creature.Dexterity.SavingThrow.ModifierText;
-            viewModel.Acrobatics = creature.Acrobatics.ModifierText;
-            viewModel.SleightOfHand = creature.SleightOfHand.ModifierText;
-            viewModel.Stealth = creature.Stealth.ModifierText;
-
-            viewModel.ConstitutionSavingThrow = creature.Constitution.SavingThrow.ModifierText;
-
-            viewModel.IntelligenceSavingThrow = creature.Intelligence.SavingThrow.ModifierText;
-            viewModel.Arcana = creature.Arcana.ModifierText;
-            viewModel.History = creature.History.ModifierText;
-            viewModel.Investigation = creature.Investigation.ModifierText;
-            viewModel.Nature = creature.Nature.ModifierText;
-            viewModel.Religion = creature.Religion.ModifierText;
-
-            viewModel.WisdomSavingThrow = creature.Wisdom.SavingThrow.ModifierText;
-            viewModel.AnimalHandling = creature.AnimalHandling.ModifierText;
-            viewModel.Insight = creature.Insight.ModifierText;
-            viewModel.Medicine = creature.Medicine.ModifierText;
-            viewModel.Perception = creature.Perception.ModifierText;
-            viewModel.Survival = creature.Survival.ModifierText;
-
-            viewModel.CharismaSavingThrow = creature.Charisma.SavingThrow.ModifierText;
-            viewModel.Deception = creature.Deception.ModifierText;
-            viewModel.Intimidation = creature.Intimidation.ModifierText;
-            viewModel.Performance = creature.Performance.ModifierText;
-            viewModel.Persuasion = creature.Persuasion.ModifierText;
-        }
-
-        public Monster NewMonsterFromOpened(OpenedMonster monster)
+        public Monster NewMonsterFromOpened(SavableOpenedMonster monster)
         {
             var newMonster = new Monster { Type = "monster" };
             SetValuesFrom(monster, newMonster);
             return newMonster;
         }
 
-        public void ReplaceWith(Monster monster, OpenedMonster previouslyOpened)
+        public void ReplaceWith(Monster monster, OpenedMonster monsterToBeOpened)
+        {
+            SetValuesFrom(monster, monsterToBeOpened);
+            monsterToBeOpened.SourceId = monster.Id;
+        }
+
+        public void ReplaceWith(Monster monster, SavableOpenedMonster previouslyOpened)
         {
             SetValuesFrom(monster, previouslyOpened);
             previouslyOpened.SourceId = monster.Id;
             previouslyOpened.Saved = true;
         }
 
-        public void ReplaceWith(OpenedMonster monster, Monster previousSave)
+        public void ReplaceWith(SavableOpenedMonster monster, Monster previousSave)
         {
             SetValuesFrom(monster, previousSave);
         }
 
-        private void SetValuesFrom(CharacterDataModel creature,
-            CharacterDataModel creatureWithOldValues)
+        public void SetValuesFrom(FlatCreature creature,
+            FlatCreature creatureWithOldValues)
         {
-            foreach (var propertyInfo in typeof(CharacterDataModel)
+            foreach (var propertyInfo in typeof(FlatCreature)
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 var newValue = propertyInfo.GetValue(creature);
@@ -103,15 +63,15 @@ namespace Application
             }
         }
         
-        public void PatchName(OpenedMonster monster, IMonsterPatchRequest patch)
-        {
-            if (patch.Value != "")
-            {
-                monster.Name = patch.Value;
-            }
-        }
+        //public void PatchName(OpenedMonster monster, IMonsterPatchRequest patch)
+        //{
+        //    if (patch.Value != "")
+        //    {
+        //        monster.Name = patch.Value;
+        //    }
+        //}
 
-        public bool Patch(Character creature, IMonsterPatchRequest patch)
+        public bool Patch(Creature creature, ICreationPatchRequest patch)
         {
             int intValue;
             bool boolValue;
@@ -120,7 +80,7 @@ namespace Application
 
             // capitalize property name
             var name = $"{char.ToUpper(patch.Name[0])}{patch.Name.Substring(1)}";
-            var type = typeof(Character);
+            var type = typeof(Creature);
 
             var abilityNames = new string[]
             {
@@ -189,6 +149,48 @@ namespace Application
             }
 
             return true;
+        }
+
+        public void TransformIntoViewModel(OpenedMonsterViewModel viewModel, Creature creature)
+        {
+            TransformIntoFlat(viewModel, creature);
+
+            viewModel.StrengthModifier = creature.Strength.ModifierText;
+            viewModel.DexterityModifier = creature.Dexterity.ModifierText;
+            viewModel.ConstitutionModifier = creature.Constitution.ModifierText;
+            viewModel.IntelligenceModifier = creature.Intelligence.ModifierText;
+            viewModel.WisdomModifier = creature.Wisdom.ModifierText;
+            viewModel.CharismaModifier = creature.Charisma.ModifierText;
+
+            viewModel.StrengthSavingThrow = creature.Strength.SavingThrow.ModifierText;
+            viewModel.Athletics = creature.Athletics.ModifierText;
+
+            viewModel.DexteritySavingThrow = creature.Dexterity.SavingThrow.ModifierText;
+            viewModel.Acrobatics = creature.Acrobatics.ModifierText;
+            viewModel.SleightOfHand = creature.SleightOfHand.ModifierText;
+            viewModel.Stealth = creature.Stealth.ModifierText;
+
+            viewModel.ConstitutionSavingThrow = creature.Constitution.SavingThrow.ModifierText;
+
+            viewModel.IntelligenceSavingThrow = creature.Intelligence.SavingThrow.ModifierText;
+            viewModel.Arcana = creature.Arcana.ModifierText;
+            viewModel.History = creature.History.ModifierText;
+            viewModel.Investigation = creature.Investigation.ModifierText;
+            viewModel.Nature = creature.Nature.ModifierText;
+            viewModel.Religion = creature.Religion.ModifierText;
+
+            viewModel.WisdomSavingThrow = creature.Wisdom.SavingThrow.ModifierText;
+            viewModel.AnimalHandling = creature.AnimalHandling.ModifierText;
+            viewModel.Insight = creature.Insight.ModifierText;
+            viewModel.Medicine = creature.Medicine.ModifierText;
+            viewModel.Perception = creature.Perception.ModifierText;
+            viewModel.Survival = creature.Survival.ModifierText;
+
+            viewModel.CharismaSavingThrow = creature.Charisma.SavingThrow.ModifierText;
+            viewModel.Deception = creature.Deception.ModifierText;
+            viewModel.Intimidation = creature.Intimidation.ModifierText;
+            viewModel.Performance = creature.Performance.ModifierText;
+            viewModel.Persuasion = creature.Persuasion.ModifierText;
         }
     }
 }

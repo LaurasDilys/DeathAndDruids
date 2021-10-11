@@ -7,13 +7,13 @@ const App = () => {
   return (
     <Router>
       <SideNav routes={Routes} />
-      <Switch>
-        {Routes.map(({ path, getComponent }, index) => <Route
-          key={index}
-          exact={path === "/"}
-          path={path}
-          component={getComponent()} />)}
-      </Switch>
+        <Switch>
+          {Routes.map(({ path, getComponent }, index) => <Route
+            key={index}
+            exact={path === "/"}
+            path={path}
+            component={getComponent()} />)}
+        </Switch>
     </Router>
   );
 }

@@ -1,13 +1,11 @@
 ﻿using Application.Dto;
-using Business.Interfaces;
 using Business.Models;
-using Business.Services;
 using Data.Models;
 using Data.Repositories;
 using System;
 using System.Linq;
 
-namespace Application
+namespace Application.Services
 {
     public class CreationService
     {
@@ -29,14 +27,14 @@ namespace Application
             return _creationRepository.Exists();
         }
 
-        public OpenedMonsterViewModel GetOpened()
+        public SavableOpenedMonsterViewModel GetOpened()
         {
             var dataModel = _creationRepository.GetOpened();
 
-            var creature = new Character();
-            _mapper.TransformIntoFullCharacter(creature, dataModel);
+            var creature = new Creature();
+            _mapper.TransformIntoExpanded(creature, dataModel);
 
-            var viewModel = new OpenedMonsterViewModel(
+            var viewModel = new SavableOpenedMonsterViewModel(
                 dataModel.Id, dataModel.SourceId, dataModel.Saved);
             _mapper.TransformIntoViewModel(viewModel, creature);
 
@@ -45,9 +43,9 @@ namespace Application
 
         public void New()
         {
-            var creature = new Character();
-            var monster = new OpenedMonster();
-            _mapper.TransformIntoDataModel(monster, creature);
+            var creature = new Creature();
+            var monster = new SavableOpenedMonster();
+            _mapper.TransformIntoFlat(monster, creature);
 
             if (OpenedExists())
             {
@@ -57,25 +55,6 @@ namespace Application
             }
 
             _creationRepository.Add(monster);
-        }
-
-        public bool Patch(IMonsterPatchRequest patch)
-       {
-            var monster = _creationRepository.GetOpened();
-
-            var creature = new Character();
-            _mapper.TransformIntoFullCharacter(creature, monster);
-            if (_mapper.Patch(creature, patch))
-            {
-                _mapper.TransformIntoDataModel(monster, creature);
-
-                monster.Saved = false;
-
-                _creationRepository.SaveChanges();
-
-                return true;
-            }
-            return false;
         }
 
         public void Save()
@@ -103,6 +82,43 @@ namespace Application
 
             monster.Saved = true;
             _creationRepository.SaveChanges();
+        }
+        public void Open(int key)
+        {
+            var monster = _monstersRepository.Get(key);
+            SavableOpenedMonster currentlyOpened;
+            if (_creationRepository.Exists())
+            {
+                currentlyOpened = _creationRepository.GetOpened();
+
+                int? sourceId = currentlyOpened.SourceId;
+                if (sourceId != null && sourceId != monster.Id
+                    && _monstersRepository.Exists((int)sourceId)) // extra precaution
+                {
+                    // change previously opened accordingly
+                    _monstersRepository.Get((int)sourceId).InCreation = false;
+                }
+
+                _mapper.ReplaceWith(monster, currentlyOpened);
+                monster.InCreation = true;
+            }
+            else
+            {
+                currentlyOpened = new SavableOpenedMonster();
+
+                _mapper.ReplaceWith(monster, currentlyOpened);
+                monster.InCreation = true;
+
+                currentlyOpened.SourceId = monster.Id;
+                _creationRepository.Add(currentlyOpened);
+            }
+
+            _monstersRepository.SaveChanges();
+        }
+
+        public void OpenLast()
+        {
+            Open(_monstersRepository.Get().Last().Id);
         }
 
         public void Close()

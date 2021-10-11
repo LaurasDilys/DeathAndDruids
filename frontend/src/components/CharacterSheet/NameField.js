@@ -2,7 +2,7 @@ import { TextField, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { patchMonster } from "../../state/actions/creationThunk";
-import { creationState, monstersState } from "../../state/selectors/creationSelectors";
+import { creationState, monstersState } from "../../state/selectors";
 import field from '../../dictionaries/FieldNames.json';
 
 const NameField = ({ nameRef, name, value, cannotBeSaved, disabled }) => {

@@ -2,6 +2,7 @@ import { TextField } from "@mui/material";
 import { withStyles } from "@mui/styles";
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
+import { patchCombatant } from "../../state/actions/combatThunk";
 import { patchMonster } from "../../state/actions/creationThunk";
 import "./CharacterSheet.css"
 
@@ -13,7 +14,7 @@ const styles = {
   }
 };
 
-const AbilityBlock = ({ name, value, modifierValue, cannotBeSaved, children, classes }) => {
+const AbilityBlock = ({ id, name, value, modifierValue, cannotBeSaved, children, classes }) => {
   const [state, setState] = useState(value);
   const dispatch = useDispatch();
 
@@ -35,11 +36,19 @@ const AbilityBlock = ({ name, value, modifierValue, cannotBeSaved, children, cla
     } else {
       setState(event.target.value);
     }
-    
-    dispatch(patchMonster({
-      name: name,
-      value: event.target.value
-    }));
+
+    if (id) {
+      dispatch(patchCombatant({
+        id: id,
+        name: name,
+        value: event.target.value
+      }));
+    } else {
+      dispatch(patchMonster({
+        name: name,
+        value: event.target.value
+      }));
+    }
   }
 
   return(

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Business.Models
+﻿namespace Business.Models
 {
-    public class CharacterDataModel // FlatCreature
+    public class FlatCreature
     {
         public string Name { get; set; }
         public string Alignment { get; set; }

@@ -19,6 +19,24 @@ namespace Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Data.Models.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Route")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SelectedTab")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Location");
+                });
+
             modelBuilder.Entity("Data.Models.Monster", b =>
                 {
                     b.Property<int>("Id")
@@ -281,6 +299,153 @@ namespace Data.Migrations
                     b.Property<bool>("ReligionProficiency")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("SleightOfHandProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("SourceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Speed")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("StealthProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Strength")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("StrengthSavingThrowProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("SurvivalProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TemporaryHitPoints")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Traits")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Wisdom")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("WisdomSavingThrowProficiency")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Combat");
+                });
+
+            modelBuilder.Entity("Data.Models.SavableOpenedMonster", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("AcrobaticsProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Alignment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("AnimalHandlingProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ArcanaProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ArmorClass")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("AthleticsProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("ChallengeRating")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Charisma")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("CharismaSavingThrowProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Constitution")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ConstitutionSavingThrowProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("CurrentArmorClass")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CurrentHitPoints")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CurrentSpeed")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("DeceptionProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Dexterity")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("DexteritySavingThrowProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HistoryProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("HitPoints")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Initiative")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("InsightProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Intelligence")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IntelligenceSavingThrowProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IntimidationProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("InvestigationProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MedicineProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("NatureProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PerceptionProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("PerformanceProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("PersuasionProficiency")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProficiencyBonus")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ReligionProficiency")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("Saved")
                         .HasColumnType("bit");
 
@@ -319,38 +484,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("OpenedMonsters");
-                });
-
-            modelBuilder.Entity("Data.Models.Player", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CombatId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Initiative")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Players");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Initiative = 0
-                        });
+                    b.ToTable("Creation");
                 });
 #pragma warning restore 612, 618
         }
